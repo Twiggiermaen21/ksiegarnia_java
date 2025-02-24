@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html">
+    
+
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Księgarnia</title>
+        <h:outputStylesheet>
+            /* Globalny styl */
+            body {
+            background-color: #f4f4f9;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            }
+
+            h1 {
+            font-family: 'Georgia', serif; /* Elegancka czcionka */
+            font-size: 3em; /* Większy rozmiar czcionki */
+            font-weight: bold; /* Pogrubienie tekstu */
+            color: #ff5733; /* Ciepły kolor tekstu */
+            text-align: center; /* Wyśrodkowanie tekstu */
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Delikatny cień tekstu */
+            letter-spacing: 2px; /* Większe odstępy między literami */
+            margin-top: 30px; /* Większa odległość od góry */
+            text-transform: uppercase; /* Wszystkie litery duże */
+            background: linear-gradient(45deg, #ff5733, #ff9b6f); /* Gradientowy kolor */
+            -webkit-background-clip: text; /* Tylko tekst ma gradient */
+            color: transparent; /* Kolor tekstu jest przezroczysty, gradient pokrywa tylko tekst */
+            }
+
+            /* Styl dla panelu wyszukiwania */
+            .p-panel {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2em;
+            background: white;
+            }
+
+            .p-panel-header {
+            font-size: 1.2em;
+            background-color: #ff5733;
+            color: white;
+            padding: 10px;
+            }
+
+            /* Styl dla siatki książek */
+            .book-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 kolumny */
+            gap: 20px;
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 0 10px;
+            }
+
+            /* Karta książki */
+            .book-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+            }
+
+            .book-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain; /* Obrazek w pełni widoczny, bez przycinania */
+            border-radius: 8px;
+            margin-bottom: 10px;
+            }
+
+            .book-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #333;
+            }
+
+            .book-price {
+            font-size: 1.1em;
+            color: #ff5733;
+            margin-bottom: 10px;
+            }
+
+            .book-details {
+            font-size: 0.9em;
+            color: #777;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            }
+
+            .details-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #ff5733;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            }
+
+            .details-link:hover {
+            background-color: #cc4628;
+            }
+
+            /* Styl dla formularza wyszukiwania */
+            .search-form {
+            max-width: 500px;
+            margin: 0 auto;
+            }
+
+            .search-form p {
+            text-align: center;
+            margin-bottom: 1em;
+            font-size: 1.1em;
+            }
+
+            .search-form .ui-inputtext {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            }
+
+            .search-form .ui-commandbutton {
+            width: 100%;
+            background-color: #ff5733;
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+            transition: background-color 0.3s;
+            }
+
+            .search-form .ui-commandbutton:hover {
+            background-color: #cc4628;
+            }
+
+            /* Responsywność */
+            @media (max-width: 1024px) {
+            .book-grid {
+            grid-template-columns: repeat(2, 1fr); /* 2 kolumny dla tabletów */
+            }
+
+            h1 {
+            font-size: 2.5em; /* Mniejszy napis na tabletach */
+            }
+            }
+
+            @media (max-width: 768px) {
+            .book-grid {
+            grid-template-columns: 1fr; /* 1 kolumna dla telefonów */
+            }
+
+            h1 {
+            font-size: 2em; /* Mniejszy napis na telefonach */
+            }
+
+            .search-form {
+            max-width: 100%; /* Formularz wyszukiwania zajmuje całą szerokość na telefonach */
+            }
+            }
+        </h:outputStylesheet>
+    </h:head>
+
+    <h:body>
+
+        <h1>Księgarnia</h1>
+
+        <!-- Panel wyszukiwania -->
+        <p:panel header="Opcje wyszukiwania" toggleable="true" collapsed="true" styleClass="search-form">
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="5"  >
+                    <h:outputLabel value="Tytuł:" />
+                    <p:inputText value="#{ksiazkiListBB.tytul}" />
+                    <p:commandButton value="Szukaj" update="form-table" />
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+
+        <!-- Komunikaty -->
+        <p:messages />
+
+        <!-- Książki -->
+        <h:form id="form-table">
+            <div class="book-grid">
+                <ui:repeat value="#{ksiazkiListBB.list}" var="k">
+                    <div class="book-card">
+                        <h:graphicImage value="/resources/#{k.imgUrl}" styleClass="book-image" />
+                        <div class="book-title">
+                            <h:outputText value="#{k.tytul}" />
+                        </div>
+                        <div class="book-price">
+                            <h:outputText value="#{k.cena} PLN" />
+                        </div>
+                        <div class="book-details">
+                            <ui:repeat var="a" value="#{ksiazkiHasAutorKsiazkiBB.list}">
+                                <h:panelGroup rendered="#{k.idKsiazki eq a.ksiazkiidKsiazki.idKsiazki}">
+                                    <span><b>Autor:</b> #{a.autorKsiazkiidAutorKsiazki.imie} #{a.autorKsiazkiidAutorKsiazki.nazwisko}</span>
+                                </h:panelGroup>
+                            </ui:repeat>
+
+                             <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
+                        </div>
+
+                        <p:commandButton value="Zobacz" 
+                                         styleClass="details-link" 
+                                         action="#{ksiazkiListBB.showBook(k)}" 
+                                         ajax="false" />
+                    </div>
+                </ui:repeat>
+            </div>
+        </h:form>
+
+    </h:body>
+</html>
