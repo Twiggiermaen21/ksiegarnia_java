@@ -171,6 +171,8 @@
             font-size: 2em; /* Mniejszy napis na telefonach */
             }
 
+
+
             .search-form {
             max-width: 100%; /* Formularz wyszukiwania zajmuje całą szerokość na telefonach */
             }
@@ -180,96 +182,92 @@
 
     <h:body>
 
-        <h1>Księgarnia</h1>
-        <h:form>
-            <h:outputText value="Witaj, #{userData.loggedInUser.imie}!" />
-            <br/>
-            <h:commandButton value="Wyloguj" action="#{logInOutBB.logout}"/>
-        </h:form>
 
-        
-        <div class="card">
-    <h:form>
-        <p:growl id="messages"/>
 
-        <p:menubar hideDelay="1000">
-             <f:facet name="start">
-                 <p:graphicImage name="logo.jpg" library="images"  />
-  
-            </f:facet>
-            <p:submenu label="File" icon="pi pi-fw pi-file">
-                <p:submenu label="New" icon="pi pi-fw pi-plus">
-                    <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
-                    <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
-                </p:submenu>
-                <p:menuitem value="Delete" icon="pi pi-fw pi-trash"/>
-                <p:divider />
-                <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
-                <p:menuitem value="Duplicate" icon="pi pi-fw pi-copy" disabled="true"/>
-            </p:submenu>
-
-            <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
-                <p:menuitem value="Left" icon="pi pi-fw pi-align-left"/>
-                <p:menuitem value="Right" icon="pi pi-fw pi-align-right"/>
-                <p:menuitem value="Center" icon="pi pi-fw pi-align-center"/>
-                <p:menuitem value="Justify" icon="pi pi-fw pi-align-justify"/>
-            </p:submenu>
-
-            <p:submenu label="Users" icon="pi pi-fw pi-user">
-                <p:menuitem value="New" icon="pi pi-fw pi-user-plus"/>
-                <p:menuitem value="Delete" icon="pi pi-fw pi-user-minus"/>
-                <p:submenu label="Search" icon="pi pi-fw pi-users">
-                    <p:submenu label="Filter" icon="pi pi-fw pi-filter">
-                        <p:menuitem value="Print" icon="pi pi-fw pi-print"/>
-                    </p:submenu>
-                    <p:menuitem value="List" icon="pi pi-fw pi-bars"/>
-                </p:submenu>
-            </p:submenu>
-
-            <p:submenu label="Events" icon="pi pi-fw pi-calendar">
-                <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
-                    <p:menuitem value="Save" icon="pi pi-fw pi-calendar-plus"/>
-                    <p:menuitem value="Delete" icon="pi pi-fw pi-calendar-minus"/>
-                </p:submenu>
-                <p:submenu label="Archieve" icon="pi pi-fw pi-calendar-times">
-                    <p:menuitem value="Remove" icon="pi pi-fw pi-calendar-minus"/>
-                </p:submenu>
-            </p:submenu>
-
-            <p:divider layout="vertical"/>
-
-            <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
-
-            <f:facet name="end">
-                <div class="ui-input-icon-left mr-2">
-                    <i class="pi pi-fw pi-search" />
-                    <p:inputText placeholder="Search"/>
-                </div>
-                <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
-            </f:facet>
-        </p:menubar>
-    </h:form>
-</div>
-        
-        
-        
-        
-        <!-- Panel wyszukiwania -->
-        <p:panel header="Opcje wyszukiwania" toggleable="true" collapsed="true" styleClass="search-form">
+        <div class="card" >
             <h:form>
-                <h:panelGrid columns="2" cellpadding="5"  >
-                    <h:outputLabel value="Tytuł:" />
-                    <p:inputText value="#{ksiazkiListBB.tytul}" />
-                    <p:commandButton value="Szukaj" update="form-table" />
-                </h:panelGrid>
+                <p:growl id="messages"/>
+
+                <p:menubar hideDelay="1000">
+                    <f:facet name="start">
+                        <p:graphicImage name="logo.jpg" library="images"  />
+                    </f:facet>
+                    
+                    <p:divider layout="vertical"/>
+                    
+                    <p:submenu label="File" icon="pi pi-fw pi-file">
+                        <p:submenu label="New" icon="pi pi-fw pi-plus">
+                            <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
+                            <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
+                        </p:submenu>
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-trash"/>
+                        <p:divider />
+                        <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                        <p:menuitem value="Duplicate" icon="pi pi-fw pi-copy" disabled="true"/>
+                    </p:submenu>
+
+                     <p:divider layout="vertical"/>
+                    
+                    <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
+                        <p:menuitem value="Left" icon="pi pi-fw pi-align-left"/>
+                        <p:menuitem value="Right" icon="pi pi-fw pi-align-right"/>
+                        <p:menuitem value="Center" icon="pi pi-fw pi-align-center"/>
+                        <p:menuitem value="Justify" icon="pi pi-fw pi-align-justify"/>
+                    </p:submenu>
+                     
+                      <p:divider layout="vertical"/>
+
+                    <p:submenu label="Users" icon="pi pi-fw pi-user">
+                        <p:menuitem value="#{userData.loggedInUser.imie}! #{userData.loggedInUser.nazwisko}!" icon="pi pi-fw pi-user"/>
+                        <p:menuitem value="#{userData.loggedInUser.email}!" icon="pi pi-fw pi-user"/>
+                        <p:menuitem value="#{userData.loggedInUser.imie}!" icon="pi pi-fw pi-user"/>
+                    </p:submenu>
+                      
+                       <p:divider layout="vertical"/>
+
+                    <p:submenu label="Events" icon="pi pi-fw pi-calendar">
+                        <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
+                            <p:menuitem value="Save" icon="pi pi-fw pi-calendar-plus"/>
+                            <p:menuitem value="Delete" icon="pi pi-fw pi-calendar-minus"/>
+                        </p:submenu>
+                        <p:submenu label="Archieve" icon="pi pi-fw pi-calendar-times">
+                            <p:menuitem value="Remove" icon="pi pi-fw pi-calendar-minus"/>
+                        </p:submenu>
+                    </p:submenu>
+
+                    <p:divider layout="vertical"/>
+
+
+                    <!-- Panel wyszukiwania -->
+                    <f:facet name="end">
+                        <div class="ui-input-icon-left mr-2">
+                            <i class="pi pi-fw pi-search" />
+
+
+
+
+                            <p:inputText placeholder="Search" value="#{ksiazkiListBB.tytul}">
+                                <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
+                            </p:inputText>
+
+                        </div>
+                        <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                    </f:facet>
+                </p:menubar>
             </h:form>
-        </p:panel>
+        </div>
+
+
+
+
+
+
 
         <!-- Komunikaty -->
         <p:messages />
 
         <!-- Książki -->
-        <h:form id="form-table">
+        <h:form id="booksTable">
             <div class="book-grid">
                 <ui:repeat value="#{ksiazkiListBB.list}" var="k">
                     <div class="book-card">
