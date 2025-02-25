@@ -192,9 +192,9 @@
                     <f:facet name="start">
                         <p:graphicImage name="logo.jpg" library="images"  />
                     </f:facet>
-                    
+
                     <p:divider layout="vertical"/>
-                    
+
                     <p:submenu label="File" icon="pi pi-fw pi-file">
                         <p:submenu label="New" icon="pi pi-fw pi-plus">
                             <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
@@ -206,24 +206,24 @@
                         <p:menuitem value="Duplicate" icon="pi pi-fw pi-copy" disabled="true"/>
                     </p:submenu>
 
-                     <p:divider layout="vertical"/>
-                    
+                    <p:divider layout="vertical"/>
+
                     <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
                         <p:menuitem value="Left" icon="pi pi-fw pi-align-left"/>
                         <p:menuitem value="Right" icon="pi pi-fw pi-align-right"/>
                         <p:menuitem value="Center" icon="pi pi-fw pi-align-center"/>
                         <p:menuitem value="Justify" icon="pi pi-fw pi-align-justify"/>
                     </p:submenu>
-                     
-                      <p:divider layout="vertical"/>
 
-                  
-                        <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user"/>
-                        
-                      
-                   
-                      
-                       <p:divider layout="vertical"/>
+                    <p:divider layout="vertical"/>
+
+
+                    <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user"/>
+
+
+
+
+                    <p:divider layout="vertical"/>
 
                     <p:submenu label="Events" icon="pi pi-fw pi-calendar">
                         <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
@@ -295,11 +295,11 @@
                     </div>
                 </ui:repeat>
             </div>
-        <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" />
+            <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" />
             <p:commandButton value="Następna" action="#{ksiazkiListBB.nextPage}" ajax="true" update="booksTable" />
-       
+
         </h:form>
-     
-        
+
+
     </h:body>
 </html>
