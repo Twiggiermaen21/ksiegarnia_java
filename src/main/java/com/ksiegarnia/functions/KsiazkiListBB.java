@@ -23,7 +23,8 @@ public class KsiazkiListBB {
     private List<Ksiazki> list;
     private String tytul;
     private int currentPage = 0;
-    private final int pageSize = 6;
+    private final int pageSize = 100;
+     private int totalBooks = 0;
     @Inject
     ExternalContext extcontext;
 
@@ -61,7 +62,7 @@ public class KsiazkiListBB {
 
         int start = currentPage * pageSize;
         int end = Math.min(start + pageSize, list.size());
-
+       
         return list.subList(start, end);
     }
 
