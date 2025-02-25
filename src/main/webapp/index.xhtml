@@ -184,7 +184,6 @@
         <h:form>
             <h:outputText value="Witaj, #{userData.loggedInUser.imie}!" />
             <br/>
-
             <h:commandButton value="Wyloguj" action="#{logInOutBB.logout}"/>
         </h:form>
 
@@ -195,7 +194,8 @@
 
         <p:menubar hideDelay="1000">
              <f:facet name="start">
-                <p:graphicImage name="/resources/images/logo.png" library="showcase" />
+                 <p:graphicImage name="logo.jpg" library="images"  />
+  
             </f:facet>
             <p:submenu label="File" icon="pi pi-fw pi-file">
                 <p:submenu label="New" icon="pi pi-fw pi-plus">
