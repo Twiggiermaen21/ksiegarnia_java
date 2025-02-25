@@ -2,11 +2,39 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
-     
       xmlns:h="jakarta.faces.html"
-    >
+      >
     <head>
         <title>Logowanie</title>
+        <h:outputStylesheet>
+            body {
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            }
+
+            .login-container {
+            width: 350px;
+            }
+
+            .login-panel {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            }
+
+            .login-button {
+            width: 100%;
+            background-color: #007ad9 !important;
+            color: white !important;
+            font-size: 16px;
+            }
+
+        </h:outputStylesheet>
     </head>
     <body>
         <h:form>
