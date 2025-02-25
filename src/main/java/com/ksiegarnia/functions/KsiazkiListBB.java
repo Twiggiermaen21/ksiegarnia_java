@@ -23,7 +23,7 @@ public class KsiazkiListBB {
     private List<Ksiazki> list;
     private String tytul;
     private int currentPage = 0;
-    private static final int PAGE_SIZE = 9;
+    private final int pageSize = 6;
     @Inject
     ExternalContext extcontext;
 
@@ -59,8 +59,8 @@ public class KsiazkiListBB {
         //2. Get list
         list = ksiazkiDAO.getList(searchParams);
 
-        int start = currentPage * PAGE_SIZE;
-        int end = Math.min(start + PAGE_SIZE, list.size());
+        int start = currentPage * pageSize;
+        int end = Math.min(start + pageSize, list.size());
 
         return list.subList(start, end);
     }
@@ -79,7 +79,15 @@ public class KsiazkiListBB {
     }
 
   
+   public void nextPage() {
+        currentPage++;
+    }
 
+    public void prevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+        }
   
 
+}
 }

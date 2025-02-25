@@ -295,6 +295,8 @@
                     </div>
                 </ui:repeat>
             </div>
+        <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" />
+            <p:commandButton value="Następna" action="#{ksiazkiListBB.nextPage}" ajax="true" update="booksTable" />
         </h:form>
      
         
