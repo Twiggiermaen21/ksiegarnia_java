@@ -24,7 +24,7 @@ public class KsiazkiListBB {
     private String tytul;
     private int currentPage = 0;
     private final int pageSize = 100;
-     private int totalBooks = 0;
+
     @Inject
     ExternalContext extcontext;
 
@@ -46,8 +46,6 @@ public class KsiazkiListBB {
         return ksiazkiDAO.getFullList();
     }
 
-   
-
     public List<Ksiazki> getList() {
 
         //1. Prepare search params
@@ -62,11 +60,9 @@ public class KsiazkiListBB {
 
         int start = currentPage * pageSize;
         int end = Math.min(start + pageSize, list.size());
-       
+
         return list.subList(start, end);
     }
-
-   
 
     public String showBook(Ksiazki ksiazki) {
         //1. Pass object through session
@@ -79,8 +75,7 @@ public class KsiazkiListBB {
         return PAGE_BOOK_SHOW;
     }
 
-  
-   public void nextPage() {
+    public void nextPage() {
         currentPage++;
     }
 
@@ -88,7 +83,6 @@ public class KsiazkiListBB {
         if (currentPage > 0) {
             currentPage--;
         }
-  
 
-}
+    }
 }
