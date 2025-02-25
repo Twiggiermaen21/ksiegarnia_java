@@ -217,11 +217,11 @@
                      
                       <p:divider layout="vertical"/>
 
-                    <p:submenu label="Users" icon="pi pi-fw pi-user">
-                        <p:menuitem value="#{userData.loggedInUser.imie}! #{userData.loggedInUser.nazwisko}!" icon="pi pi-fw pi-user"/>
-                        <p:menuitem value="#{userData.loggedInUser.email}!" icon="pi pi-fw pi-user"/>
-                        <p:menuitem value="#{userData.loggedInUser.imie}!" icon="pi pi-fw pi-user"/>
-                    </p:submenu>
+                  
+                        <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user"/>
+                        
+                      
+                   
                       
                        <p:divider layout="vertical"/>
 
@@ -296,6 +296,7 @@
                 </ui:repeat>
             </div>
         </h:form>
-
+     
+        
     </h:body>
 </html>
