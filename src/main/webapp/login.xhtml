@@ -2,25 +2,25 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="jakarta.faces.facelets"
+     
       xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core">
-<head>
-    <title>Logowanie</title>
-</head>
-<body>
-    <h:form>
-        <h2>Logowanie</h2>
-        <h:outputLabel for="username" value="Nazwa użytkownika:"/>
-        <h:inputText id="username" value="#{logInOutBB.email}" required="true"/><br/>
+    >
+    <head>
+        <title>Logowanie</title>
+    </head>
+    <body>
+        <h:form>
+            <h2>Logowanie</h2>
+            <h:outputLabel for="email" value="Email:"/>
+            <h:inputText id="email" value="#{logInOutBB.email}" required="true"/><br/>
 
-        <h:outputLabel for="password" value="Hasło:"/>
-        <h:inputSecret id="password" value="#{logInOutBB.password}" required="true"/><br/>
+            <h:outputLabel for="password" value="Hasło:"/>
+            <h:inputSecret id="password" value="#{logInOutBB.password}" required="true"/><br/>
 
-        <h:commandButton value="Zaloguj" action="#{logInOutBB.login}"/>
-        
-        <h:messages globalOnly="true" style="color:red"/>
-    </h:form>
-</body>
+            <h:commandButton value="Zaloguj" action="#{logInOutBB.login}"/>
+
+            <h:messages globalOnly="true" style="color:red"/>
+        </h:form>
+    </body>
 </html>
 

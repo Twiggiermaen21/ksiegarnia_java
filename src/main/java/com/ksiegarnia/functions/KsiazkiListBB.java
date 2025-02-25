@@ -17,10 +17,6 @@ import jakarta.servlet.http.HttpSession;
 
 import com.ksiegarnia.dao.KsiazkiDAO;
 import com.ksiegarnia.entities.*;
-/**
- *
- * @author kacpe
- */
 
 
 @Named

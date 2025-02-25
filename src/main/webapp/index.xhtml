@@ -4,7 +4,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="jakarta.faces.facelets"
       xmlns:h="jakarta.faces.html">
-    
+
 
     <h:head>
         <meta charset="utf-8" />
@@ -180,6 +180,8 @@
     <h:body>
 
         <h1>Księgarnia</h1>
+        <h:outputText value="Twój e-mail: #{userData.loggedInUser.email}" />
+        <h:commandButton value="Wyloguj" action="#{logInOutBB.logout}" />
 
         <!-- Panel wyszukiwania -->
         <p:panel header="Opcje wyszukiwania" toggleable="true" collapsed="true" styleClass="search-form">
@@ -214,7 +216,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
 
-                             <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
+                            <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                         </div>
 
                         <p:commandButton value="Zobacz" 
