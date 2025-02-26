@@ -206,7 +206,7 @@
 
                  
                         
-                        <p:menuitem value="biblioteczka" icon="pi pi-book"/>
+                        <p:menuitem value="biblioteczka" icon="pi pi-book"  action="#{zamowieniaPage.OrdersPage}" />
                 
 
                     <p:divider layout="vertical"/>
@@ -259,6 +259,7 @@
                             <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                         </div>
                         <p:commandButton value="Zobacz"     styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}"   ajax="false" />
+               
                     </div>
                 </ui:repeat>
             </div>
