@@ -200,13 +200,13 @@
                     <p:divider layout="vertical"/>
 
                     <p:menuitem value="koszyk"  icon="pi pi-shopping-bag"/>
-                    
-                    
+
+
                     <p:submenu label="koszyk" icon="pi pi-shopping-bag">
                         <p:divider />
-                            <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
-                            <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
-                
+                        <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
+                        <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
+
                         <p:menuitem value="Delete" icon="pi pi-fw pi-trash"/>
                         <p:divider />
                         <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
@@ -270,7 +270,7 @@
                             <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                         </div>
                         <p:commandButton value="Zobacz"     styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}"   ajax="false" />
-                              <p:commandButton value="Dodaj do koszyka"     styleClass="details-link" action=""   ajax="false" />
+                        <p:commandButton value="Dodaj do koszyka"     styleClass="details-link"    ajax="false" />
                     </div>
                 </ui:repeat>
             </div>
