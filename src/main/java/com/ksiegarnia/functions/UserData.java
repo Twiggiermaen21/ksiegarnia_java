@@ -4,18 +4,17 @@
  */
 package com.ksiegarnia.functions;
 
-import jakarta.inject.Inject;
+
 import jakarta.inject.Named;
 import com.ksiegarnia.entities.Uzytkownik;
-import jakarta.annotation.PostConstruct;
+
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.application.FacesMessage;
+
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
+
 
 @Named
 @SessionScoped
@@ -32,9 +31,11 @@ public class UserData implements Serializable {
         }
         return null;
     }
+    
 
     public Uzytkownik getUser() {
-        return getLoggedInUser(); // Żeby zawsze zwracał poprawnego użytkownika
+        user = getLoggedInUser();
+        return user; // Żeby zawsze zwracał poprawnego użytkownika
     }
     
     
@@ -48,6 +49,6 @@ public class UserData implements Serializable {
         return PAGE_USER;
     }
    
-
+  
 }
 

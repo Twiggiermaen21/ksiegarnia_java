@@ -4,8 +4,10 @@
  */
 package com.ksiegarnia.functions;
 
+import com.ksiegarnia.dao.UserDAO;
 import com.ksiegarnia.entities.Uzytkownik;
 import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
@@ -19,20 +21,25 @@ import org.primefaces.event.RowEditEvent;
  *
  * @author kacpe
  */
-@Named("dtEditView")
+@Named
 @ViewScoped
 public class UserPageEdit implements Serializable {
+    private Uzytkownik user ;
     
+    @Inject
+   UserData data;
 
-
- 
-
-    
-
-
-   
-
- 
+@PostConstruct
+    public void init() {
+        user = data.getUser();
+       
+    }
+    public Uzytkownik  getuser() {
+        return user;
+    }
+public void setService(UserData service) {
+        this.data = service;
+    }
 
     public void onRowEdit(RowEditEvent<Uzytkownik> event) {
         FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getIdUzytkownik()));
@@ -51,6 +58,8 @@ public class UserPageEdit implements Serializable {
         if (newValue != null && !newValue.equals(oldValue)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
+            
+            
         }
     }
 }
