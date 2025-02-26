@@ -5,6 +5,7 @@
 package com.ksiegarnia.functions;
 
 import com.ksiegarnia.dao.ZamowieniaDAO;
+import com.ksiegarnia.entities.Uzytkownik;
 import com.ksiegarnia.entities.Zamowienia;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
@@ -14,40 +15,41 @@ import jakarta.inject.Inject;
 
 import jakarta.inject.Named;
 import java.util.List;
+import com.ksiegarnia.functions.UserData;
 
-/**
- *
- * @author kacpe
- */
 @Named
 @RequestScoped
 public class ZamowieniaPage {
     private static final String PAGE_Orders = "orderedBooks?faces-redirect=true";
 private List<Zamowienia> list;
+ private Uzytkownik user;
     @Inject
     ExternalContext extcontext;
 
     @Inject
-    Flash flash;
+    UserData data;
 
     @EJB
     ZamowieniaDAO zamowieniaDAO;
 
-    public List< Zamowienia> getFullList() {
-        return zamowieniaDAO.getFullList();
+    public List< Zamowienia> getFullList(int id) {
+        return zamowieniaDAO.getFullList(id);
     }
 
      public List<Zamowienia> getList() {
-
+       
      
         //2. Get list
-        list = getFullList();
+        list = getFullList(user.getIdUzytkownik());
 
      
         return list;
     }
     
-    
+    public int idUzytkownik(){
+          user =data. getLoggedInUser();
+        return user.getIdUzytkownik();
+    }
     
     public String OrdersPage() {
         //1. Pass object through session

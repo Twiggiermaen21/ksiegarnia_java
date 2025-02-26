@@ -12,6 +12,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import com.ksiegarnia.entities.Zamowienia;
 
+
 @Stateless
 public class ZamowieniaDAO {
      private final static String UNIT_NAME = "jsfcourse-ksiegarniaPU";
@@ -36,11 +37,19 @@ public class ZamowieniaDAO {
         return em.find(Zamowienia.class, id);
     }
 
-    public List<Zamowienia> getFullList() {
+    public List<Zamowienia> getFullList(int identyfikator) {
         List<Zamowienia> list = null;
+              String select = "select z ";
+        String from = "from Zamowienia z ";
+        String where = "where z.uzytkownikidUzytkownik = :identyfikator";
 
-        Query query = em.createQuery("select z from Zamowienia z");
-
+         
+        
+        
+        // ... other parameters ... 
+        // 2. Create query object
+        Query query = em.createQuery(select + from + where);
+        
         try {
             list = query.getResultList();
         } catch (Exception e) {
