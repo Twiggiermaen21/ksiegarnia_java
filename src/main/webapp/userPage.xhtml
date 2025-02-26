@@ -67,7 +67,29 @@
             </p:cellEditor>
         </p:column>
         
-        <p:column headerText="Email">
+         <p:column headerText="Data_aktualizacji">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{user.dataaktualizacji}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{user.dataaktualizacji}" style="width:100%"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        
+         <p:column headerText="Id_aktualizacjil">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{user.idaktualizacji}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{user.idaktualizacji}" style="width:100%"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        
+         <p:column headerText="Email">
             <p:cellEditor>
                 <f:facet name="output">
                     <h:outputText value="#{user.email}"/>
@@ -77,8 +99,40 @@
                 </f:facet>
             </p:cellEditor>
         </p:column>
+        
+         <p:column headerText="haslo">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{user.haslo}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{user.haslo}" style="width:100%"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        
+        <p:column headerText="Data_utworzenia">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{user.datautworzenia}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{user.datautworzenia}" style="width:100%"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
 
-    
+        <p:column headerText="aktywny">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{user.aktywny}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{user.aktywny}" style="width:100%"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        
         <p:column style="width:6rem">
             <p:rowEditor editTitle="Edit User" cancelTitle="Cancel" saveTitle="Save"/>
         </p:column>
@@ -87,6 +141,7 @@
           </div>
     
 </h:form>
+        
 
         
         

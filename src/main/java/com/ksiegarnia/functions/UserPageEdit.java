@@ -28,7 +28,10 @@ public class UserPageEdit implements Serializable {
     
     @Inject
    UserData data;
-
+    UserDAO userDAO;
+       
+    
+    
 @PostConstruct
     public void init() {
         user = data.getUser();
@@ -42,6 +45,16 @@ public void setService(UserData service) {
     }
 
     public void onRowEdit(RowEditEvent<Uzytkownik> event) {
+      try {
+    userDAO.merge(event.getObject());
+
+} catch (Exception e) {
+    // Inne, mniej specyficzne wyjątki
+    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Unexpected Error", "Something went wrong.");
+    FacesContext.getCurrentInstance().addMessage(null, msg);
+}
+       
+        
         FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getIdUzytkownik()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
