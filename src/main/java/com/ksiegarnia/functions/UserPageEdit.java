@@ -7,7 +7,6 @@ package com.ksiegarnia.functions;
 import com.ksiegarnia.dao.UserDAO;
 import com.ksiegarnia.entities.Uzytkownik;
 import jakarta.annotation.PostConstruct;
-import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
