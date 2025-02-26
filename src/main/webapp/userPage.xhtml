@@ -34,65 +34,69 @@
         <h:form id="form">
     <p:growl id="msgs" showDetail="true"/>
 
+  
+
     <div class="card">
-        <h5>Row Editing</h5>
-        <p:dataTable id="products1" var="user" value="#{userData.getUser()}" editable="true"
-                     style="margin-bottom:20px">
-
-            <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update=":form:msgs"/>
-            <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update=":form:msgs"/>
-
-            <p:column headerText="Imie">
-                <p:cellEditor>
-                    <f:facet name="output">
-                        <h:outputText value="#{user.Imie}"/>
-                    </f:facet>
-                    <f:facet name="input">
-                        <p:inputText id="modelInput" value="#{user.Imie}" style="width:100%"/>
-                    </f:facet>
-                </p:cellEditor>
+        <h5>Edytowanie użytkowników</h5>
+        <p:dataTable id="products1" var="user" value="#{userData.getUser()}" editable="true" style="margin-bottom:20px;">
+            
+            <p:ajax event="rowEdit" listener="#{userData.onRowEdit}" update=":form:msgs"/>
+            <p:ajax event="rowEditCancel" listener="#{userData.onRowCancel}" update=":form:msgs"/>
+            
+            <p:column headerText="Dane użytkownika">
+                <h:panelGrid columns="1" style="width: 100%;">
+                    
+                    <h:outputLabel for="imieInput" value="Imię"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{user.imie}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="imieInput" value="#{user.imie}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                    
+                    <h:outputLabel for="nazwiskoInput" value="Nazwisko"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{user.nazwisko}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="nazwiskoInput" value="#{user.nazwisko}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                    
+                    <h:outputLabel for="emailInput" value="Email"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{user.email}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="emailInput" value="#{user.email}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                    
+                    <h:outputLabel for="hasloInput" value="Hasło"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="******"/> <!-- Ukrycie hasła w trybie podglądu -->
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:password id="hasloInput" value="#{user.haslo}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </h:panelGrid>
             </p:column>
-
-            <p:column headerText="Nazwisko">
-                <p:cellEditor>
-                    <f:facet name="output">
-                        <h:outputText value="#{user.Nazwisko}"/>
-                    </f:facet>
-                    <f:facet name="input">
-                        <p:inputText value="#{user.Nazwisko}" style="width:100%" label="Nazwisko"/>
-                    </f:facet>
-                </p:cellEditor>
-            </p:column>
-
-            <p:column headerText="Email">
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{user.email}"/></f:facet>
-                    <f:facet name="input">
-                         <p:inputText value="#{user.email}" style="width:100%" label="email"/>
-                    </f:facet>
-                </p:cellEditor>
-            </p:column>
-
-            <p:column headerText="Haslo">
-                <p:cellEditor>
-                    <f:facet name="output">
-                        <h:outputText value="#{user.haslo}">
-                            <f:convertNumber type="currency" currencySymbol="$"/>
-                        </h:outputText>
-                    </f:facet>
-                    <f:facet name="input">
-                        <p:inputNumber value="#{user.haslo}" style="width:100%" label="Price" />
-                    </f:facet>
-                </p:cellEditor>
-            </p:column>
-
+            
             <p:column style="width:6rem">
-                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                <p:rowEditor editTitle="Edytuj" cancelTitle="Anuluj" saveTitle="Zapisz"/>
             </p:column>
         </p:dataTable>
-           <p:button value="Cofnij" icon="pi pi-arrow-left"  outcome="index"  />
+        
+        <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index"/>
     </div>
 </h:form>
+
         
         
     </h:body>
