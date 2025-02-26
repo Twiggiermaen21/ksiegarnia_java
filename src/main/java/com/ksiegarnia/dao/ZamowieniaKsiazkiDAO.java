@@ -4,7 +4,7 @@
  */
 package com.ksiegarnia.dao;
 
-import com.ksiegarnia.entities.Uzytkownik;
+import com.ksiegarnia.entities.Zamowienia;
 import com.ksiegarnia.entities.ZamowieniaHasKsiazki;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -37,19 +37,20 @@ public class ZamowieniaKsiazkiDAO {
         return em.find(ZamowieniaHasKsiazki.class, id);
     }
 
-    public List<ZamowieniaHasKsiazki> getFullList(int id) {
+    public List<ZamowieniaHasKsiazki> getFullList(List<Zamowienia> zam) {
+
         List<ZamowieniaHasKsiazki> list = null;
               String select = "select z ";
-              String from = "from Zamowienia z ";
-              String where = "where z.zamowieniaIdzamowienia = :id";
+              String from = "from ZamowieniaHasKsiazki z ";
+              String where = "where z.zamowieniaIdzamowienia IN :zam";
 
          
         
         
         // ... other parameters ... 
         // 2. Create query object
-        Query query = em.createQuery(select + from + where);
-        query.setParameter("id", id);
+        Query query = em.createQuery(select + from + where );
+     query.setParameter("zam", zam);
         try {
             list = query.getResultList();
         } catch (Exception e) {
