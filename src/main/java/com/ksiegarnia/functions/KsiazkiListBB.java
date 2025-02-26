@@ -74,6 +74,11 @@ public class KsiazkiListBB {
 
         return PAGE_BOOK_SHOW;
     }
+    
+ 
+    
+    
+    
 
     public void nextPage() {
         currentPage++;
