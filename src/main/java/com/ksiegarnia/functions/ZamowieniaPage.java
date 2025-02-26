@@ -32,24 +32,24 @@ private List<Zamowienia> list;
     @EJB
     ZamowieniaDAO zamowieniaDAO;
 
-    public List< Zamowienia> getFullList(int id) {
-        return zamowieniaDAO.getFullList(id);
-    }
+    
 
+       public int idUzytkownik(){
+          user =data. getLoggedInUser();
+        return user.getIdUzytkownik();
+    }
+    
      public List<Zamowienia> getList() {
-       
+        idUzytkownik();
      
         //2. Get list
-        list = getFullList(user.getIdUzytkownik());
+        list = zamowieniaDAO.getFullList(user);
 
      
         return list;
     }
     
-    public int idUzytkownik(){
-          user =data. getLoggedInUser();
-        return user.getIdUzytkownik();
-    }
+    
     
     public String OrdersPage() {
         //1. Pass object through session

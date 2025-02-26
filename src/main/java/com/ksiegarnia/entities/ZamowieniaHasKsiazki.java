@@ -43,9 +43,9 @@ public class ZamowieniaHasKsiazki implements Serializable {
     @JoinColumn(name = "Ksiazki_idKsiazki", referencedColumnName = "idKsiazki")
     @ManyToOne(optional = false)
     private Ksiazki ksiazkiidKsiazki;
-    @JoinColumn(name = "zamowienia_idzam\u00f3wienia", referencedColumnName = "idzamowienia")
+    @JoinColumn(name = "zamowienia_idzamowienia", referencedColumnName = "idzamowienia")
     @ManyToOne(optional = false)
-    private Zamowienia zamowieniaIdzamówienia;
+    private Zamowienia zamowieniaIdzamowienia;
 
     public ZamowieniaHasKsiazki() {
     }
@@ -83,12 +83,12 @@ public class ZamowieniaHasKsiazki implements Serializable {
         this.ksiazkiidKsiazki = ksiazkiidKsiazki;
     }
 
-    public Zamowienia getZamowieniaIdzamówienia() {
-        return zamowieniaIdzamówienia;
+    public Zamowienia getZamowieniaIdzamowienia() {
+        return zamowieniaIdzamowienia;
     }
 
-    public void setZamowieniaIdzamówienia(Zamowienia zamowieniaIdzamówienia) {
-        this.zamowieniaIdzamówienia = zamowieniaIdzamówienia;
+    public void setZamowieniaIdzamowienia(Zamowienia zamowieniaIdzamowienia) {
+        this.zamowieniaIdzamowienia = zamowieniaIdzamowienia;
     }
 
     @Override
