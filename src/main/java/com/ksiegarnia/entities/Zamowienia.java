@@ -66,11 +66,11 @@ public class Zamowienia implements Serializable {
     @JoinColumn(name = "Uzytkownik_idUzytkownik", referencedColumnName = "idUzytkownik")
     @ManyToOne(optional = false)
     private Uzytkownik uzytkownikidUzytkownik;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zamowieniaIdzam\u00f3wienia")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zamowieniaIdzamowienia")
     private Collection<ZamowieniaHasKsiazki> zamowieniaHasKsiazkiCollection;
 
     public Zamowienia() {
-    }
+    } 
 
     public Zamowienia(Integer idzamowienia) {
         this.idzamowienia = idzamowienia;

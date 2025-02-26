@@ -5,8 +5,10 @@
 package com.ksiegarnia.functions;
 
 import com.ksiegarnia.dao.ZamowieniaDAO;
+import com.ksiegarnia.dao.ZamowieniaKsiazkiDAO;
 import com.ksiegarnia.entities.Uzytkownik;
 import com.ksiegarnia.entities.Zamowienia;
+import com.ksiegarnia.entities.ZamowieniaHasKsiazki;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.ExternalContext;
@@ -22,6 +24,7 @@ import com.ksiegarnia.functions.UserData;
 public class ZamowieniaPage {
     private static final String PAGE_Orders = "orderedBooks?faces-redirect=true";
 private List<Zamowienia> list;
+private List<ZamowieniaHasKsiazki> zhklist;
  private Uzytkownik user;
     @Inject
     ExternalContext extcontext;
@@ -31,7 +34,7 @@ private List<Zamowienia> list;
 
     @EJB
     ZamowieniaDAO zamowieniaDAO;
-
+    ZamowieniaKsiazkiDAO zamowieniaKsiazkiDAO;
     
 
        public int idUzytkownik(){
@@ -48,6 +51,12 @@ private List<Zamowienia> list;
      
         return list;
     }
+     
+     public List<ZamowieniaHasKsiazki> getZHK(){
+         
+        
+         return zhklist;
+     }
     
     
     
