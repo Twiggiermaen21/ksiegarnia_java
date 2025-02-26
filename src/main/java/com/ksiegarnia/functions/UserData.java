@@ -17,7 +17,7 @@ import java.io.Serializable;
 @SessionScoped
 public class UserData implements Serializable {
     private Uzytkownik user; // Opcjonalnie, ale nie jest pobierane z sesji automatycznie!
-
+    private static final String PAGE_USER =  "userPage?faces-redirect=true";
     public Uzytkownik getLoggedInUser() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
@@ -32,5 +32,18 @@ public class UserData implements Serializable {
     public Uzytkownik getUser() {
         return getLoggedInUser(); // Żeby zawsze zwracał poprawnego użytkownika
     }
+    
+    
+    public String userPage() {
+        //1. Pass object through session
+        //HttpSession session = (HttpSession) extcontext.getSession(true);
+        //session.setAttribute("person", person);
+
+     
+
+        return PAGE_USER;
+    }
+    
+    
 }
 
