@@ -10,7 +10,7 @@
     <h:head>
         <meta charset="utf-8" />
         <title>Księgarnia</title>
-        <h:outputStylesheet>
+  <h:outputStylesheet>
             /* Globalny styl */
             body {
             background-color: #f4f4f9;
@@ -171,19 +171,23 @@
             font-size: 2em; /* Mniejszy napis na telefonach */
             }
 
-
-
+              .container {
+                background-color: #fff;
+                border-radius: 8px;
+                padding: 30px;
+                width: 300px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
             .search-form {
             max-width: 100%; /* Formularz wyszukiwania zajmuje całą szerokość na telefonach */
             }
             }
         </h:outputStylesheet>
+        
     </h:head>
 
     <h:body>
-
-
-
+        <!-- menubar -->
         <div class="card" >
             <h:form>
                 <p:growl id="messages"/>
@@ -219,22 +223,12 @@
 
 
                     <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user" action="#{userData.userPage}" />
-
-
-
-
                     <p:divider layout="vertical"/>
-
-                
-
 
                     <!-- Panel wyszukiwania -->
                     <f:facet name="end">
                         <div class="ui-input-icon-left mr-2">
                             <i class="pi pi-fw pi-search" />
-
-
-
 
                             <p:inputText placeholder="Search" value="#{ksiazkiListBB.tytul}">
                                 <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
@@ -248,13 +242,11 @@
         </div>
 
 
-
-
-
-
-
         <!-- Komunikaty -->
         <p:messages />
+
+
+       
 
         <!-- Książki -->
         <h:form id="booksTable">
@@ -274,21 +266,19 @@
                                     <span><b>Autor:</b> #{a.autorKsiazkiidAutorKsiazki.imie} #{a.autorKsiazkiidAutorKsiazki.nazwisko}</span>
                                 </h:panelGroup>
                             </ui:repeat>
-
                             <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                         </div>
-
-                        <p:commandButton value="Zobacz" 
-                                         styleClass="details-link" 
-                                         action="#{ksiazkiListBB.showBook(k)}" 
-                                         ajax="false" />
+                        <p:commandButton value="Zobacz"     styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}"   ajax="false" />
                     </div>
                 </ui:repeat>
             </div>
             <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" />
             <p:commandButton value="Następna" action="#{ksiazkiListBB.nextPage}" ajax="true" update="booksTable" />
-
         </h:form>
+        
+
+
+
 
 
     </h:body>
