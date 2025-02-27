@@ -154,14 +154,14 @@
                         <p:graphicImage name="logo.jpg" library="images"  />
                     </f:facet>
                     <p:divider layout="vertical"/>
-                    <p:menuitem value="koszyk"  action="#{ksiazkiListBB.showBusket}" icon="pi pi-shopping-bag">
+                    <p:menuitem value="koszyk"  action="#{ksiazkiListBB.showBusket}" icon="pi pi-shopping-bag" disabled="#{not logInOutBB.loggedIn}">
                     </p:menuitem>
                     <p:divider layout="vertical"/>
-                    <p:menuitem value="biblioteczka" icon="pi pi-book"  action="#{zamowieniaPage.OrdersPage}" />
+                    <p:menuitem value="biblioteczka" icon="pi pi-book"  action="#{zamowieniaPage.OrdersPage}" disabled="#{not logInOutBB.loggedIn}" />
                     <p:divider layout="vertical"/>
-                    <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user" action="#{userData.userPage}" />
+                    <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user" action="#{userData.userPage}" disabled="#{not logInOutBB.loggedIn}" />
 
-                    <p:submenu label="Role" icon="pi pi-shopping-bag">
+                    <p:submenu label="Role" icon="pi pi-shopping-bag" disabled="#{not logInOutBB.loggedIn}">
                         <c:forEach items="#{userData.userRoles}" var="role">
                             <p:menuitem value="#{role.rolaidRola.nazwaRoli}" icon="pi pi-fw pi-user" />
                         </c:forEach>
@@ -177,11 +177,11 @@
                         </div>
 
                         <!-- Przycisk Logout - widoczny tylko jeśli użytkownik jest zalogowany -->
-            <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" rendered="#{userData.loggedIn}" />
+                        <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" rendered="#{logInOutBB.loggedIn}" />
 
-            <!-- Przycisk Login - widoczny tylko jeśli użytkownik nie jest zalogowany -->
-            <p:commandButton value="Login" action="#{logInOutBB.login}" icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" rendered="#{not userData.loggedIn}" />
-        </f:facet>
+                        <!-- Przycisk Login - widoczny tylko jeśli użytkownik nie jest zalogowany -->
+                        <p:commandButton value="Login" action="#{logInOutBB.loginPage}" icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" rendered="#{not logInOutBB.loggedIn}" />
+                    </f:facet>
                 </p:menubar>
             </h:form>
         </div>
@@ -215,7 +215,7 @@
                                     <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                                 </div>
                                 <p:commandButton value="Zobacz" styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}" ajax="false" />
-                               
+
                                 <p:commandButton value="Dodaj do koszyka" 
                                                  styleClass="details-link"  
                                                  action="#{ksiazkiListBB.addToBusket(k)}"  

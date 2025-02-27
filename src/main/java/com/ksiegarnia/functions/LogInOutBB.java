@@ -112,5 +112,14 @@ public class LogInOutBB extends HttpServlet {
         loggedIn = false;
         return "login.xhtml?faces-redirect=true";
     }
+    
+        public String loginPage() {
+        
+        return "login.xhtml?faces-redirect=true";
+    }
+     public String registerPage() {
+        
+        return "register.xhtml?faces-redirect=true";
+    }
 
 }
