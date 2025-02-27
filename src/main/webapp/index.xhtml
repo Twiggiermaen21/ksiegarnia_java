@@ -20,36 +20,6 @@
             padding: 0;
             }
 
-            h1 {
-            font-family: 'Georgia', serif; /* Elegancka czcionka */
-            font-size: 3em; /* Większy rozmiar czcionki */
-            font-weight: bold; /* Pogrubienie tekstu */
-            color: #ff5733; /* Ciepły kolor tekstu */
-            text-align: center; /* Wyśrodkowanie tekstu */
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Delikatny cień tekstu */
-            letter-spacing: 2px; /* Większe odstępy między literami */
-            margin-top: 30px; /* Większa odległość od góry */
-            text-transform: uppercase; /* Wszystkie litery duże */
-            background: linear-gradient(45deg, #ff5733, #ff9b6f); /* Gradientowy kolor */
-            -webkit-background-clip: text; /* Tylko tekst ma gradient */
-            color: transparent; /* Kolor tekstu jest przezroczysty, gradient pokrywa tylko tekst */
-            }
-
-            /* Styl dla panelu wyszukiwania */
-            .p-panel {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2em;
-            background: white;
-            }
-
-            .p-panel-header {
-            font-size: 1.2em;
-            background-color: #ff5733;
-            color: white;
-            padding: 10px;
-            }
-
             /* Styl dla siatki książek */
             .book-grid {
             display: grid;
@@ -119,48 +89,10 @@
             background-color: #cc4628;
             }
 
-            /* Styl dla formularza wyszukiwania */
-            .search-form {
-            max-width: 500px;
-            margin: 0 auto;
-            }
-
-            .search-form p {
-            text-align: center;
-            margin-bottom: 1em;
-            font-size: 1.1em;
-            }
-
-            .search-form .ui-inputtext {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            }
-
-            .search-form .ui-commandbutton {
-            width: 100%;
-            background-color: #ff5733;
-            color: white;
-            border-radius: 5px;
-            padding: 10px;
-            transition: background-color 0.3s;
-            }
-
-            .search-form .ui-commandbutton:hover {
-            background-color: #cc4628;
-            }
-
             /* Responsywność */
             @media (max-width: 1024px) {
             .book-grid {
             grid-template-columns: repeat(2, 1fr); /* 2 kolumny dla tabletów */
-            }
-
-            h1 {
-            font-size: 2.5em; /* Mniejszy napis na tabletach */
-            }
             }
 
             @media (max-width: 768px) {
@@ -168,23 +100,26 @@
             grid-template-columns: 1fr; /* 1 kolumna dla telefonów */
             }
 
-            h1 {
-            font-size: 2em; /* Mniejszy napis na telefonach */
-            }
 
-            .container {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 30px;
-            width: 300px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-            .search-form {
-            max-width: 100%; /* Formularz wyszukiwania zajmuje całą szerokość na telefonach */
-            }
+
+
+
             }
         </h:outputStylesheet>
-
+        <style>
+            .container {
+                display: flex;
+              
+            }
+            .left, .right {
+                width: 20%; /* Lewa i prawa kolumna po 20% */
+              
+            }
+            .center {
+                width: 60%; /* Środkowa kolumna 60% */
+                padding: 20px;
+            }
+        </style>
     </h:head>
 
     <h:body>
@@ -192,52 +127,31 @@
         <div class="card" >
             <h:form>
                 <p:growl id="messages"/>
-
                 <p:menubar hideDelay="1000">
                     <f:facet name="start">
                         <p:graphicImage name="logo.jpg" library="images"  />
                     </f:facet>
-
                     <p:divider layout="vertical"/>
-
                     <p:menuitem value="koszyk"  action="#{ksiazkiListBB.showBusket}" icon="pi pi-shopping-bag">
-
                     </p:menuitem>
-
-                    <p:submenu label="koszyk" icon="pi pi-shopping-bag">
-                        <p:divider />
-                        <p:menuitem value="#{ksiazkiListBB.busket}" icon="pi pi-fw pi-bookmark"/>
-
-                    </p:submenu>
-
                     <p:divider layout="vertical"/>
                     <p:menuitem value="biblioteczka" icon="pi pi-book"  action="#{zamowieniaPage.OrdersPage}" />
                     <p:divider layout="vertical"/>
-
-
-
                     <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user" action="#{userData.userPage}" />
 
                     <p:submenu label="Role" icon="pi pi-shopping-bag">
                         <c:forEach items="#{userData.userRoles}" var="role">
                             <p:menuitem value="#{role.rolaidRola.nazwaRoli}" icon="pi pi-fw pi-user" />
                         </c:forEach>
-
                     </p:submenu>
                     <p:divider layout="vertical"/>
-
-
-
-
                     <!-- Panel wyszukiwania -->
                     <f:facet name="end">
                         <div class="ui-input-icon-left mr-2">
                             <i class="pi pi-fw pi-search" />
-
                             <p:inputText placeholder="Search" value="#{ksiazkiListBB.tytul}">
                                 <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
                             </p:inputText>
-
                         </div>
                         <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
                     </f:facet>
@@ -245,63 +159,63 @@
             </h:form>
         </div>
 
+        <div class="container">
+            <!-- Lewa pusta kolumna -->
+            <div class="left"></div>
 
-        <!-- Komunikaty -->
-        <p:messages />
-
-
-
-        <h:form id="koszykForm">
-            <h:panelGroup id="koszykPanel">
-                <h3>Twój koszyk</h3>
-                <ui:repeat value="#{ksiazkiListBB.busket}" var="ksiazka">
-                    <p>
-                        <h:outputText value="#{ksiazka.tytul} - #{ksiazka.cena} PLN" />
-                        <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm:koszykPanel" />
-                    </p>
-                </ui:repeat>
-                <p:commandButton value="Wyczyść koszyk" action="#{ksiazkiListBB.wyczyscBusket()}" update="koszykForm:koszykPanel" />
-            </h:panelGroup>
-        </h:form>
-
-
-
-
-        <!-- Książki -->
-        <h:form id="booksTable">
-            <p:growl id="msgs" showDetail="true"/>
-            <div class="book-grid">
-                <ui:repeat value="#{ksiazkiListBB.list}" var="k">
-                    <div class="book-card">
-                        <h:graphicImage value="/resources/#{k.imgUrl}" styleClass="book-image" />
-                        <div class="book-title">
-                            <h:outputText value="#{k.tytul}" />
-                        </div>
-                        <div class="book-price">
-                            <h:outputText value="#{k.cena} PLN" />
-                        </div>
-                        <div class="book-details">
-                            <ui:repeat var="a" value="#{ksiazkiHasAutorKsiazkiBB.list}">
-                                <h:panelGroup rendered="#{k.idKsiazki eq a.ksiazkiidKsiazki.idKsiazki}">
-                                    <span><b>Autor:</b> #{a.autorKsiazkiidAutorKsiazki.imie} #{a.autorKsiazkiidAutorKsiazki.nazwisko}</span>
-                                </h:panelGroup>
-                            </ui:repeat>
-                            <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
-                        </div>
-                        <p:commandButton value="Zobacz"     styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}"   ajax="false" />
-                        <p:commandButton value="Dodaj do koszyka" 
-                                         styleClass="details-link"  
-                                         action="#{ksiazkiListBB.addToBusket(k)}"  
-                                         update=":koszykForm:koszykPanel" />
-
+            <!-- Środkowa kolumna z koszykiem i książkami -->
+            <div class="center">
+              
+                <!-- Książki -->
+                <h:form id="booksTable">
+                    <p:growl id="msgs" showDetail="true"/>
+                    <div class="book-grid">
+                        <ui:repeat value="#{ksiazkiListBB.list}" var="k">
+                            <div class="book-card">
+                                <h:graphicImage value="/resources/#{k.imgUrl}" styleClass="book-image" />
+                                <div class="book-title">
+                                    <h:outputText value="#{k.tytul}" />
+                                </div>
+                                <div class="book-price">
+                                    <h:outputText value="#{k.cena} PLN" />
+                                </div>
+                                <div class="book-details">
+                                    <ui:repeat var="a" value="#{ksiazkiHasAutorKsiazkiBB.list}">
+                                        <h:panelGroup rendered="#{k.idKsiazki eq a.ksiazkiidKsiazki.idKsiazki}">
+                                            <span><b>Autor:</b> #{a.autorKsiazkiidAutorKsiazki.imie} #{a.autorKsiazkiidAutorKsiazki.nazwisko}</span>
+                                        </h:panelGroup>
+                                    </ui:repeat>
+                                    <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
+                                </div>
+                                <p:commandButton value="Zobacz" styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}" ajax="false" />
+                                <p:commandButton value="Dodaj do koszyka" 
+                                                 styleClass="details-link"  
+                                                 action="#{ksiazkiListBB.addToBusket(k)}"  
+                                                 update=":koszykForm:koszykPanel" />
+                            </div>
+                        </ui:repeat>
                     </div>
-                </ui:repeat>
+                    <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" />
+                    <p:commandButton value="Następna" action="#{ksiazkiListBB.nextPage}" ajax="true" update="booksTable" />
+                </h:form>
             </div>
-            <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" />
-            <p:commandButton value="Następna" action="#{ksiazkiListBB.nextPage}" ajax="true" update="booksTable" />
-        </h:form>
 
-
+            <!-- Prawa pusta kolumna -->
+            <div class="right">
+                  <h:form id="koszykForm">
+                    <h3>Twój koszyk</h3>
+                    <h:panelGroup id="koszykPanel">
+                        <ui:repeat value="#{ksiazkiListBB.busket}" var="ksiazka">
+                            <p>
+                                <h:outputText value="#{ksiazka.tytul} - #{ksiazka.cena} PLN" />
+                                <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm:koszykPanel" />
+                            </p>
+                        </ui:repeat>
+                        <p:commandButton value="Wyczyść koszyk" action="#{ksiazkiListBB.wyczyscBusket()}" update="koszykForm:koszykPanel" />
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </div>
 
 
 
