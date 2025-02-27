@@ -13,10 +13,12 @@ import jakarta.faces.context.Flash;
 
 import com.ksiegarnia.dao.KsiazkiDAO;
 import com.ksiegarnia.entities.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 @Named
 @RequestScoped
-public class KsiazkiListBB {
+public class KsiazkiListBB implements Serializable {
 
     private static final String PAGE_BOOK_SHOW = "bookShow?faces-redirect=true";
     private static final String PAGE_BUSKET_SHOW = "busketPage?faces-redirect=true";
@@ -78,9 +80,21 @@ public class KsiazkiListBB {
     }
     
  public void addToBusket(Ksiazki ksiazki){
+     if (busket == null) { // 🔹 Dodatkowa ochrona przed null
+            busket = new ArrayList<>();
+        }
      busket.add(ksiazki);
   
  }
+ public void usunBusket(Ksiazki ksiazka) {
+        busket.remove(ksiazka);
+    }
+
+    public void wyczyscBusket() {
+        busket.clear();
+    }
+ 
+ 
      public List<Ksiazki>  getBusket() {
         return busket;
     }
@@ -91,6 +105,9 @@ public class KsiazkiListBB {
         return PAGE_BUSKET_SHOW;
     }
 
+       
+       
+       
     public void nextPage() {
         currentPage++;
     }

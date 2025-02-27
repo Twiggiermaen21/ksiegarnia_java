@@ -199,13 +199,24 @@
 
                     <p:divider layout="vertical"/>
 
-                    <p:menuitem value="koszyk"  action="#{ksiazkiListBB.showBusket}" icon="pi pi-shopping-bag"/>
+                    <p:menuitem value="koszyk"  action="#{ksiazkiListBB.showBusket}" icon="pi pi-shopping-bag">
+                        <h:panelGroup id="koszykPanel">
+                            <h3>Twój koszyk</h3>
+                            <ui:repeat value="#{ksiazkiListBB.busket}" var="ksiazka">
+                                <p>
+                                    <h:outputText value="#{ksiazka.tytul} - #{ksiazka.cena} PLN" />
+                                    <p:commandButton value="Usuń" action="#{koszykBean.usunBusket(ksiazka)}" update="koszykPanel" />
+                                </p>
+                            </ui:repeat>
 
+                            <p:commandButton value="Wyczyść koszyk" action="#{koszykBean.wyczyscBusket()}" update="koszykPanel" />
+                        </h:panelGroup>
+                    </p:menuitem>
 
                     <p:submenu label="koszyk" icon="pi pi-shopping-bag">
                         <p:divider />
                         <p:menuitem value="#{ksiazkiListBB.busket}" icon="pi pi-fw pi-bookmark"/>
-                        
+
                     </p:submenu>
 
                     <p:divider layout="vertical"/>
@@ -265,7 +276,7 @@
                             <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                         </div>
                         <p:commandButton value="Zobacz"     styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}"   ajax="false" />
-                        <p:commandButton value="Dodaj do koszyka"     styleClass="details-link"  action="#{ksiazkiListBB.addToBusket(k)}"   ajax="false" />
+                        <p:commandButton value="Dodaj do koszyka"     styleClass="details-link"  action="#{ksiazkiListBB.addToBusket(k)}"  update="koszykPanel"    />
                     </div>
                 </ui:repeat>
             </div>
