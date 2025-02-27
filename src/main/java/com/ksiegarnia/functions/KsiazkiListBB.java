@@ -13,18 +13,22 @@ import jakarta.faces.context.Flash;
 
 import com.ksiegarnia.dao.KsiazkiDAO;
 import com.ksiegarnia.entities.*;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 @Named
-@RequestScoped
+
+@SessionScoped
 public class KsiazkiListBB implements Serializable {
 
     private static final String PAGE_BOOK_SHOW = "bookShow?faces-redirect=true";
     private static final String PAGE_BUSKET_SHOW = "busketPage?faces-redirect=true";
     private static final String PAGE_STAY_AT_THE_SAME = null;
     private List<Ksiazki> list;
-    private List<Ksiazki> busket;
+    private List<Ksiazki> busket = new ArrayList<>();
     private String tytul;
     private int currentPage = 0;
     private final int pageSize = 100;
@@ -78,36 +82,33 @@ public class KsiazkiListBB implements Serializable {
 
         return PAGE_BOOK_SHOW;
     }
-    
- public void addToBusket(Ksiazki ksiazki){
-     if (busket == null) { // 🔹 Dodatkowa ochrona przed null
-            busket = new ArrayList<>();
-        }
-     busket.add(ksiazki);
-  
- }
- public void usunBusket(Ksiazki ksiazka) {
+
+    public void addToBusket(Ksiazki ksiazki) {
+
+        busket.add(ksiazki);
+
+        FacesMessage msg = new FacesMessage("id ksiazki", String.valueOf(busket));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+    }
+
+    public void usunBusket(Ksiazki ksiazka) {
         busket.remove(ksiazka);
     }
 
     public void wyczyscBusket() {
         busket.clear();
     }
- 
- 
-     public List<Ksiazki>  getBusket() {
+
+    public List<Ksiazki> getBusket() {
         return busket;
     }
-    
-       public String showBusket() {
-       
+
+    public String showBusket() {
 
         return PAGE_BUSKET_SHOW;
     }
 
-       
-       
-       
     public void nextPage() {
         currentPage++;
     }

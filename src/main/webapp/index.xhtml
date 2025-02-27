@@ -200,17 +200,7 @@
                     <p:divider layout="vertical"/>
 
                     <p:menuitem value="koszyk"  action="#{ksiazkiListBB.showBusket}" icon="pi pi-shopping-bag">
-                        <h:panelGroup id="koszykPanel">
-                            <h3>Twój koszyk</h3>
-                            <ui:repeat value="#{ksiazkiListBB.busket}" var="ksiazka">
-                                <p>
-                                    <h:outputText value="#{ksiazka.tytul} - #{ksiazka.cena} PLN" />
-                                    <p:commandButton value="Usuń" action="#{koszykBean.usunBusket(ksiazka)}" update="koszykPanel" />
-                                </p>
-                            </ui:repeat>
 
-                            <p:commandButton value="Wyczyść koszyk" action="#{koszykBean.wyczyscBusket()}" update="koszykPanel" />
-                        </h:panelGroup>
                     </p:menuitem>
 
                     <p:submenu label="koszyk" icon="pi pi-shopping-bag">
@@ -220,12 +210,7 @@
                     </p:submenu>
 
                     <p:divider layout="vertical"/>
-
-
-
                     <p:menuitem value="biblioteczka" icon="pi pi-book"  action="#{zamowieniaPage.OrdersPage}" />
-
-
                     <p:divider layout="vertical"/>
 
 
@@ -254,9 +239,25 @@
 
 
 
+        <h:form id="koszykForm">
+            <h:panelGroup id="koszykPanel">
+                <h3>Twój koszyk</h3>
+                <ui:repeat value="#{ksiazkiListBB.busket}" var="ksiazka">
+                    <p>
+                        <h:outputText value="#{ksiazka.tytul} - #{ksiazka.cena} PLN" />
+                        <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm:koszykPanel" />
+                    </p>
+                </ui:repeat>
+                <p:commandButton value="Wyczyść koszyk" action="#{ksiazkiListBB.wyczyscBusket()}" update="koszykForm:koszykPanel" />
+            </h:panelGroup>
+        </h:form>
+
+
+
 
         <!-- Książki -->
         <h:form id="booksTable">
+            <p:growl id="msgs" showDetail="true"/>
             <div class="book-grid">
                 <ui:repeat value="#{ksiazkiListBB.list}" var="k">
                     <div class="book-card">
@@ -276,7 +277,11 @@
                             <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                         </div>
                         <p:commandButton value="Zobacz"     styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}"   ajax="false" />
-                        <p:commandButton value="Dodaj do koszyka"     styleClass="details-link"  action="#{ksiazkiListBB.addToBusket(k)}"  update="koszykPanel"    />
+                        <p:commandButton value="Dodaj do koszyka" 
+                                         styleClass="details-link"  
+                                         action="#{ksiazkiListBB.addToBusket(k)}"  
+                                         update=":koszykForm:koszykPanel" />
+
                     </div>
                 </ui:repeat>
             </div>
