@@ -30,7 +30,8 @@ public class KsiazkiListBB implements Serializable {
     private List<Ksiazki> busket = new ArrayList<>();
     private String tytul;
     private int currentPage = 0;
-    private final int pageSize = 100;
+    private final int pageSize = 9;
+    private int totalBooks=0;
 
     @Inject
     ExternalContext extcontext;
@@ -64,7 +65,7 @@ public class KsiazkiListBB implements Serializable {
 
         //2. Get list
         list = ksiazkiDAO.getList(searchParams);
-
+        totalBooks=list.size();
         int start = currentPage * pageSize;
         int end = Math.min(start + pageSize, list.size());
 
@@ -113,7 +114,10 @@ public class KsiazkiListBB implements Serializable {
     }
 
     public void nextPage() {
+          int totalPages = (int) Math.ceil((double) totalBooks / pageSize);
+         if (currentPage < totalPages - 1) {
         currentPage++;
+    }
     }
 
     public void prevPage() {

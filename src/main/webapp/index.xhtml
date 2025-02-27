@@ -119,6 +119,28 @@
                 width: 60%; /* Środkowa kolumna 60% */
                 padding: 20px;
             }
+            /* Kontener przycisków paginacji */
+            .pagination-container {
+                text-align: center; /* Wyśrodkowanie przycisków */
+                margin-top: 20px; /* Odstęp od treści książek */
+            }
+
+            /* Styl przycisków paginacji */
+            .pagination-btn {
+                padding: 10px 20px; /* Wygodne paddingi */
+                font-size: 14px; /* Wielkość czcionki */
+                background-color: #007bff; /* Kolor tła przycisków */
+                color: white; /* Kolor tekstu */
+                border: none;
+                border-radius: 5px; /* Zaokrąglone rogi */
+                margin: 0 10px; /* Odstępy między przyciskami */
+                cursor: pointer; /* Wskaźnik w postaci ręki */
+            }
+
+            .pagination-btn:hover {
+                background-color: #0056b3; /* Kolor przycisku po najechaniu */
+            }
+
         </style>
     </h:head>
 
@@ -153,10 +175,13 @@
                                 <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
                             </p:inputText>
                         </div>
-                        
-                        <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
-                        
-                    </f:facet>
+
+                        <!-- Przycisk Logout - widoczny tylko jeśli użytkownik jest zalogowany -->
+            <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" rendered="#{userData.loggedIn}" />
+
+            <!-- Przycisk Login - widoczny tylko jeśli użytkownik nie jest zalogowany -->
+            <p:commandButton value="Login" action="#{logInOutBB.login}" icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" rendered="#{not userData.loggedIn}" />
+        </f:facet>
                 </p:menubar>
             </h:form>
         </div>
@@ -190,6 +215,7 @@
                                     <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                                 </div>
                                 <p:commandButton value="Zobacz" styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}" ajax="false" />
+                               
                                 <p:commandButton value="Dodaj do koszyka" 
                                                  styleClass="details-link"  
                                                  action="#{ksiazkiListBB.addToBusket(k)}"  
@@ -197,8 +223,11 @@
                             </div>
                         </ui:repeat>
                     </div>
-                    <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" />
-                    <p:commandButton value="Następna" action="#{ksiazkiListBB.nextPage}" ajax="true" update="booksTable" />
+                    <div class="pagination-container">
+                        <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" styleClass="pagination-btn"/>
+                        <p:commandButton value="Następna" action="#{ksiazkiListBB.nextPage}" ajax="true" update="booksTable" styleClass="pagination-btn" />
+                    </div>
+
                 </h:form>
             </div>
 
