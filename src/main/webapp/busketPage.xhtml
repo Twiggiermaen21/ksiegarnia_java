@@ -48,12 +48,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h5>Adres</h5>
                 <span class="ui-float-label">
                     <p:inputText id="float-input" value="#{validateBusketBB.text}">
-                      
-                         <f:validator validatorId="addressValidator" />
-               
-             
-                <!-- Wyświetlanie błędów -->
-                <p:message for="float-input" />
+
+                        <f:validator validatorId="addressValidator" />
+
+
+                        <!-- Wyświetlanie błędów -->
+                        <p:message for="float-input" />
                     </p:inputText>
                 </span>
 
@@ -64,15 +64,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                             <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
                             <f:selectItem itemLabel="Gotowka" itemValue="1"/>
                             <f:selectItem itemLabel="Blik" itemValue="2"/>
-                          <f:validator validatorId="paymentMethodValidator" />
-                    <!-- Wyświetlanie błędów -->
-                    <p:message for="paymentMethod" />
+                            <f:validator validatorId="paymentMethodValidator" />
+                            <!-- Wyświetlanie błędów -->
+                            <p:message for="paymentMethod" />
                         </p:selectOneMenu>
                     </p:inplace>
                 </span>
 
                 <!-- Poprawny odwołanie do p:message -->
                 <p:message for="paymentMethod" />
+
+                <h5>Do you agree to the terms?</h5>
+                <span class="ui-float-label">
+                    <p:selectBooleanButton id="agree" value="#{validateBusketBB.agree}" onLabel="Yes" offLabel="No" style="width:6rem">
+                        <!-- Apply the custom validator -->
+                        <f:validator validatorId="selectPaymentButtonValidator"/>
+                        <p:message for="agree"/>
+                    </p:selectBooleanButton>
+
+                </span>
+                <p:message for="agree"/>
 
                 <h:commandButton value="Submit" action="#{validateBusketBB.submit}" />
             </h:form>

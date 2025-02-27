@@ -17,7 +17,14 @@ public class ValidateBusketBB {
 
     private String text; // Adres
     private Integer paymentMethod; // Metoda płatności
+    private Boolean agree;
 
+    public Boolean getAgree() {
+        return agree;
+    }
+     public void setAgree(Boolean agree) {
+        this.agree = agree;
+    }
     // Getter i setter dla 'text'
     public String getText() {
         return text;
@@ -36,33 +43,13 @@ public class ValidateBusketBB {
         this.paymentMethod = paymentMethod;
     }
 
-    // Metoda walidująca adres
-    public void validateAddress(FacesContext context, String address) throws ValidatorException {
-        if (address == null || address.trim().isEmpty()) {
-            FacesMessage msg = new FacesMessage("Adres nie może być pusty");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(msg);
-        }
-        if (address.trim().length() < 5) {
-            FacesMessage msg = new FacesMessage("Adres musi mieć co najmniej 5 znaków");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(msg);
-        }
-    }
-
-    // Metoda walidująca metodę płatności
-    public void validatePaymentMethod(FacesContext context, Integer paymentMethod) throws ValidatorException {
-        if (paymentMethod == null || paymentMethod == 0) {
-            FacesMessage msg = new FacesMessage("Wybierz metodę płatności");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(msg);
-        }
-    }
 
     // Metoda do przetwarzania danych po wysłaniu formularza
     public void submit() {
+       if (agree != null && agree) {
         // Możesz tutaj dodać logikę biznesową po zatwierdzeniu formularza
         FacesMessage msg = new FacesMessage("Formularz został wysłany");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+       }
     }
 }

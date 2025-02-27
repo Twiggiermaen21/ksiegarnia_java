@@ -12,21 +12,16 @@ import jakarta.faces.validator.Validator;
 import jakarta.faces.validator.ValidatorException;
 
 
-@FacesValidator("addressValidator") // This is the validator ID you will use in the xhtml
-public class AddressValidation implements Validator {
+@FacesValidator("selectPaymentButtonValidator")
+public class SelectPaymentButtonValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        String address = (String) value; // cast the input value to a String
+        Boolean booleanValue = (Boolean) value;
 
-        if (address == null || address.trim().isEmpty()) {
-            FacesMessage msg = new FacesMessage("Adres nie może być pusty");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(msg);
-        }
-        
-        if (address.trim().length() < 5) {
-            FacesMessage msg = new FacesMessage("Adres musi mieć co najmniej 5 znaków");
+        // If the value is null (or false), throw a validation error
+        if (booleanValue == null) {
+            FacesMessage msg = new FacesMessage("You must select Yes or No");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
         }
