@@ -35,7 +35,7 @@ public class LogInOutBB extends HttpServlet {
     private String email;
     private String password;
     private Uzytkownik loggedUser;
-    private  List<UzytkownikHasRola> loggedRola;
+    private List<UzytkownikHasRola> loggedRola;
     private boolean loggedIn = false;
 
     @Inject
@@ -48,7 +48,7 @@ public class LogInOutBB extends HttpServlet {
     UserDAO userDAO;
     @EJB
     UzytkownikHasRolaDAO uzytkownikHasRolaDAO;
-    
+
     public String getEmail() {
         return email;
     }
@@ -75,8 +75,8 @@ public class LogInOutBB extends HttpServlet {
 
     public String login() {
         Uzytkownik users = userDAO.getUser(email, password); // Pobieramy użytkownika po emailu
-        List<UzytkownikHasRola> userRole =uzytkownikHasRolaDAO.getFullList(users);
-        if (users != null || userRole !=null) {
+        List<UzytkownikHasRola> userRole = uzytkownikHasRolaDAO.getFullList(users);
+        if (users != null || userRole != null) {
             loggedUser = users;
             loggedRola = userRole;
             loggedIn = true;
@@ -91,12 +91,12 @@ public class LogInOutBB extends HttpServlet {
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nieprawidłowe dane logowania!", ""));
-            if(users == null)  {
-                  FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR,  "puste", ""));
-            
+            if (users == null) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "puste", ""));
+
             }
-            
+
             return null;
         }
     }
@@ -112,13 +112,14 @@ public class LogInOutBB extends HttpServlet {
         loggedIn = false;
         return "login.xhtml?faces-redirect=true";
     }
-    
-        public String loginPage() {
-        
+
+    public String loginPage() {
+
         return "login.xhtml?faces-redirect=true";
     }
-     public String registerPage() {
-        
+
+    public String registerPage() {
+
         return "register.xhtml?faces-redirect=true";
     }
 
