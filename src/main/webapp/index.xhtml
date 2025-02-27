@@ -4,7 +4,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="jakarta.faces.facelets"
       xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core">
+      xmlns:f="jakarta.faces.core"
+      xmlns:c="jakarta.tags.core">
 
 
     <h:head>
@@ -214,8 +215,19 @@
                     <p:divider layout="vertical"/>
 
 
+
                     <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user" action="#{userData.userPage}" />
+
+                    <p:submenu label="Role" icon="pi pi-shopping-bag">
+                        <c:forEach items="#{userData.userRoles}" var="role">
+                            <p:menuitem value="#{role.rolaidRola.nazwaRoli}" icon="pi pi-fw pi-user" />
+                        </c:forEach>
+
+                    </p:submenu>
                     <p:divider layout="vertical"/>
+
+
+
 
                     <!-- Panel wyszukiwania -->
                     <f:facet name="end">

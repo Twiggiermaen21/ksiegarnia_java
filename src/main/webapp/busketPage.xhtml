@@ -61,9 +61,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <span class="ui-float-label">
                     <p:inplace label="Wybierz" effectSpeed="fast" event="mouseenter" >
                         <p:selectOneMenu id="paymentMethod" value="#{validateBusketBB.paymentMethod}">
-                            <f:selectItem itemLabel="Przelew Bankowy" itemValue="Przelew Bankowy"/>
-                            <f:selectItem itemLabel="Gotowka" itemValue="Gotowka"/>
-                            <f:selectItem itemLabel="Blik" itemValue="Blik"/>
+                            <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
+                            <f:selectItem itemLabel="Gotowka" itemValue="1"/>
+                            <f:selectItem itemLabel="Blik" itemValue="2"/>
                             <f:validator validatorId="paymentMethodValidator" />
                             <!-- Wyświetlanie błędów -->
 

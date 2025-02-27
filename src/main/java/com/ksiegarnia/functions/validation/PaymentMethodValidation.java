@@ -19,7 +19,7 @@ public class PaymentMethodValidation implements Validator {
         Integer paymentMethod = (Integer) value;  // Cast the value to Integer
 
         // Check if paymentMethod is null or 0 (which means no selection)
-        if (paymentMethod == null || paymentMethod == 0) {
+        if (paymentMethod == null ) {
             FacesMessage msg = new FacesMessage("Wybierz metodę płatności");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);

@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import com.ksiegarnia.dao.UserDAO;
+import com.ksiegarnia.dao.UzytkownikHasRolaDAO;
 import com.ksiegarnia.entities.Uzytkownik;
+import com.ksiegarnia.entities.UzytkownikHasRola;
 import jakarta.ejb.EJB;
 
 import jakarta.enterprise.context.SessionScoped;
@@ -33,6 +35,7 @@ public class LogInOutBB extends HttpServlet {
     private String email;
     private String password;
     private Uzytkownik loggedUser;
+    private  List<UzytkownikHasRola> loggedRola;
     private boolean loggedIn = false;
 
     @Inject
@@ -43,7 +46,9 @@ public class LogInOutBB extends HttpServlet {
 
     @EJB
     UserDAO userDAO;
-
+    @EJB
+    UzytkownikHasRolaDAO uzytkownikHasRolaDAO;
+    
     public String getEmail() {
         return email;
     }
@@ -70,9 +75,10 @@ public class LogInOutBB extends HttpServlet {
 
     public String login() {
         Uzytkownik users = userDAO.getUser(email, password); // Pobieramy użytkownika po emailu
-
-        if (users != null ) {
+        List<UzytkownikHasRola> userRole =uzytkownikHasRolaDAO.getFullList(users);
+        if (users != null || userRole !=null) {
             loggedUser = users;
+            loggedRola = userRole;
             loggedIn = true;
 
             // Pobranie sesji i zapisanie użytkownika
@@ -80,7 +86,7 @@ public class LogInOutBB extends HttpServlet {
             HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
             HttpSession session = request.getSession(true);
             session.setAttribute("user", loggedUser); // Zapisanie użytkownika w sesji
-
+            session.setAttribute("role", loggedRola);
             return "index.xhtml?faces-redirect=true"; // Przekierowanie na stronę powitalną
         } else {
             FacesContext.getCurrentInstance().addMessage(null,

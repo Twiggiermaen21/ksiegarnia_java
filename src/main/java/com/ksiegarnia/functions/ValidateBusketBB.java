@@ -70,7 +70,7 @@ private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
             
               flash.put("busket", busket);
               flash.put("fieldList", fieldList);
-            session.removeAttribute("busket");
+            removeBusket();
             // Możesz tutaj dodać logikę biznesową po zatwierdzeniu formularza
             FacesMessage msg = new FacesMessage("Formularz został wysłany");
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -82,4 +82,18 @@ private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
         
         return PAGE_BILL_SHOW;
     }
+    
+    public void removeBusket() {
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+
+    if (session != null) {
+        session.removeAttribute("busket");
+        System.out.println("Busket attribute removed successfully!");
+    } else {
+        System.out.println("Session is null, cannot remove attribute.");
+    }
+}
+    
+    
 }
