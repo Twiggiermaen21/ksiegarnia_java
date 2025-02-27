@@ -4,12 +4,46 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>Koszyk</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+    </h:head>
+    <h:body>
+
+
+
+        <h:form id="koszykForm">
+            <div class="card">
+                <h:outputText value="Zawartość Koszyka:" />
+                <p:dataTable var="ksiazka" value="#{busketPageBB.busket}">
+                    <p:column headerText="Tytul">
+                        <h:outputText value="#{ksiazka.tytul}" />
+                    </p:column>
+
+                    <p:column headerText="Cena">
+                        <h:outputText value="#{ksiazka.cena}" />
+                    </p:column>
+
+                    <p:column headerText="Grafika">
+                        <h:graphicImage value="/resources/#{ksiazka.imgUrl}" style="height: 100px" />
+                    </p:column>
+                    <p:column headerText="Opcje">
+                        <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm" />
+                        
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+
+
+
+        <p:button value="Cofnij" icon="pi pi-arrow-left"  outcome="index"  />
+
+    </h:body>
 </html>

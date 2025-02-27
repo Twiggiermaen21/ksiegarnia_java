@@ -16,6 +16,7 @@ import com.ksiegarnia.entities.*;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -90,6 +91,10 @@ public class KsiazkiListBB implements Serializable {
         FacesMessage msg = new FacesMessage("id ksiazki", String.valueOf(busket));
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
+        //1. Pass object through session
+        HttpSession session = (HttpSession) extcontext.getSession(true);
+        session.setAttribute("busket", busket);
+        
     }
 
     public void usunBusket(Ksiazki ksiazka) {
