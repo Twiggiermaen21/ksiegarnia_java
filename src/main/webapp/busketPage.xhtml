@@ -10,13 +10,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core">
     <h:head>
+
         <title>Koszyk</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
 
-
-
+        <p:button value="Cofnij" icon="pi pi-arrow-left"  outcome="index"  />
+        <br/><br/>
         <h:form id="koszykForm">
             <div class="card">
                 <h:outputText value="Zawartość Koszyka:" />
@@ -41,36 +42,34 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             </div>
         </h:form>
 
-        <div class="card">
+    <div class="card">
+    <h:form>
+        <h5>Adres</h5>
+        <span class="ui-float-label">
+            <p:inputText id="float-input" value="#{ValidateBusketBB.text}">
+                <f:validateLength minimum="10" />
+                <p:message for="float-input" />
+            </p:inputText>
+        </span>
 
-            <h5>Floating Label</h5>
-            <span class="ui-float-label">
-                <p:inputText id="float-input" value="#{inputTextView.text}"/>
-                <p:outputLabel for="@previous" value="Username"/>
-            </span>
-            <h5>Floating Label</h5>
-            <span class="ui-float-label">
-                <p:inputText id="float-input" value="#{inputTextView.text}"/>
-                <p:outputLabel for="@previous" value="Username"/>
-            </span>
-            <h5>Floating Label</h5>
-            <span class="ui-float-label">
-                <p:inputText id="float-input" value="#{inputTextView.text}"/>
-                <p:outputLabel for="@previous" value="Username"/>
-            </span>
-            <h5>Floating Label</h5>
-            <span class="ui-float-label">
-                <p:inplace label="Cities" effectSpeed="fast" event="dblclick">
-                    <p:selectOneMenu>
-                        <f:selectItem itemLabel="New York" itemValue="0"/>
-                        <f:selectItem itemLabel="London" itemValue="1"/>
-                        <f:selectItem itemLabel="Paris" itemValue="2"/>
-                        <f:selectItem itemLabel="Berlin" itemValue="3"/>
-                    </p:selectOneMenu>
-                </p:inplace>
-            </span>
-        </div>
-        <p:button value="Cofnij" icon="pi pi-arrow-left"  outcome="index"  />
+        <h5>Metoda Platnosci</h5>
+        <span class="ui-float-label">
+            <p:inplace label="Wybierz" effectSpeed="fast" event="dblclick">
+                <p:selectOneMenu id="paymentMethod" value="#{ValidateBusketBB.paymentMethod}">
+                    <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
+                    <f:selectItem itemLabel="Gotowka" itemValue="1"/>
+                    <f:selectItem itemLabel="Blik" itemValue="2"/>
+                    <!-- Wywołanie metody walidacyjnej w backendzie -->
+                    <f:validateRequired  />
+                    <p:message for="paymentMethod" />
+                </p:selectOneMenu>
+            </p:inplace>
+        </span>
+
+        <h:commandButton value="Submit" action="#{ValidateBusketBB.submit}" />
+    </h:form>
+</div>
+
 
     </h:body>
 </html>
