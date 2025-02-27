@@ -84,9 +84,10 @@
     </h:head>
 
     <body>
-        <h:form>
+        <div class="container">
+            <h:form>
 
-            <div class="container">
+
                 <h2>Logowanie</h2>
 
                 <div class="field">
@@ -104,13 +105,15 @@
                 <div class="button-container">
                     <h:commandButton value="Zaloguj" action="#{logInOutBB.login}" 
                                      styleClass="login-button"/>
-                     <h:commandButton value="Zarejestruj" action="#{logInOutBB.registerPage}" 
-                                     styleClass="login-button"/>
+
                 </div>
 
                 <h:messages globalOnly="true" styleClass="error-message"/>
-            </div>
-        </h:form>
 
+            </h:form>
+            <h:form>
+                <p:commandButton value="Zarejestruj" action="#{logInOutBB.registerPage}" styleClass="ui-button-secondary" />
+            </h:form>
+        </div>
     </body>
 </html>
