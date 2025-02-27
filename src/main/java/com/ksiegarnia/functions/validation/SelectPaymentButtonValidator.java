@@ -20,8 +20,8 @@ public class SelectPaymentButtonValidator implements Validator {
         Boolean booleanValue = (Boolean) value;
 
         // If the value is null (or false), throw a validation error
-        if (booleanValue == null) {
-            FacesMessage msg = new FacesMessage("You must select Yes or No");
+        if (booleanValue == false) {
+            FacesMessage msg = new FacesMessage("You must select Yes ");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
         }

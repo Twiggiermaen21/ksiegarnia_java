@@ -53,20 +53,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
 
                         <!-- Wyświetlanie błędów -->
-                        <p:message for="float-input" />
+
                     </p:inputText>
                 </span>
-
+                <p:message for="float-input" />
                 <h5>Metoda Platnosci</h5>
                 <span class="ui-float-label">
                     <p:inplace label="Wybierz" effectSpeed="fast" event="mouseenter" >
                         <p:selectOneMenu id="paymentMethod" value="#{validateBusketBB.paymentMethod}">
-                            <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
-                            <f:selectItem itemLabel="Gotowka" itemValue="1"/>
-                            <f:selectItem itemLabel="Blik" itemValue="2"/>
+                            <f:selectItem itemLabel="Przelew Bankowy" itemValue="Przelew Bankowy"/>
+                            <f:selectItem itemLabel="Gotowka" itemValue="Gotowka"/>
+                            <f:selectItem itemLabel="Blik" itemValue="Blik"/>
                             <f:validator validatorId="paymentMethodValidator" />
                             <!-- Wyświetlanie błędów -->
-                            <p:message for="paymentMethod" />
+
                         </p:selectOneMenu>
                     </p:inplace>
                 </span>
@@ -79,7 +79,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <p:selectBooleanButton id="agree" value="#{validateBusketBB.agree}" onLabel="Yes" offLabel="No" style="width:6rem">
                         <!-- Apply the custom validator -->
                         <f:validator validatorId="selectPaymentButtonValidator"/>
-                        <p:message for="agree"/>
+
                     </p:selectBooleanButton>
 
                 </span>

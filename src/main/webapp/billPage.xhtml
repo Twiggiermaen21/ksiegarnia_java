@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+
+        <title>Rachunek</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+    <h:dataTable value="#{flash.busket}" var="item">
+    <h:column>
+        <f:facet name="header">Nazwa</f:facet>
+        #{item.tytul}
+    </h:column>
+    <h:column>
+        <f:facet name="header">Cena</f:facet>
+        #{item.cena}
+    </h:column>
+</h:dataTable>
+
+<h:dataTable value="#{flash.fieldList}" var="field">
+    <h:column>
+        <f:facet name="header">Pole</f:facet>
+        #{field}
+    </h:column>
+</h:dataTable>
+    </h:body>
+</html>
