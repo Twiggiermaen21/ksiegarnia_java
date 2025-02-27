@@ -42,33 +42,41 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             </div>
         </h:form>
 
-    <div class="card">
-    <h:form>
-        <h5>Adres</h5>
-        <span class="ui-float-label">
-            <p:inputText id="float-input" value="#{ValidateBusketBB.text}">
-                <f:validateLength minimum="10" />
+        <div class="card">
+            <h:form>
+                <p:growl id="msg" showDetail="true"/>
+                <h5>Adres</h5>
+                <span class="ui-float-label">
+                    <p:inputText id="float-input" value="#{validateBusketBB.text}">
+                      
+                         <f:validator validatorId="addressValidator" />
+               
+             
+                <!-- Wyświetlanie błędów -->
                 <p:message for="float-input" />
-            </p:inputText>
-        </span>
+                    </p:inputText>
+                </span>
 
-        <h5>Metoda Platnosci</h5>
-        <span class="ui-float-label">
-            <p:inplace label="Wybierz" effectSpeed="fast" event="dblclick">
-                <p:selectOneMenu id="paymentMethod" value="#{ValidateBusketBB.paymentMethod}">
-                    <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
-                    <f:selectItem itemLabel="Gotowka" itemValue="1"/>
-                    <f:selectItem itemLabel="Blik" itemValue="2"/>
-                    <!-- Wywołanie metody walidacyjnej w backendzie -->
-                    <f:validateRequired  />
+                <h5>Metoda Platnosci</h5>
+                <span class="ui-float-label">
+                    <p:inplace label="Wybierz" effectSpeed="fast" event="mouseenter" >
+                        <p:selectOneMenu id="paymentMethod" value="#{validateBusketBB.paymentMethod}">
+                            <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
+                            <f:selectItem itemLabel="Gotowka" itemValue="1"/>
+                            <f:selectItem itemLabel="Blik" itemValue="2"/>
+                          <f:validator validatorId="paymentMethodValidator" />
+                    <!-- Wyświetlanie błędów -->
                     <p:message for="paymentMethod" />
-                </p:selectOneMenu>
-            </p:inplace>
-        </span>
+                        </p:selectOneMenu>
+                    </p:inplace>
+                </span>
 
-        <h:commandButton value="Submit" action="#{ValidateBusketBB.submit}" />
-    </h:form>
-</div>
+                <!-- Poprawny odwołanie do p:message -->
+                <p:message for="paymentMethod" />
+
+                <h:commandButton value="Submit" action="#{validateBusketBB.submit}" />
+            </h:form>
+        </div>
 
 
     </h:body>
