@@ -19,8 +19,10 @@ import com.ksiegarnia.entities.*;
 public class KsiazkiListBB {
 
     private static final String PAGE_BOOK_SHOW = "bookShow?faces-redirect=true";
+    private static final String PAGE_BUSKET_SHOW = "busketPage?faces-redirect=true";
     private static final String PAGE_STAY_AT_THE_SAME = null;
     private List<Ksiazki> list;
+    private List<Ksiazki> busket;
     private String tytul;
     private int currentPage = 0;
     private final int pageSize = 100;
@@ -75,10 +77,19 @@ public class KsiazkiListBB {
         return PAGE_BOOK_SHOW;
     }
     
- 
+ public void addToBusket(Ksiazki ksiazki){
+     busket.add(ksiazki);
+  
+ }
+     public List<Ksiazki>  getBusket() {
+        return busket;
+    }
     
-    
-    
+       public String showBusket() {
+       
+
+        return PAGE_BUSKET_SHOW;
+    }
 
     public void nextPage() {
         currentPage++;
