@@ -109,11 +109,11 @@
         <style>
             .container {
                 display: flex;
-              
+
             }
             .left, .right {
                 width: 20%; /* Lewa i prawa kolumna po 20% */
-              
+
             }
             .center {
                 width: 60%; /* Środkowa kolumna 60% */
@@ -153,7 +153,9 @@
                                 <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
                             </p:inputText>
                         </div>
+                        
                         <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                        
                     </f:facet>
                 </p:menubar>
             </h:form>
@@ -165,7 +167,7 @@
 
             <!-- Środkowa kolumna z koszykiem i książkami -->
             <div class="center">
-              
+
                 <!-- Książki -->
                 <h:form id="booksTable">
                     <p:growl id="msgs" showDetail="true"/>
@@ -191,7 +193,7 @@
                                 <p:commandButton value="Dodaj do koszyka" 
                                                  styleClass="details-link"  
                                                  action="#{ksiazkiListBB.addToBusket(k)}"  
-                                                 update=":koszykForm:koszykPanel" />
+                                                 update=":koszykForm" />
                             </div>
                         </ui:repeat>
                     </div>
@@ -202,23 +204,37 @@
 
             <!-- Prawa pusta kolumna -->
             <div class="right">
-                  <h:form id="koszykForm">
-                    <h3>Twój koszyk</h3>
-                    <h:panelGroup id="koszykPanel">
-                        <ui:repeat value="#{ksiazkiListBB.busket}" var="ksiazka">
-                            <p>
-                                <h:outputText value="#{ksiazka.tytul} - #{ksiazka.cena} PLN" />
-                                <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm:koszykPanel" />
-                            </p>
-                        </ui:repeat>
-                        <p:commandButton value="Wyczyść koszyk" action="#{ksiazkiListBB.wyczyscBusket()}" update="koszykForm:koszykPanel" />
-                    </h:panelGroup>
-                </h:form>
+
+                <h3>Twój koszyk</h3>
+
+                <div class="product card">
+                    <h:form id="koszykForm">
+                        <p:dataScroller value="#{ksiazkiListBB.busket}" var="ksiazka" chunkSize="3" mode="inline"
+                                        scrollHeight="200">
+                            <f:facet name="header">
+                                Scroll Down to Load More Products
+                            </f:facet>
+                            <div class="product" >
+                                <div class="product-list-item p-5" style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ccc; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                                    <p:graphicImage value="/resources/#{ksiazka.imgUrl}" style="height: 30px; margin-right: 15px;" />
+                                    <div class="product-list-detail" style="flex-grow: 1;">
+                                        <div class="product-name">#{ksiazka.tytul}</div>
+                                    </div>
+                                    <div class="product-list-action" style="text-align: right; margin-left: 15px;">
+                                        <h:outputText value="#{ksiazka.cena}" styleClass="product-price">
+                                            <f:convertNumber currencySymbol="$" type="currency" />
+                                        </h:outputText>
+                                        <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm" icon="pi pi-shopping-cart" />
+                                    </div>
+                                </div>
+                            </div>
+                        </p:dataScroller>
+                        <p:commandButton value="Wyczyść koszyk" action="#{ksiazkiListBB.wyczyscBusket()}" update="koszykForm" />
+                    </h:form>
+                </div>
+
             </div>
         </div>
-
-
-
 
     </h:body>
 </html>

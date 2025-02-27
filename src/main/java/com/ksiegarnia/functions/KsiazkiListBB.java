@@ -6,7 +6,6 @@ import java.util.Map;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.ejb.EJB;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.Flash;
@@ -21,7 +20,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 @Named
-
 @SessionScoped
 public class KsiazkiListBB implements Serializable {
 
