@@ -10,6 +10,7 @@ import java.util.Map;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
@@ -59,4 +60,14 @@ public class UserDAO {
         return user;
     }
 
+    public Uzytkownik findByEmail(String email) {
+    try {
+        return em.createQuery("SELECT u FROM Uzytkownik u WHERE u.email = :email", Uzytkownik.class)
+                 .setParameter("email", email)
+                 .getSingleResult();
+    } catch (NoResultException e) {
+        return null; // Jeśli nie ma użytkownika, zwraca null
+    }
+}
+    
 }

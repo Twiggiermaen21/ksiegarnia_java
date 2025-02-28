@@ -4,8 +4,12 @@
  */
 package com.ksiegarnia.functions;
 
+import com.ksiegarnia.dao.RolaDAO;
 import com.ksiegarnia.dao.UserDAO;
+import com.ksiegarnia.dao.UzytkownikHasRolaDAO;
+import com.ksiegarnia.entities.Rola;
 import com.ksiegarnia.entities.Uzytkownik;
+import com.ksiegarnia.entities.UzytkownikHasRola;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
@@ -31,9 +35,14 @@ public class RegisterBB implements Serializable{
     private String password;
     private Date datautworzenia;
     private Boolean aktywny;
-    
+            private Uzytkownik newUser;
+
     @EJB
     private UserDAO userDAO;
+      @EJB
+    private UzytkownikHasRolaDAO UHRDAO;
+        @EJB
+    private RolaDAO roleDAO;
     
        public RegisterBB() {
            this.idaktualizacji=0;
@@ -81,17 +90,34 @@ public class RegisterBB implements Serializable{
     // Metoda rejestracji
     public String register() {
         // Przykładowa logika rejestracji
-        if (username != null && surname != null && email != null && password != null) {
+        if (username != null && surname != null && email != null && password != null 
+                && userDAO.findByEmail(email)== null
+                ) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Rejestracja zakończona sukcesem!", null));
             makeUser();
+            makeRole();
              return "login.xhtml?faces-redirect=true"; // lub inna strona, np. "home.xhtml"
         } 
+         FacesMessage msg = new FacesMessage("jest juz taki email");
+                 
+            FacesContext.getCurrentInstance().addMessage(null, msg);
       return null;
     }
     
+    
+    
+    public String makeRole(){
+        UzytkownikHasRola UHR = new UzytkownikHasRola();
+        RolaDAO roleDAO= new RolaDAO();
+        UHR.setRolaidRola(roleDAO.getFullList());
+        UHR.setDatanadania(datautworzenia);
+        UHR.setUzytkownikidUzytkownik(newUser);
+        return "succes";
+    }
+    
     public String makeUser(){
-        Uzytkownik newUser=new Uzytkownik();
+         newUser=new Uzytkownik();
         newUser.setEmail(email);
         newUser.setHaslo(password);
         newUser.setAktywny(aktywny);

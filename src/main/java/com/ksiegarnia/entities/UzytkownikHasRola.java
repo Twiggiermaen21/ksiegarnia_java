@@ -4,6 +4,7 @@
  */
 package com.ksiegarnia.entities;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,7 +42,7 @@ public class UzytkownikHasRola implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date datanadania;
     @Basic(optional = false)
-    @NotNull
+    @Nullable
     @Column(name = "Data_zabrania")
     @Temporal(TemporalType.TIMESTAMP)
     private Date datazabrania;
