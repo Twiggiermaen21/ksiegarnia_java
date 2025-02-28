@@ -4,12 +4,83 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:c="jakarta.tags.core">
+    <h:head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+
+        <style>
+            /* Global Body Styles */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .field {
+                margin-bottom: 20px;
+            }
+            /* Container Style */
+            .container {
+                background-color: #fff;
+                border-radius: 8px;
+                padding: 30px;
+                width: 300px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <h:form>
+                <h2>Rejestracja</h2>
+                <div class="card">
+                    <div class="grid ui-fluid">
+
+                        <div class="field">
+                            <div class="col-12 md:col-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                    <p:inputText placeholder="User name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="col-12 md:col-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                    <p:inputText placeholder="User surname"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="col-12 md:col-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                    <p:inputText placeholder="Email"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="col-12 md:col-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                    <p:inputText placeholder="Password"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </h:form>
+        </div>
+    </h:body>
 </html>
