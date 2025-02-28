@@ -238,7 +238,7 @@
 
                 <div class="product card">
                     <h:form id="koszykForm">
-                        <p:dataScroller value="#{ksiazkiListBB.busket}" var="ksiazka" chunkSize="3" mode="inline"
+                        <p:dataScroller value="#{ksiazkiListBB.getBusket()}" var="ksiazka" chunkSize="3" mode="inline"
                                         scrollHeight="200">
                             <f:facet name="header">
                                 Scroll Down to Load More Products

@@ -12,6 +12,7 @@ import jakarta.faces.context.Flash;
 
 import com.ksiegarnia.dao.KsiazkiDAO;
 import com.ksiegarnia.entities.*;
+import com.ksiegarnia.enums.Busket;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -27,7 +28,8 @@ public class KsiazkiListBB implements Serializable {
     private static final String PAGE_BUSKET_SHOW = "busketPage?faces-redirect=true";
     private static final String PAGE_STAY_AT_THE_SAME = null;
     private List<Ksiazki> list;
-    private List<Ksiazki> busket = new ArrayList<>();
+    private List<Busket> busket = new ArrayList<>(); // Lista przedmiotów w koszyku
+  
     private String tytul;
     private int currentPage = 0;
     private final int pageSize = 9;
@@ -83,30 +85,62 @@ public class KsiazkiListBB implements Serializable {
         return PAGE_BOOK_SHOW;
     }
 
-    public void addToBusket(Ksiazki ksiazki) {
+    public void addToBusket(Ksiazki ksiazki, int ilosc) {
+    HttpSession session = (HttpSession) extcontext.getSession(true); // Tworzy sesję, jeśli nie istnieje
 
-        busket.add(ksiazki);
+    // Pobranie koszyka z sesji
+    List<Busket> sessionBusket = (List<Busket>) session.getAttribute("busket");
 
-        FacesMessage msg = new FacesMessage("id ksiazki", String.valueOf(busket));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        //1. Pass object through session
-        HttpSession session = (HttpSession) extcontext.getSession(true);
-        session.setAttribute("busket", busket);
-
+    // Jeśli koszyk nie istnieje w sesji, tworzymy nową listę
+    if (sessionBusket == null) {
+        sessionBusket = new ArrayList<>();
     }
+
+    // Sprawdzamy, czy książka już jest w koszyku
+        boolean found = false;
+        for (Busket item : sessionBusket) {
+            if (item.getKsiazka().getIdKsiazki().equals(ksiazki.getIdKsiazki())) {
+                // Jeśli książka jest już w koszyku, zwiększamy ilość
+                item.setIlosc(item.getIlosc() + ilosc);
+                found = true;
+                break;
+            }
+        }
+
+        // Jeśli książka nie była w koszyku, dodajemy ją z podaną ilością
+        if (!found) {
+            sessionBusket.add(new Busket(ksiazki, ilosc));
+        }
+    
+    // Aktualizacja sesji
+    session.setAttribute("busket", sessionBusket);
+
+    // Aktualizacja lokalnej listy, aby uniknąć desynchronizacji
+    this.busket = sessionBusket;
+}
 
     public void usunBusket(Ksiazki ksiazka) {
         busket.remove(ksiazka);
     }
 
     public void wyczyscBusket() {
-        busket.clear();
+    HttpSession session = (HttpSession) extcontext.getSession(false);
+
+    if (session != null) {
+        session.removeAttribute("busket"); // Usuwa koszyk z sesji
     }
 
+    this.busket.clear(); // Czyści lokalną listę
+}
+
     public List<Ksiazki> getBusket() {
-        return busket;
-    }
+    HttpSession session = (HttpSession) extcontext.getSession(false); // false = nie tworzy nowej sesji
+
+    List<Ksiazki> sessionBusket = (session != null) ? (List<Ksiazki>) session.getAttribute("busket") : null;
+
+    // Jeśli koszyk nie istnieje, zwracamy pustą listę, ale nie zapisujemy jej w sesji
+    return (sessionBusket != null) ? sessionBusket : new ArrayList<>();
+}
 
     public String showBusket() {
 

@@ -30,6 +30,8 @@ private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
     @Inject
     Flash flash;
 
+    KsiazkiListBB KLBB;
+    
     public Boolean getAgree() {
         return agree;
     }
@@ -90,6 +92,8 @@ private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
     if (session != null) {
         session.removeAttribute("busket");
         System.out.println("Busket attribute removed successfully!");
+            
+          
     } else {
         System.out.println("Session is null, cannot remove attribute.");
     }

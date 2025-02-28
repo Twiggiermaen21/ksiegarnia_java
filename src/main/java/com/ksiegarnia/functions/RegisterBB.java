@@ -4,6 +4,7 @@
  */
 package com.ksiegarnia.functions;
 
+
 import com.ksiegarnia.dao.RolaDAO;
 import com.ksiegarnia.dao.UserDAO;
 import com.ksiegarnia.dao.UzytkownikHasRolaDAO;
@@ -41,8 +42,8 @@ public class RegisterBB implements Serializable{
     private UserDAO userDAO;
       @EJB
     private UzytkownikHasRolaDAO UHRDAO;
-        @EJB
-    private RolaDAO roleDAO;
+       @EJB
+       private RolaDAO roleDAO;
     
        public RegisterBB() {
            this.idaktualizacji=0;
@@ -109,10 +110,11 @@ public class RegisterBB implements Serializable{
     
     public String makeRole(){
         UzytkownikHasRola UHR = new UzytkownikHasRola();
-        RolaDAO roleDAO= new RolaDAO();
-        UHR.setRolaidRola(roleDAO.getFullList());
+        Rola role =roleDAO.getById(3);
+     UHR.setRolaidRola(role);
         UHR.setDatanadania(datautworzenia);
         UHR.setUzytkownikidUzytkownik(newUser);
+        UHRDAO.create(UHR);
         return "succes";
     }
     
