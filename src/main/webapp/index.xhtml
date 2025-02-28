@@ -214,12 +214,19 @@
                                     </ui:repeat>
                                     <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
                                 </div>
-                                <p:commandButton value="Zobacz" styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}" ajax="false" />
 
+                                <p:commandButton value="Zobacz" styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}" ajax="false" />
+                                <div class="field col-12 md:col-4">
+                                    <p:outputLabel for="rotate" value="Ilość"/>
+                                    <p:spinner id="rotate" value="#{ksiazkiListBB.quantity}" min="1" max="10" />
+                                </div>
+                                
                                 <p:commandButton value="Dodaj do koszyka" 
                                                  styleClass="details-link"  
-                                                 action="#{ksiazkiListBB.addToBusket(k)}"  
-                                                 update=":koszykForm" />
+                                                 action="#{ksiazkiListBB.addToBusket(k)}"
+                                                 update=":koszykForm, :rotate" >
+
+                                </p:commandButton>
                             </div>
                         </ui:repeat>
                     </div>
@@ -245,12 +252,15 @@
                             </f:facet>
                             <div class="product" >
                                 <div class="product-list-item p-5" style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ccc; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-                                    <p:graphicImage value="/resources/#{ksiazka.imgUrl}" style="height: 30px; margin-right: 15px;" />
+                                    <p:graphicImage value="/resources/#{ksiazka.ksiazka.imgUrl}" style="height: 30px; margin-right: 15px;" />
                                     <div class="product-list-detail" style="flex-grow: 1;">
-                                        <div class="product-name">#{ksiazka.tytul}</div>
+                                        <div class="product-name">#{ksiazka.ksiazka.tytul}</div>
+                                        <h:outputText value="#{ksiazka.ilosc}" styleClass="product-price">
+                                            <f:convertNumber />
+                                        </h:outputText>
                                     </div>
                                     <div class="product-list-action" style="text-align: right; margin-left: 15px;">
-                                        <h:outputText value="#{ksiazka.cena}" styleClass="product-price">
+                                        <h:outputText value="#{ksiazka.ksiazka.cena}" styleClass="product-price">
                                             <f:convertNumber currencySymbol="$" type="currency" />
                                         </h:outputText>
                                         <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm" icon="pi pi-shopping-cart" />

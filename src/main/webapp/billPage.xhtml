@@ -10,29 +10,112 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core">
     <h:head>
-
         <title>Rachunek</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Wbudowane style CSS -->
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                display: flex;
+                justify-content: center;
+                padding: 20px;
+                margin: 0;
+            }
+
+            .invoice-container {
+                width: 600px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .invoice-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .invoice-header h1 {
+                font-size: 24px;
+                color: #333;
+            }
+
+            .invoice-table {
+                width: 100%;
+                margin-bottom: 20px;
+                border-collapse: collapse;
+            }
+
+            .invoice-table th, .invoice-table td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .invoice-table th {
+                background-color: #f8f8f8;
+                font-weight: bold;
+            }
+
+            .invoice-info {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .back-button {
+                text-align: center;
+            }
+
+            .back-button .ui-button {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+            }
+
+            .back-button .ui-button:hover {
+                background-color: #45a049;
+            }
+        </style>
     </h:head>
     <h:body>
-    <h:dataTable value="#{flash.busket}" var="item">
-    <h:column>
-        <f:facet name="header">Nazwa</f:facet>
-        #{item.tytul}
-    </h:column>
-    <h:column>
-        <f:facet name="header">Cena</f:facet>
-        #{item.cena}
-    </h:column>
-</h:dataTable>
+        <div class="invoice-container">
+            <div class="invoice-header">
+                <h1>Rachunek</h1>
+            </div>
 
-<h:dataTable value="#{flash.fieldList}" var="field">
-    <h:column>
-        <f:facet name="header">Pole</f:facet>
-        #{field}
-    </h:column>
-</h:dataTable>
-        
-           <p:button value="Cofnij" icon="pi pi-arrow-left"  outcome="index"  />
+            <h:dataTable value="#{flash.busket}" var="item" styleClass="invoice-table">
+                <h:column>
+                    <f:facet name="header">Nazwa</f:facet>
+                    <h:graphicImage value="/resources/#{item.ksiazka.imgUrl}" style="height: 100px" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Tytuł</f:facet>
+                    #{item.ksiazka.tytul}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Ilość</f:facet>
+                    #{item.ilosc}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Cena</f:facet>
+                    #{item.ksiazka.cena}
+                </h:column>
+            </h:dataTable>
+
+            <h:dataTable value="#{flash.fieldList}" var="field" styleClass="invoice-info">
+                <h:column>
+                    <f:facet name="header">Pole</f:facet>
+                    #{field}
+                </h:column>
+            </h:dataTable>
+
+            <div class="back-button">
+                <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" />
+            </div>
+        </div>
     </h:body>
 </html>

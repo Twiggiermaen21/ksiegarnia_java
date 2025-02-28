@@ -5,6 +5,7 @@
 package com.ksiegarnia.functions;
 
 import com.ksiegarnia.entities.Ksiazki;
+import com.ksiegarnia.enums.Busket;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.ExternalContext;
@@ -24,7 +25,7 @@ private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
     private String text; // Adres
     private Integer paymentMethod; // Metoda płatności
     private Boolean agree;
-    private List<Ksiazki> busket;
+    private List<Busket> busket;
     @Inject
     ExternalContext extcontext;
     @Inject
@@ -67,7 +68,7 @@ private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
             fieldList.add(this.agree);
             HttpSession session = (HttpSession) extcontext.getSession(false);
 
-            busket = (List<Ksiazki>) session.getAttribute("busket");
+            busket = (List<Busket>) session.getAttribute("busket");
 
             
               flash.put("busket", busket);
