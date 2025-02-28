@@ -36,51 +36,77 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 width: 300px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
+            h2 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #333;
+
+                .login-button {
+                    width: 100%;
+                    padding: 12px;
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+
+                .login-button:hover {
+                    background-color: #0056b3;
+                }
+
+
+            }
         </style>
     </h:head>
     <h:body>
         <div class="container">
-            <h:form>
-                <h2>Rejestracja</h2>
-                <div class="card">
-                    <div class="grid ui-fluid">
+     <h:form>
+    <h2>Rejestracja</h2>
+    <div class="card">
+        <div class="grid ui-fluid">
+            <div class="field">
+                <h:outputLabel for="username" value="User name"/>
+                <p:inputText id="username" value="#{registerBB.username}" >
+                    <f:validator validatorId="usernameValidator"/>
+                </p:inputText>
+                <p:message for="username"/>
+            </div>
 
-                        <div class="field">
-                            <div class="col-12 md:col-4">
-                                <div class="ui-inputgroup">
-                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
-                                    <p:inputText placeholder="User name"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="col-12 md:col-4">
-                                <div class="ui-inputgroup">
-                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
-                                    <p:inputText placeholder="User surname"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="col-12 md:col-4">
-                                <div class="ui-inputgroup">
-                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
-                                    <p:inputText placeholder="Email"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="col-12 md:col-4">
-                                <div class="ui-inputgroup">
-                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
-                                    <p:inputText placeholder="Password"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="field">
+                <h:outputLabel for="surname" value="User surname"/>
+                <p:inputText id="surname" value="#{registerBB.surname}" >
+                    <f:validator validatorId="surnameValidator"/>
+                </p:inputText>
+                <p:message for="surname"/>
+            </div>
 
-                </div>
-            </h:form>
+            <div class="field">
+                <h:outputLabel for="email" value="Email"/>
+                <p:inputText id="email" value="#{registerBB.email}" >
+                    <f:validator validatorId="emailValidator"/>
+                </p:inputText>
+                <p:message for="email"/>
+            </div>
+
+            <div class="field">
+                <h:outputLabel for="password" value="Password"/>
+                <p:password id="password" value="#{registerBB.password}" >
+                    <f:validator validatorId="passwordValidator"/>
+                </p:password>
+                <p:message for="password"/>
+            </div>
+        </div>
+        <div class="button-container">
+            <h:commandButton value="Zarejestruj się" action="#{registerBB.register}" styleClass="login-button"/>
+            <p:button value="Cofnij" outcome="login" styleClass="login-button"/>
+        </div>
+    </div>
+</h:form>
+
+
         </div>
     </h:body>
 </html>
