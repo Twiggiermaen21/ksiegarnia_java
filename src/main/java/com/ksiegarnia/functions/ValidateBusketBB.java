@@ -6,10 +6,12 @@ package com.ksiegarnia.functions;
 
 import com.ksiegarnia.dao.PlatnosciDAO;
 import com.ksiegarnia.dao.ZamowieniaDAO;
+import com.ksiegarnia.dao.ZamowieniaKsiazkiDAO;
 import com.ksiegarnia.entities.Ksiazki;
 import com.ksiegarnia.entities.Platnosci;
 import com.ksiegarnia.entities.Uzytkownik;
 import com.ksiegarnia.entities.Zamowienia;
+import com.ksiegarnia.entities.ZamowieniaHasKsiazki;
 import com.ksiegarnia.enums.Busket;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
@@ -31,7 +33,8 @@ import java.util.Random;
 @Named
 @RequestScoped
 public class ValidateBusketBB {
-private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
+
+    private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
     private String text; // Adres
     private Integer paymentMethod; // Metoda płatności
     private Boolean agree;
@@ -46,14 +49,35 @@ private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
     @EJB
     ZamowieniaDAO zamowieniaDAO;
     PlatnosciDAO platnoscDAO;
-                HttpSession session = (HttpSession) extcontext.getSession(false);
-private static final Map<String, String> paymentMethodMap = Map.of(
-        "0", "Przelew Bankowy",
-        "1", "Gotowka",
-        "2", "Blik"
+    ZamowieniaKsiazkiDAO zhkDAO;
+
+    private static final Map<String, String> paymentMethodMap = Map.of(
+            "0", "Przelew Bankowy",
+            "1", "Gotowka",
+            "2", "Blik"
     );
+
     public Boolean getAgree() {
         return agree;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    // Setter for totalPrice
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    // Getter for totalBooks
+    public int getTotalBooks() {
+        return totalBooks;
+    }
+
+    // Setter for totalBooks
+    public void setTotalBooks(int totalBooks) {
+        this.totalBooks = totalBooks;
     }
 
     public void setAgree(Boolean agree) {
@@ -73,7 +97,8 @@ private static final Map<String, String> paymentMethodMap = Map.of(
     public Integer getPaymentMethod() {
         return paymentMethod;
     }
-      public String getSelectedPaymentl() {
+
+    public String getSelectedPaymentl() {
         return paymentMethodMap.getOrDefault(paymentMethod, "Nieznana metoda");
     }
 
@@ -88,76 +113,105 @@ private static final Map<String, String> paymentMethodMap = Map.of(
             fieldList.add(this.text);           // Add the 'text' value (address)
             fieldList.add(this.paymentMethod);  // Add the 'paymentMethod' value
             fieldList.add(this.agree);
-
+            HttpSession session = (HttpSession) extcontext.getSession(false);
             busket = (List<Busket>) session.getAttribute("busket");
             for (Busket item : busket) {
-            totalPrice += item.getKsiazka().getCena() * item.getIlosc();
-            totalBooks += item.getIlosc();
-        }
+                totalPrice += item.getKsiazka().getCena() * item.getIlosc();
+                totalBooks += item.getIlosc();
+            }
 
-            
-              flash.put("busket", busket);
-              flash.put("fieldList", fieldList);
-              
-              
-              
-            removeBusket();
-            // Możesz tutaj dodać logikę biznesową po zatwierdzeniu formularza
-            FacesMessage msg = new FacesMessage("Formularz został wysłany");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            flash.put("busket", busket);
+            flash.put("fieldList", fieldList);
+            if (busket != null) {
+
+                try {
+                    Zamowienia order = GenerateZam();
+                    for (Busket item : busket) {
+
+                        GenerateZHK(order, item.getKsiazka());
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Błąd: " + e.getMessage());
+                }
+
+                removeBusket();
+                // Możesz tutaj dodać logikę biznesową po zatwierdzeniu formularza
+                FacesMessage msg = new FacesMessage("Formularz został wysłany");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            } else {
+                FacesMessage msg = new FacesMessage("Koszyk jest pusty");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
+
         } else {
             FacesMessage msg = new FacesMessage("Zaakceptuj prawa");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
 
-        
         return PAGE_BILL_SHOW;
     }
-    
+
     public void removeBusket() {
-    FacesContext facesContext = FacesContext.getCurrentInstance();
-    HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 
-    if (session != null) {
-        session.removeAttribute("busket");
-        System.out.println("Busket attribute removed successfully!");
-            
-          
-    } else {
-        System.out.println("Session is null, cannot remove attribute.");
-    }
-}
-    
-    
-    public boolean GenerateZam(){
-        Zamowienia zam = new Zamowienia();
-                   
+        if (session != null) {
+            session.removeAttribute("busket");
+            System.out.println("Busket attribute removed successfully!");
 
-        zam.setUzytkownikidUzytkownik( (Uzytkownik) session.getAttribute("user"));
-        zam.setDatazamowienia(new Date());
-        zam.setPlatnosciidPlatnosci(GeneratePlat());
-        zam.setAdres(text);
-        zam.setKodZamowienia(generateRandomCode());
-        zamowieniaDAO.create(zam);
-        
-        return true;
+        } else {
+            System.out.println("Session is null, cannot remove attribute.");
+        }
     }
-    
-    public Platnosci GeneratePlat(){
-        Uzytkownik user=(Uzytkownik) session.getAttribute("user");
-        Platnosci pla = new Platnosci();
-        pla.setKwota( totalPrice);
+
+    public Zamowienia GenerateZam() {
+Zamowienia zamowni = new Zamowienia();
+        try {
+           
+            HttpSession session = (HttpSession) extcontext.getSession(false);
+            Uzytkownik user = (Uzytkownik) session.getAttribute("user");
+            Platnosci platnosc = new Platnosci();
+            platnosc=GeneratePlat(user);
+            zamowni .setUzytkownikidUzytkownik(user);
+            zamowni .setDatazamowienia(new Date());
+            zamowni .setPlatnosciidPlatnosci(platnosc);
+            zamowni .setAdres(text);
+            zamowni .setKodZamowienia(generateRandomCode());
+            zamowieniaDAO.create(zamowni );
+        } catch (Exception e) {
+            System.out.println("blad zamownienie");
+        }
+        return zamowni ;
+    }
+
+    public Platnosci GeneratePlat(   Uzytkownik user ) {
+       Platnosci pla = new Platnosci();
+        try {
+           
+              pla.setKwota(totalPrice);
         pla.setDataPlatnosci(new Date());
         pla.setRodzajpłatnosci(getSelectedPaymentl());
         pla.setIdUzytkownik(user.getIdUzytkownik());
         pla.setKodPlatnosci(generateRandomCode());
+        platnoscDAO.create(pla);
+        } catch (Exception e) {
+              System.out.println("blad platnosc");
+        }
+
+      
         return pla;
     }
-    
-    
-    
-    
-     public static String generateRandomCode() {
+
+    public void GenerateZHK(Zamowienia order, Ksiazki book) {
+        ZamowieniaHasKsiazki ZHK = new ZamowieniaHasKsiazki();
+        ZHK.setKsiazkiidKsiazki(book);
+        ZHK.setZamowieniaIdzamowienia(order);
+        ZHK.setIloscksiazek(totalBooks);
+        zhkDAO.create(ZHK);
+    }
+
+    public static String generateRandomCode() {
         // Tworzenie losowego 16-znakowego ciągu alfanumerycznego
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder randomString = new StringBuilder();
@@ -167,5 +221,5 @@ private static final Map<String, String> paymentMethodMap = Map.of(
         }
         return randomString.toString();
     }
-    
+
 }

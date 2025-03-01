@@ -9,30 +9,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet>
             .container {
-                max-width: 800px;
-                margin: auto;
-                padding: 20px;
-                background: #f9f9f9;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
             .card {
-                background: #ffffff;
-                padding: 15px;
-                border-radius: 8px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                margin-bottom: 20px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
             }
             .button-container {
-                text-align: right;
-                margin-top: 10px;
+            text-align: right;
+            margin-top: 10px;
             }
         </h:outputStylesheet>
     </h:head>
     <h:body>
         <div class="container">
             <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" style="margin-bottom: 15px;" />
-            
+
             <h:form id="koszykForm">
                 <div class="card">
                     <h:outputText value="Zawartość Koszyka:" style="font-size: 18px; font-weight: bold;" />
@@ -49,13 +49,24 @@
                         <p:column headerText="Ilość">
                             <h:outputText value="#{ksiazka.ilosc}" />
                         </p:column>
+                        <p:column headerText="Łączna Cena">
+                            <h:outputText value="#{ksiazka.ilosc * ksiazka.ksiazka.cena}" />
+                        </p:column>
                         <p:column headerText="Opcje">
                             <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm" style="background-color: #d9534f; color: white; border: none;" />
                         </p:column>
+                        <f:facet name="footer">
+                            <p:column colspan="3" style="text-align: right; font-weight: bold;">
+                                Suma: 
+                                <h:outputText value="#{busketPageBB.totalPrice}">
+                                    <f:convertNumber pattern="###,##0.00" />
+                                </h:outputText>
+                            </p:column>
+                        </f:facet>
                     </p:dataTable>
                 </div>
             </h:form>
-            
+
             <div class="card">
                 <h:form>
                     <p:growl id="msg" showDetail="true"/>
@@ -64,7 +75,7 @@
                         <f:validator validatorId="addressValidator" />
                     </p:inputText>
                     <p:message for="float-input" />
-                    
+
                     <h5>Metoda Płatności</h5>
                     <p:selectOneMenu id="paymentMethod" value="#{validateBusketBB.paymentMethod}" style="width: 100%;">
                         <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
@@ -73,11 +84,11 @@
                         <f:validator validatorId="paymentMethodValidator" />
                     </p:selectOneMenu>
                     <p:message for="paymentMethod" />
-                    
+
                     <h5>Akceptacja regulaminu</h5>
                     <p:selectBooleanButton id="agree" value="#{validateBusketBB.agree}" onLabel="Tak" offLabel="Nie" style="width:100px;" />
                     <p:message for="agree"/>
-                    
+
                     <div class="button-container">
                         <h:commandButton value="Zatwierdź" action="#{validateBusketBB.submit}" style="background-color: #5cb85c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;" />
                     </div>
