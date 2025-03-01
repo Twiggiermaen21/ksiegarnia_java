@@ -101,4 +101,11 @@ private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
 }
     
     
+    public boolean zapisDoBazy(){
+        
+        
+        return true;
+    }
+    
+    
 }

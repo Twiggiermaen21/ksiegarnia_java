@@ -1,8 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
@@ -10,88 +5,84 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core">
     <h:head>
-
         <title>Koszyk</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet>
+            .container {
+                max-width: 800px;
+                margin: auto;
+                padding: 20px;
+                background: #f9f9f9;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .card {
+                background: #ffffff;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+            .button-container {
+                text-align: right;
+                margin-top: 10px;
+            }
+        </h:outputStylesheet>
     </h:head>
     <h:body>
-
-        <p:button value="Cofnij" icon="pi pi-arrow-left"  outcome="index"  />
-        <br/><br/>
-        <h:form id="koszykForm">
-            <div class="card">
-                <h:outputText value="Zawartość Koszyka:" />
-                <p:dataTable var="ksiazka" value="#{busketPageBB.busket}">
-                    <p:column headerText="Tytul">
-                        <h:outputText value="#{ksiazka.ksiazka.tytul}" />
-                    </p:column>
-
-                    <p:column headerText="Cena">
-                        <h:outputText value="#{ksiazka.ksiazka.cena}" />
-                    </p:column>
-
-                    <p:column headerText="Grafika">
-                        <h:graphicImage value="/resources/#{ksiazka.ksiazka.imgUrl}" style="height: 100px" />
-                    </p:column>
-                    <p:column headerText="Ilosc">
-                        <h:outputText value="#{ksiazka.ilosc}" />
-                    </p:column>
-                    <p:column headerText="Opcje">
-                        <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm" />
-
-                    </p:column>
-
-                </p:dataTable>
-            </div>
-        </h:form>
-
-        <div class="card">
-            <h:form>
-                <p:growl id="msg" showDetail="true"/>
-                <h5>Adres</h5>
-                <span class="ui-float-label">
-                    <p:inputText id="float-input" value="#{validateBusketBB.text}">
-
-                        <f:validator validatorId="addressValidator" />
-
-
-                        <!-- Wyświetlanie błędów -->
-
-                    </p:inputText>
-                </span>
-                <p:message for="float-input" />
-                <h5>Metoda Platnosci</h5>
-                <span class="ui-float-label">
-                    <p:inplace label="Wybierz" effectSpeed="fast" event="mouseenter" >
-                        <p:selectOneMenu id="paymentMethod" value="#{validateBusketBB.paymentMethod}">
-                            <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
-                            <f:selectItem itemLabel="Gotowka" itemValue="1"/>
-                            <f:selectItem itemLabel="Blik" itemValue="2"/>
-                            <f:validator validatorId="paymentMethodValidator" />
-                            <!-- Wyświetlanie błędów -->
-
-                        </p:selectOneMenu>
-                    </p:inplace>
-                </span>
-
-                <!-- Poprawny odwołanie do p:message -->
-                <p:message for="paymentMethod" />
-
-                <h5>Do you agree to the terms?</h5>
-                <span class="ui-float-label">
-                    <p:selectBooleanButton id="agree" value="#{validateBusketBB.agree}" onLabel="Yes" offLabel="No" style="width:6rem">
-                        <!-- Apply the custom validator -->
-                        <f:validator validatorId="selectPaymentButtonValidator"/>
-
-                    </p:selectBooleanButton>
-
-                </span>
-                <p:message for="agree"/>
-
-                <h:commandButton value="Submit" action="#{validateBusketBB.submit}" />
+        <div class="container">
+            <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" style="margin-bottom: 15px;" />
+            
+            <h:form id="koszykForm">
+                <div class="card">
+                    <h:outputText value="Zawartość Koszyka:" style="font-size: 18px; font-weight: bold;" />
+                    <p:dataTable var="ksiazka" value="#{busketPageBB.busket}" style="width:100%">
+                        <p:column headerText="Tytuł">
+                            <h:outputText value="#{ksiazka.ksiazka.tytul}" />
+                        </p:column>
+                        <p:column headerText="Cena">
+                            <h:outputText value="#{ksiazka.ksiazka.cena}" />
+                        </p:column>
+                        <p:column headerText="Grafika">
+                            <h:graphicImage value="/resources/#{ksiazka.ksiazka.imgUrl}" style="height: 100px; display: block; margin: auto;" />
+                        </p:column>
+                        <p:column headerText="Ilość">
+                            <h:outputText value="#{ksiazka.ilosc}" />
+                        </p:column>
+                        <p:column headerText="Opcje">
+                            <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBusket(ksiazka)}" update="koszykForm" style="background-color: #d9534f; color: white; border: none;" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
             </h:form>
+            
+            <div class="card">
+                <h:form>
+                    <p:growl id="msg" showDetail="true"/>
+                    <h5>Adres</h5>
+                    <p:inputText id="float-input" value="#{validateBusketBB.text}" style="width: 100%;">
+                        <f:validator validatorId="addressValidator" />
+                    </p:inputText>
+                    <p:message for="float-input" />
+                    
+                    <h5>Metoda Płatności</h5>
+                    <p:selectOneMenu id="paymentMethod" value="#{validateBusketBB.paymentMethod}" style="width: 100%;">
+                        <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
+                        <f:selectItem itemLabel="Gotówka" itemValue="1"/>
+                        <f:selectItem itemLabel="Blik" itemValue="2"/>
+                        <f:validator validatorId="paymentMethodValidator" />
+                    </p:selectOneMenu>
+                    <p:message for="paymentMethod" />
+                    
+                    <h5>Akceptacja regulaminu</h5>
+                    <p:selectBooleanButton id="agree" value="#{validateBusketBB.agree}" onLabel="Tak" offLabel="Nie" style="width:100px;" />
+                    <p:message for="agree"/>
+                    
+                    <div class="button-container">
+                        <h:commandButton value="Zatwierdź" action="#{validateBusketBB.submit}" style="background-color: #5cb85c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;" />
+                    </div>
+                </h:form>
+            </div>
         </div>
-
-
     </h:body>
 </html>
