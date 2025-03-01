@@ -4,6 +4,7 @@
  */
 package com.ksiegarnia.functions;
 
+import com.ksiegarnia.dao.KsiazkiDAO;
 import com.ksiegarnia.dao.PlatnosciDAO;
 import com.ksiegarnia.dao.ZamowieniaDAO;
 import com.ksiegarnia.dao.ZamowieniaKsiazkiDAO;
@@ -35,6 +36,7 @@ import java.util.Random;
 public class ValidateBusketBB {
 
     private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
+    private static final String PAGE_STAY_AT_THE_SAME = null;
     private String text; // Adres
     private Integer paymentMethod; // Metoda płatności
     private Boolean agree;
@@ -48,13 +50,16 @@ public class ValidateBusketBB {
     Flash flash;
     @EJB
     ZamowieniaDAO zamowieniaDAO;
+    @EJB
     PlatnosciDAO platnoscDAO;
+    @EJB
     ZamowieniaKsiazkiDAO zhkDAO;
-
-    private static final Map<String, String> paymentMethodMap = Map.of(
-            "0", "Przelew Bankowy",
-            "1", "Gotowka",
-            "2", "Blik"
+    @EJB
+    KsiazkiDAO ksiazkiDAO;
+    private static final Map<Integer, String> paymentMethodMap = Map.of(
+            0, "Przelew Bankowy",
+            1, "Gotowka",
+            2, "Blik"
     );
 
     public Boolean getAgree() {
@@ -108,27 +113,31 @@ public class ValidateBusketBB {
 
     // Metoda do przetwarzania danych po wysłaniu formularza
     public String submit() {
-        if (agree != null && agree) {
-            List<Object> fieldList = new ArrayList<>();
-            fieldList.add(this.text);           // Add the 'text' value (address)
-            fieldList.add(this.paymentMethod);  // Add the 'paymentMethod' value
-            fieldList.add(this.agree);
-            HttpSession session = (HttpSession) extcontext.getSession(false);
-            busket = (List<Busket>) session.getAttribute("busket");
-            for (Busket item : busket) {
-                totalPrice += item.getKsiazka().getCena() * item.getIlosc();
-                totalBooks += item.getIlosc();
-            }
+        HttpSession session = (HttpSession) extcontext.getSession(false);
+        busket = (List<Busket>) session.getAttribute("busket");
 
-            flash.put("busket", busket);
-            flash.put("fieldList", fieldList);
-            if (busket != null) {
+        // Check if the basket is not null or empty
+        if (busket != null && !busket.isEmpty()) {
+            // Ensure the "agree" checkbox is checked
+            if (agree != null && agree) {
+                List<Object> fieldList = new ArrayList<>();
+                fieldList.add(this.text);           // Add the 'text' value (address)
+                fieldList.add(this.paymentMethod);  // Add the 'paymentMethod' value
+                fieldList.add(this.agree);
+
+                for (Busket item : busket) {
+                    totalPrice += item.getKsiazka().getCena() * item.getIlosc();
+                    totalBooks += item.getIlosc();
+                }
+
+                flash.put("busket", busket);
+                flash.put("fieldList", fieldList);
 
                 try {
                     Zamowienia order = GenerateZam();
                     for (Busket item : busket) {
-
-                        GenerateZHK(order, item.getKsiazka());
+                        GenerateZHK(order, item.getKsiazka(), item.getIlosc());
+                        updateBook(item.getKsiazka(), item.getIlosc());
                     }
 
                 } catch (Exception e) {
@@ -136,20 +145,20 @@ public class ValidateBusketBB {
                 }
 
                 removeBusket();
-                // Możesz tutaj dodać logikę biznesową po zatwierdzeniu formularza
                 FacesMessage msg = new FacesMessage("Formularz został wysłany");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
             } else {
-                FacesMessage msg = new FacesMessage("Koszyk jest pusty");
+                FacesMessage msg = new FacesMessage("Zaakceptuj prawa");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
+                return null;  // Return null to prevent form submission if "agree" is not checked
             }
 
+            return PAGE_BILL_SHOW;
         } else {
-            FacesMessage msg = new FacesMessage("Zaakceptuj prawa");
+            FacesMessage msg = new FacesMessage("Koszyk jest pusty");
             FacesContext.getCurrentInstance().addMessage(null, msg);
+            return PAGE_STAY_AT_THE_SAME;
         }
-
-        return PAGE_BILL_SHOW;
     }
 
     public void removeBusket() {
@@ -166,49 +175,60 @@ public class ValidateBusketBB {
     }
 
     public Zamowienia GenerateZam() {
-Zamowienia zamowni = new Zamowienia();
+        Zamowienia zamowni = new Zamowienia();
         try {
-           
+
             HttpSession session = (HttpSession) extcontext.getSession(false);
             Uzytkownik user = (Uzytkownik) session.getAttribute("user");
             Platnosci platnosc = new Platnosci();
-            platnosc=GeneratePlat(user);
-            zamowni .setUzytkownikidUzytkownik(user);
-            zamowni .setDatazamowienia(new Date());
-            zamowni .setPlatnosciidPlatnosci(platnosc);
-            zamowni .setAdres(text);
-            zamowni .setKodZamowienia(generateRandomCode());
-            zamowieniaDAO.create(zamowni );
+            platnosc = GeneratePlat(user);
+            zamowni.setUzytkownikidUzytkownik(user);
+            zamowni.setDatazamowienia(new Date());
+            zamowni.setPlatnosciidPlatnosci(platnosc);
+            zamowni.setAdres(text);
+            zamowni.setKodZamowienia(generateRandomCode());
+            zamowieniaDAO.create(zamowni);
         } catch (Exception e) {
             System.out.println("blad zamownienie");
         }
-        return zamowni ;
+        return zamowni;
     }
 
-    public Platnosci GeneratePlat(   Uzytkownik user ) {
-       Platnosci pla = new Platnosci();
+    public Platnosci GeneratePlat(Uzytkownik user) {
+        Platnosci pla = new Platnosci();
         try {
-           
-              pla.setKwota(totalPrice);
-        pla.setDataPlatnosci(new Date());
-        pla.setRodzajpłatnosci(getSelectedPaymentl());
-        pla.setIdUzytkownik(user.getIdUzytkownik());
-        pla.setKodPlatnosci(generateRandomCode());
-        platnoscDAO.create(pla);
+
+            pla.setKwota(totalPrice);
+            pla.setDataPlatnosci(new Date());
+            pla.setRodzajpłatnosci(getSelectedPaymentl());
+            pla.setIdUzytkownik(user.getIdUzytkownik());
+            pla.setKodPlatnosci(generateRandomCode());
+            platnoscDAO.create(pla);
         } catch (Exception e) {
-              System.out.println("blad platnosc");
+            System.out.println("Błąd: " + e.getMessage());
         }
 
-      
         return pla;
     }
 
-    public void GenerateZHK(Zamowienia order, Ksiazki book) {
+    public void GenerateZHK(Zamowienia order, Ksiazki book, int ilosc) {
         ZamowieniaHasKsiazki ZHK = new ZamowieniaHasKsiazki();
         ZHK.setKsiazkiidKsiazki(book);
         ZHK.setZamowieniaIdzamowienia(order);
-        ZHK.setIloscksiazek(totalBooks);
+        ZHK.setIloscksiazek(ilosc);
         zhkDAO.create(ZHK);
+    }
+
+    public void updateBook(Ksiazki book, int ilosc) {
+        // Sprawdzenie, czy liczba książek do odjęcia jest mniejsza lub równa liczbie dostępnych książek
+        int pom = book.getIloscsztuk() - ilosc;
+      
+
+        // Ustawienie nowej ilości książek (nie liczby stron)
+        book.setIloscsztuk(pom);
+
+        // Zaktualizowanie książki w bazie danych
+        ksiazkiDAO.merge(book);
     }
 
     public static String generateRandomCode() {
