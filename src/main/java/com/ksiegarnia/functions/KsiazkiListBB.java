@@ -13,7 +13,7 @@ import jakarta.faces.context.Flash;
 import com.ksiegarnia.dao.KsiazkiDAO;
 import com.ksiegarnia.dao.KsiazkiHasAutorKsiazkiDAO;
 import com.ksiegarnia.entities.*;
-import com.ksiegarnia.enums.Busket;
+import com.ksiegarnia.enums.Basket;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
@@ -25,11 +25,11 @@ import java.util.ArrayList;
 public class KsiazkiListBB implements Serializable {
 
     private static final String PAGE_BOOK_SHOW = "bookShow?faces-redirect=true";
-    private static final String PAGE_BUSKET_SHOW = "busketPage?faces-redirect=true";
+    private static final String PAGE_BASKET_SHOW = "basketPage?faces-redirect=true";
     private static final String PAGE_STAY_AT_THE_SAME = null;
     private List<Ksiazki> list;
     private List <KsiazkiHasAutorKsiazki> listKHAK;
-    private List<Busket> busket = new ArrayList<>(); // Lista przedmiotów w koszyku
+    private List<Basket> basket = new ArrayList<>(); // Lista przedmiotów w koszyku
     private int quantity = 1;
     private String tytul;
     private int currentPage = 0;
@@ -99,20 +99,20 @@ public class KsiazkiListBB implements Serializable {
         return PAGE_BOOK_SHOW;
     }
 
-    public void addToBusket(Ksiazki ksiazki) {
+    public void addToBasket(Ksiazki ksiazki) {
         HttpSession session = (HttpSession) extcontext.getSession(true); // Tworzy sesję, jeśli nie istnieje
 
         // Pobranie koszyka z sesji
-        List<Busket> sessionBusket = (List<Busket>) session.getAttribute("busket");
+        List<Basket> sessionBasket = (List<Basket>) session.getAttribute("basket");
 
         // Jeśli koszyk nie istnieje w sesji, tworzymy nową listę
-        if (sessionBusket == null) {
-            sessionBusket = new ArrayList<>();
+        if (sessionBasket == null) {
+            sessionBasket = new ArrayList<>();
         }
 
         // Sprawdzamy, czy książka już jest w koszyku
         boolean found = false;
-        for (Busket item : sessionBusket) {
+        for (Basket item : sessionBasket) {
             if (item.getKsiazka().getIdKsiazki().equals(ksiazki.getIdKsiazki())) {
                 // Jeśli książka jest już w koszyku, zwiększamy ilość
                 item.setIlosc(item.getIlosc() + this.quantity);
@@ -123,44 +123,44 @@ public class KsiazkiListBB implements Serializable {
 
         // Jeśli książka nie była w koszyku, dodajemy ją z podaną ilością
         if (!found) {
-            sessionBusket.add(new Busket(ksiazki, this.quantity));
+            sessionBasket.add(new Basket(ksiazki, this.quantity));
         }
 
         // Aktualizacja sesji
-        session.setAttribute("busket", sessionBusket);
+        session.setAttribute("basket", sessionBasket);
 
         // Aktualizacja lokalnej listy, aby uniknąć desynchronizacji
-        this.busket = sessionBusket;
+        this.basket = sessionBasket;
                 System.out.println("Dodano książkę: " + ksiazki.getTytul() + " w ilości: " + this.quantity);
 
     }
 
-    public void usunBusket(Busket ksiazka) {
-        busket.remove(ksiazka);
+    public void usunBasket(Basket ksiazka) {
+        basket.remove(ksiazka);
     }
 
-    public void wyczyscBusket() {
+    public void wyczyscBasket() {
         HttpSession session = (HttpSession) extcontext.getSession(false);
 
         if (session != null) {
-            session.removeAttribute("busket"); // Usuwa koszyk z sesji
+            session.removeAttribute("basket"); // Usuwa koszyk z sesji
         }
 
-        this.busket.clear(); // Czyści lokalną listę
+        this.basket.clear(); // Czyści lokalną listę
     }
 
-    public List<Busket> getBusket() {
+    public List<Basket> getBasket() {
         HttpSession session = (HttpSession) extcontext.getSession(false); // false = nie tworzy nowej sesji
 
-        List<Busket> sessionBusket = (session != null) ? (List<Busket>) session.getAttribute("busket") : null;
+        List<Basket> sessionBasket = (session != null) ? (List<Basket>) session.getAttribute("basket") : null;
 
         // Jeśli koszyk nie istnieje, zwracamy pustą listę, ale nie zapisujemy jej w sesji
-        return (sessionBusket != null) ? sessionBusket : new ArrayList<>();
+        return (sessionBasket != null) ? sessionBasket : new ArrayList<>();
     }
 
-    public String showBusket() {
+    public String showBasket() {
 
-        return PAGE_BUSKET_SHOW;
+        return PAGE_BASKET_SHOW;
     }
 
     public void nextPage() {

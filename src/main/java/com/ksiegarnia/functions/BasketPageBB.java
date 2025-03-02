@@ -4,8 +4,8 @@
  */
 package com.ksiegarnia.functions;
 
-import com.ksiegarnia.entities.Ksiazki;
-import com.ksiegarnia.enums.Busket;
+
+import com.ksiegarnia.enums.Basket;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.inject.Inject;
@@ -22,28 +22,28 @@ import java.util.List;
 
 @Named
 @SessionScoped
-public class BusketPageBB implements Serializable{
-    private List<Busket>  busket;
+public class BasketPageBB implements Serializable{
+    private List<Basket>  basket;
     private double totalPrice; 
     @Inject
     ExternalContext extcontext;
     
-    public List<Busket> getBusket(){
+    public List<Basket> getBasket(){
    HttpSession session = (HttpSession) extcontext.getSession(false);
   if (session != null) {
-        busket = (List<Busket>) session.getAttribute("busket");
-        if (busket == null) {
-            busket = new ArrayList<>(); // Jeśli koszyk jest null, przypisz pustą listę
+        basket = (List<Basket>) session.getAttribute("basket");
+        if (basket == null) {
+            basket = new ArrayList<>(); // Jeśli koszyk jest null, przypisz pustą listę
         }
     } else {
-        busket = new ArrayList<>(); // Jeśli sesja jest null, przypisz pustą listę
+        basket = new ArrayList<>(); // Jeśli sesja jest null, przypisz pustą listę
     }
-        return busket;
+        return basket;
     }
     
     public double getTotalPrice(){
-        if(busket!=null){
-         for (Busket item : busket) {
+        if(basket!=null){
+         for (Basket item : basket) {
                 totalPrice += item.getKsiazka().getCena() * item.getIlosc();
                 
             }

@@ -13,7 +13,7 @@ import com.ksiegarnia.entities.Platnosci;
 import com.ksiegarnia.entities.Uzytkownik;
 import com.ksiegarnia.entities.Zamowienia;
 import com.ksiegarnia.entities.ZamowieniaHasKsiazki;
-import com.ksiegarnia.enums.Busket;
+import com.ksiegarnia.enums.Basket;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
@@ -33,14 +33,14 @@ import java.util.Random;
 
 @Named
 @RequestScoped
-public class ValidateBusketBB {
+public class ValidateBasketBB {
 
     private static final String PAGE_BILL_SHOW = "billPage?faces-redirect=true";
     private static final String PAGE_STAY_AT_THE_SAME = null;
     private String text; // Adres
     private Integer paymentMethod; // Metoda płatności
     private Boolean agree;
-    private List<Busket> busket;
+    private List<Basket> basket;
     private Zamowienia zam;
     private double totalPrice;
     private int totalBooks;
@@ -114,10 +114,10 @@ public class ValidateBusketBB {
     // Metoda do przetwarzania danych po wysłaniu formularza
     public String submit() {
         HttpSession session = (HttpSession) extcontext.getSession(false);
-        busket = (List<Busket>) session.getAttribute("busket");
+        basket = (List<Basket>) session.getAttribute("busket");
 
         // Check if the basket is not null or empty
-        if (busket != null && !busket.isEmpty()) {
+        if (basket != null && !basket.isEmpty()) {
             // Ensure the "agree" checkbox is checked
             if (agree != null && agree) {
                 List<Object> fieldList = new ArrayList<>();
@@ -125,17 +125,17 @@ public class ValidateBusketBB {
                 fieldList.add(this.paymentMethod);  // Add the 'paymentMethod' value
                 fieldList.add(this.agree);
 
-                for (Busket item : busket) {
+                for (Basket item : basket) {
                     totalPrice += item.getKsiazka().getCena() * item.getIlosc();
                     totalBooks += item.getIlosc();
                 }
 
-                flash.put("busket", busket);
+                flash.put("basket", basket);
                 flash.put("fieldList", fieldList);
 
                 try {
                     Zamowienia order = GenerateZam();
-                    for (Busket item : busket) {
+                    for (Basket item : basket) {
                         GenerateZHK(order, item.getKsiazka(), item.getIlosc());
                         updateBook(item.getKsiazka(), item.getIlosc());
                     }
@@ -144,7 +144,7 @@ public class ValidateBusketBB {
                     System.out.println("Błąd: " + e.getMessage());
                 }
 
-                removeBusket();
+                removeBasket();
                 FacesMessage msg = new FacesMessage("Formularz został wysłany");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
             } else {
@@ -161,13 +161,13 @@ public class ValidateBusketBB {
         }
     }
 
-    public void removeBusket() {
+    public void removeBasket() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 
         if (session != null) {
-            session.removeAttribute("busket");
-            System.out.println("Busket attribute removed successfully!");
+            session.removeAttribute("basket");
+            System.out.println("Basket attribute removed successfully!");
 
         } else {
             System.out.println("Session is null, cannot remove attribute.");

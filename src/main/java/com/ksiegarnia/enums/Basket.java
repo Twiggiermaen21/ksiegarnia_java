@@ -10,11 +10,11 @@ import com.ksiegarnia.entities.Ksiazki;
  *
  * @author kacpe
  */
-public class Busket {
+public class Basket {
     private Ksiazki ksiazka;
     private int ilosc;
 
-    public Busket(Ksiazki ksiazka, int ilosc) {
+    public Basket(Ksiazki ksiazka, int ilosc) {
         this.ksiazka = ksiazka;
         this.ilosc = ilosc;
     }
@@ -38,7 +38,7 @@ public class Busket {
 
     @Override
     public String toString() {
-        return "BusketItem{" +
+        return "BasketItem{" +
                "ksiazka=" + ksiazka.getTytul() +
                ", ilosc=" + ilosc +
                '}';

@@ -10,9 +10,9 @@ import com.ksiegarnia.entities.Uzytkownik;
 import com.ksiegarnia.entities.Zamowienia;
 import com.ksiegarnia.entities.ZamowieniaHasKsiazki;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.RequestScoped;
+
 import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.Flash;
+
 import jakarta.inject.Inject;
 
 import jakarta.inject.Named;
