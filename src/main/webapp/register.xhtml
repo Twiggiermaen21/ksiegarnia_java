@@ -11,102 +11,57 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
       xmlns:f="jakarta.faces.core"
       xmlns:c="jakarta.tags.core">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>Rejestracja</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-        <style>
-            /* Global Body Styles */
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-            }
-            .field {
-                margin-bottom: 20px;
-            }
-            /* Container Style */
-            .container {
-                background-color: #fff;
-                border-radius: 8px;
-                padding: 30px;
-                width: 300px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-            h2 {
-                text-align: center;
-                margin-bottom: 20px;
-                color: #333;
-
-                .login-button {
-                    width: 100%;
-                    padding: 12px;
-                    background-color: #007bff;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    font-size: 16px;
-                    cursor: pointer;
-                    transition: background-color 0.3s;
-                }
-
-                .login-button:hover {
-                    background-color: #0056b3;
-                }
-
-
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/logReg.css"/>
     </h:head>
     <h:body>
         <div class="container">
-     <h:form>
-    <h2>Rejestracja</h2>
-    <div class="card">
-        <div class="grid ui-fluid">
-            <div class="field">
-                <h:outputLabel for="username" value="User name"/>
-                <p:inputText id="username" value="#{registerBB.username}" >
-                    <f:validator validatorId="usernameValidator"/>
-                </p:inputText>
-                <p:message for="username"/>
-            </div>
+            <h:form>
+                <h2>Rejestracja</h2>
+                <div class="card">
+                    <div class="grid ui-fluid">
+                        <div class="field">
+                            <h:outputLabel for="username" value="User name"/>
+                            <p:inputText id="username" value="#{registerBB.username}" >
+                                <f:validator validatorId="usernameValidator"/>
+                            </p:inputText>
+                            <p:message for="username"/>
+                        </div>
 
-            <div class="field">
-                <h:outputLabel for="surname" value="User surname"/>
-                <p:inputText id="surname" value="#{registerBB.surname}" >
-                    <f:validator validatorId="surnameValidator"/>
-                </p:inputText>
-                <p:message for="surname"/>
-            </div>
+                        <div class="field">
+                            <h:outputLabel for="surname" value="User surname"/>
+                            <p:inputText id="surname" value="#{registerBB.surname}" >
+                                <f:validator validatorId="surnameValidator"/>
+                            </p:inputText>
+                            <p:message for="surname"/>
+                        </div>
 
-            <div class="field">
-                <h:outputLabel for="email" value="Email"/>
-                <p:inputText id="email" value="#{registerBB.email}" >
-                    <f:validator validatorId="emailValidator"/>
-                </p:inputText>
-                <p:message for="email"/>
-            </div>
+                        <div class="field">
+                            <h:outputLabel for="email" value="Email"/>
+                            <p:inputText id="email" value="#{registerBB.email}" >
+                                <f:validator validatorId="emailValidator"/>
+                            </p:inputText>
+                            <p:message for="email"/>
+                        </div>
 
-            <div class="field">
-                <h:outputLabel for="password" value="Password"/>
-                <p:password id="password" value="#{registerBB.password}" >
-                    <f:validator validatorId="passwordValidator"/>
-                </p:password>
-                <p:message for="password"/>
-            </div>
-        </div>
-        <div class="button-container">
-            <h:commandButton value="Zarejestruj się" action="#{registerBB.register}" styleClass="login-button"/>
-            <p:button value="Cofnij" outcome="login" styleClass="login-button"/>
-        </div>
-    </div>
-</h:form>
+                        <div class="field">
+                            <h:outputLabel for="password" value="Password"/>
+                            <p:password id="password" value="#{registerBB.password}" >
+                                <f:validator validatorId="passwordValidator"/>
+                            </p:password>
+                            <p:message for="password"/>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <h:commandButton value="Zarejestruj się" action="#{registerBB.register}" styleClass="login-button"/>
+                        <p:button value="Cofnij" outcome="index"
+                                  styleClass="ui-button-secondary"/>
+                    </div>
+                </div>
+            </h:form>
 
-<h:messages globalOnly="true" showDetail="true" showSummary="true" style="color: red;" />
+            <h:messages globalOnly="true" showDetail="true" showSummary="true" style="color: red;" />
 
         </div>
     </h:body>

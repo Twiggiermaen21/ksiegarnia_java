@@ -3,119 +3,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="jakarta.faces.html">
-
     <h:head>
         <title>Logowanie</title>
-
-
         <!-- Inline CSS -->
-        <style>
-            /* Global Body Styles */
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-            }
-
-            /* Container Style */
-            .container {
-                background-color: #fff;
-                border-radius: 8px;
-                padding: 30px;
-                width: 300px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-
-            /* Heading Style */
-            h2 {
-                text-align: center;
-                margin-bottom: 20px;
-                color: #333;
-            }
-
-            /* Field Style */
-            .field {
-                margin-bottom: 20px;
-            }
-
-            h:outputLabel {
-                font-size: 14px;
-                color: #333;
-            }
-
-            .input-text {
-                width: 100%;
-                padding: 10px;
-                margin-top: 5px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                font-size: 14px;
-            }
-
-            /* Button Style */
-            .login-button {
-                width: 100%;
-                padding: 12px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                font-size: 16px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            }
-
-            .login-button:hover {
-                background-color: #0056b3;
-            }
-
-            /* Error Message Style */
-            .error-message {
-                color: red;
-                font-size: 12px;
-                text-align: center;
-            }
-        </style>
-
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/logReg.css"/>
     </h:head>
-
-    <body>
+    <h:body>
         <div class="container">
             <h:form>
-
-
-                <h2>Logowanie</h2>
-
+                <h2>Logowanie</h2>  
                 <div class="field">
                     <h:outputLabel for="email" value="Email:"/>
                     <h:inputText id="email" value="#{logInOutBB.email}" required="true" 
                                  styleClass="input-text"/>
                 </div>
-
                 <div class="field">
                     <h:outputLabel for="password" value="Hasło:"/>
                     <h:inputSecret id="password" value="#{logInOutBB.password}" required="true" 
                                    styleClass="input-text"/>
                 </div>
-
                 <div class="button-container">
-                    <h:commandButton value="Zaloguj" action="#{logInOutBB.login}" 
-                                     styleClass="login-button"/>
-
+                    <h:commandButton value="Zaloguj" action="#{logInOutBB.login}"  styleClass="login-button"/>
                 </div>
-
                 <h:messages globalOnly="true" styleClass="error-message"/>
-
             </h:form>
             <h:form>
                 <p:commandButton value="Zarejestruj" action="#{logInOutBB.registerPage}" styleClass="ui-button-secondary" />
-                <p:button value="Cofnij" outcome="index"
-                          styleClass="ui-button-secondary"/>
+                <p:button value="Cofnij" outcome="index"  styleClass="ui-button-secondary"/>
             </h:form>
         </div>
-    </body>
+    </h:body>
 </html>
