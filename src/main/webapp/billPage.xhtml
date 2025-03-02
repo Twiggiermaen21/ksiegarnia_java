@@ -16,15 +16,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <!-- Wbudowane style CSS -->
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/billPage.css"/>
     </h:head>
-    <h:body>
-        <div class="invoice-container">
-            <div class="invoice-header">
-                <h1>Rachunek</h1>
-            </div>
+<h:body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h1>Paragon Zakupu</h1>
+            <p class="invoice-subtitle">Dziękujemy za zakupy!</p>
+        </div>
 
+        <div class="invoice-section">
+            <h2>Produkty</h2>
             <h:dataTable value="#{flash.basket}" var="item" styleClass="invoice-table">
                 <h:column>
-                    <f:facet name="header">Nazwa</f:facet>
+                    <f:facet name="header">Zdjęcie</f:facet>
                     <h:graphicImage value="/resources/#{item.ksiazka.imgUrl}" style="height: 100px" />
                 </h:column>
                 <h:column>
@@ -37,20 +40,53 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </h:column>
                 <h:column>
                     <f:facet name="header">Cena</f:facet>
-                    #{item.ksiazka.cena}
+                    #{item.ksiazka.cena} PLN
                 </h:column>
             </h:dataTable>
+        </div>
 
+        <div class="invoice-section">
+            <h2>Informacje o Zamówieniu</h2>
             <h:dataTable value="#{flash.fieldList}" var="field" styleClass="invoice-info">
                 <h:column>
-                    <f:facet name="header">Pole</f:facet>
-                    #{field}
+                    <f:facet name="header">Data Zamówienia</f:facet>
+                    #{field.datazamowienia}
                 </h:column>
-            </h:dataTable>
 
-            <div class="back-button">
-                <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" />
-            </div>
+                <h:column>
+                    <f:facet name="header">Rodzaj Płatności</f:facet>
+                  
+                    #{field.platnosciidPlatnosci.rodzajpłatnosci}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Adres</f:facet>
+                    #{field.adres}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Kod Zamówienia</f:facet>
+                    #{field.kodZamowienia}
+                </h:column>
+            
+        
+
+        <div class="invoice-footer">
+            <h3>Podsumowanie</h3>
+            <h:outputText value="Całkowita kwota: " />
+            <h:outputText value="#{field.platnosciidPlatnosci.kwota}PLN" styleClass="total-amount" />
         </div>
-    </h:body>
+</h:dataTable>
+            </div>
+        <div class="back-button">
+            <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" />
+        </div>
+    </div>
+</h:body>
+
+<!-- Style for the invoice -->
+<h:head>
+    <h:outputStylesheet name="styles.css" />
+</h:head>
+
 </html>

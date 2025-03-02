@@ -4,7 +4,6 @@
  */
 package com.ksiegarnia.functions;
 
-
 import com.ksiegarnia.dao.RolaDAO;
 import com.ksiegarnia.dao.UserDAO;
 import com.ksiegarnia.dao.UzytkownikHasRolaDAO;
@@ -14,46 +13,40 @@ import com.ksiegarnia.entities.UzytkownikHasRola;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
-
-
 
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 
-
 @Named
 @SessionScoped
-public class RegisterBB implements Serializable{
+public class RegisterBB implements Serializable {
 
     private String username;
     private String surname;
     private Date dataaktualizacji;
-     private int idaktualizacji;
+    private int idaktualizacji;
     private String email;
     private String password;
     private Date datautworzenia;
     private Boolean aktywny;
-            private Uzytkownik newUser;
+    private Uzytkownik newUser;
 
     @EJB
     private UserDAO userDAO;
-      @EJB
+    @EJB
     private UzytkownikHasRolaDAO UHRDAO;
-       @EJB
-       private RolaDAO roleDAO;
-    
-       public RegisterBB() {
-           this.idaktualizacji=0;
-        this.dataaktualizacji= new Date(0);
-        this.datautworzenia = new Date(); // ustawia bieżącą datę i godzinę
-        this.aktywny = true; // Załóżmy, że domyślnie obiekt jest aktywny
+    @EJB
+    private RolaDAO roleDAO;
+
+    public RegisterBB() {
+        this.idaktualizacji = 0;
+        this.dataaktualizacji = new Date(0);
+        this.datautworzenia = new Date();
+        this.aktywny = true;
     }
-    
-    
-    // Getters and Setters
+
     public String getUsername() {
         return username;
     }
@@ -85,53 +78,58 @@ public class RegisterBB implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
 
-    // Metoda rejestracji
     public String register() {
-        // Przykładowa logika rejestracji
-        if (username != null && surname != null && email != null && password != null 
-                && userDAO.findByEmail(email)== null
-                ) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Rejestracja zakończona sukcesem!", null));
-            makeUser();
-            makeRole();
-             return "login.xhtml?faces-redirect=true"; // lub inna strona, np. "home.xhtml"
-        } 
-         FacesMessage msg = new FacesMessage("jest juz taki email");
-                 
+        try {
+            if (username != null && surname != null && email != null && password != null
+                    && userDAO.findByEmail(email) == null) {
+
+      
+                newUser = new Uzytkownik();
+                newUser.setEmail(email);
+                newUser.setHaslo(password);
+                newUser.setAktywny(aktywny);
+                newUser.setIdaktualizacji(idaktualizacji);
+                newUser.setDataaktualizacji(dataaktualizacji);
+                newUser.setDatautworzenia(datautworzenia);
+                newUser.setImie(username);
+                newUser.setNazwisko(surname);
+
+                try {
+                    userDAO.create(newUser);  
+                } catch (Exception e) {
+                    FacesMessage msg = new FacesMessage("Błąd przy tworzeniu użytkownika: " + e.getMessage());
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                    return null;
+                }
+
+         
+                UzytkownikHasRola UHR = new UzytkownikHasRola();
+                Rola role = roleDAO.getById(3);
+                UHR.setRolaidRola(role);
+                UHR.setDatanadania(datautworzenia);
+                UHR.setUzytkownikidUzytkownik(newUser);
+
+                try {
+                    UHRDAO.create(UHR);  
+                } catch (Exception e) {
+                    FacesMessage msg = new FacesMessage("Błąd przy przypisywaniu roli: " + e.getMessage());
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                    return null;
+                }
+
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Rejestracja zakończona sukcesem!", null));
+                return "login.xhtml?faces-redirect=true";
+            } else {
+                FacesMessage msg = new FacesMessage("Taki email już istnieje");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage("Błąd rejestracji: " + e.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, msg);
-      return null;
+        }
+        return null;
     }
-    
-    
-    
-    public String makeRole(){
-        UzytkownikHasRola UHR = new UzytkownikHasRola();
-        Rola role =roleDAO.getById(3);
-     UHR.setRolaidRola(role);
-        UHR.setDatanadania(datautworzenia);
-        UHR.setUzytkownikidUzytkownik(newUser);
-        UHRDAO.create(UHR);
-        return "succes";
-    }
-    
-    public String makeUser(){
-         newUser=new Uzytkownik();
-        newUser.setEmail(email);
-        newUser.setHaslo(password);
-        newUser.setAktywny(aktywny);
-        newUser.setIdaktualizacji(idaktualizacji);
-        newUser.setDataaktualizacji(dataaktualizacji);
-        newUser.setDatautworzenia(datautworzenia);
-        newUser.setImie(username);
-        newUser.setNazwisko(surname);
-        userDAO.create(newUser);
-         return "succes";
-    }
-    
-    
-    
+
 }

@@ -57,39 +57,26 @@ private List<ZamowieniaHasKsiazki> zhklist;
     }
     
      public List<Zamowienia> getList() {
-        idUzytkownik();
-     
-        //2. Get list
-        list = zamowieniaDAO.getFullList(user);
-
-     
+        list = zamowieniaDAO.getFullList( data.getUser());
         return list;
     }
      
      public List<Orders> getZHK(){
          List<Orders> ListaZbady = new ArrayList<>();
-
-         getList();
-         zhklist=zamowieniaKsiazkiDAO.getFullList(list);
-         
+         zhklist=zamowieniaKsiazkiDAO.getFullList(getList());
          for (int i = 0; i < list.size(); i++) {
-             List<Ksiazki> ksiazki = new ArrayList<>();  // Initialize here
+             List<Ksiazki> ksiazki = new ArrayList<>(); 
         List<Integer> bookCount = new ArrayList<>(); 
              for (int j = 0; j <zhklist.size(); j++) {
-                 
-                 if (list.get(i).equals(zhklist.get(j).getZamowieniaIdzamowienia()))
-{
+                 if (list.get(i).equals(zhklist.get(j).getZamowieniaIdzamowienia())){
                      ksiazki.add(zhklist.get(j).getKsiazkiidKsiazki());
                      bookCount.add(zhklist.get(j).getIloscksiazek());
                  }
-                
-                 
+ 
              }
               Orders pom = new Orders(ksiazki,list.get(i),bookCount);
                  ListaZbady.add(pom);
          }
-     
-         
          return ListaZbady;
      }
     
@@ -103,10 +90,6 @@ private List<ZamowieniaHasKsiazki> zhklist;
     }
     
     public String OrdersPage() {
-        //1. Pass object through session
-        //HttpSession session = (HttpSession) extcontext.getSession(true);
-        //session.setAttribute("person", person);
-
         return PAGE_Orders;
     }
 }

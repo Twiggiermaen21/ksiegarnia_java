@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.ksiegarnia.functions;
 
 import com.ksiegarnia.dao.UserDAO;
@@ -17,14 +14,10 @@ import java.io.Serializable;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
-/**
- *
- * @author kacpe
- */
+
 @Named
 @ViewScoped
 public class UserPageEdit implements Serializable {
-
     private Uzytkownik user;
 
     @Inject
@@ -35,7 +28,6 @@ public class UserPageEdit implements Serializable {
     @PostConstruct
     public void init() {
         user = data.getUser();
-
     }
 
     public Uzytkownik getuser() {
@@ -55,20 +47,15 @@ public class UserPageEdit implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     } catch (PersistenceException e) {
-        // Obsługa błędów związanych z bazą danych
+      
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Database Error", "Something went wrong with the database.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     } catch (Exception e) {
-        // Inne, mniej specyficzne wyjątki
+      
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Unexpected Error", "Something went wrong.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }
-
-    
-    
-    
-    
     
     public void onRowCancel(RowEditEvent<Uzytkownik> event) {
         FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getEmail()));

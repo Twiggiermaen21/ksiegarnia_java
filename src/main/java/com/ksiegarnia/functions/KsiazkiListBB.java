@@ -32,7 +32,7 @@ public class KsiazkiListBB implements Serializable {
     private int currentPage = 0;
     private final int pageSize = 9;
     private int totalBooks = 0;
-    private HttpSession session;
+    
 
     @Inject
     ExternalContext extcontext;
@@ -43,9 +43,7 @@ public class KsiazkiListBB implements Serializable {
     @EJB
     KsiazkiHasAutorKsiazkiDAO khakDAO;
 
-    public KsiazkiListBB() {
-        session = (HttpSession) extcontext.getSession(false);
-    }
+    
 
     public List<Ksiazki> getList() {
         Map<String, Object> searchParams = new HashMap<String, Object>();
@@ -65,6 +63,7 @@ public class KsiazkiListBB implements Serializable {
     }
 
     public void addToBasket(Ksiazki ksiazki) {
+        HttpSession session = (HttpSession) extcontext.getSession(false);
         List<Basket> sessionBasket = (List<Basket>) session.getAttribute("basket");
         if (sessionBasket == null) {
             sessionBasket = new ArrayList<>();
@@ -81,7 +80,7 @@ public class KsiazkiListBB implements Serializable {
         if (!found) {
             sessionBasket.add(new Basket(ksiazki, this.quantity));
         }
-
+ 
         session.setAttribute("basket", sessionBasket);
         this.basket = sessionBasket;
         System.out.println("Dodano książkę: " + ksiazki.getTytul() + " w ilości: " + this.quantity);
@@ -93,6 +92,7 @@ public class KsiazkiListBB implements Serializable {
     }
 
     public void wyczyscBasket() {
+          HttpSession   session = (HttpSession) extcontext.getSession(false);
         if (session != null) {
             session.removeAttribute("basket");
         }
@@ -100,6 +100,7 @@ public class KsiazkiListBB implements Serializable {
     }
 
     public List<Basket> getBasket() {
+       HttpSession   session = (HttpSession) extcontext.getSession(false);
         List<Basket> sessionBasket = (session != null) ? (List<Basket>) session.getAttribute("basket") : null;
         return (sessionBasket != null) ? sessionBasket : new ArrayList<>();
     }

@@ -13,13 +13,9 @@ import com.ksiegarnia.dao.UzytkownikHasRolaDAO;
 import com.ksiegarnia.entities.Uzytkownik;
 import com.ksiegarnia.entities.UzytkownikHasRola;
 import jakarta.ejb.EJB;
-
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.context.Flash;
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.util.List;
 
