@@ -11,20 +11,17 @@
     <h:head>
         <meta charset="utf-8" />
         <title>Szczegóły książki</title>
-        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/bookPage.css"/>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/basket.css"/>
     </h:head>
 
     <h:body style="background-color: #f8f8f8; font-family: Arial, sans-serif;">
+        <ui:include src="/templates/header.xhtml"/>
 
         <div class="container">
             <h2 class="header">Szczegóły książki</h2>
-
             <h:form rendered="#{bookShowBB.ksiazki != null}">
                 <div class="book-container">
-
                     <h:graphicImage value="/resources/#{bookShowBB.ksiazki.imgUrl}" styleClass="book-image" />
-
-
                     <div class="book-info">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel value="Tytuł" />

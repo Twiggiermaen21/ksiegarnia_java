@@ -1,8 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
@@ -13,80 +8,83 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <title>Rachunek</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <!-- Wbudowane style CSS -->
+  
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/billPage.css"/>
     </h:head>
-<h:body>
-    <div class="invoice-container">
-        <div class="invoice-header">
-            <h1>Paragon Zakupu</h1>
-            <p class="invoice-subtitle">Dziękujemy za zakupy!</p>
-        </div>
-
-        <div class="invoice-section">
-            <h2>Produkty</h2>
-            <h:dataTable value="#{flash.basket}" var="item" styleClass="invoice-table">
-                <h:column>
-                    <f:facet name="header">Zdjęcie</f:facet>
-                    <h:graphicImage value="/resources/#{item.ksiazka.imgUrl}" style="height: 100px" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Tytuł</f:facet>
-                    #{item.ksiazka.tytul}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Ilość</f:facet>
-                    #{item.ilosc}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Cena</f:facet>
-                    #{item.ksiazka.cena} PLN
-                </h:column>
-            </h:dataTable>
-        </div>
-
-        <div class="invoice-section">
-            <h2>Informacje o Zamówieniu</h2>
-            <h:dataTable value="#{flash.fieldList}" var="field" styleClass="invoice-info">
-                <h:column>
-                    <f:facet name="header">Data Zamówienia</f:facet>
-                    #{field.datazamowienia}
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">Rodzaj Płatności</f:facet>
-                  
-                    #{field.platnosciidPlatnosci.rodzajpłatnosci}
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">Adres</f:facet>
-                    #{field.adres}
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">Kod Zamówienia</f:facet>
-                    #{field.kodZamowienia}
-                </h:column>
-            
-        
-
-        <div class="invoice-footer">
-            <h3>Podsumowanie</h3>
-            <h:outputText value="Całkowita kwota: " />
-            <h:outputText value="#{field.platnosciidPlatnosci.kwota}PLN" styleClass="total-amount" />
-        </div>
-</h:dataTable>
+    <h:body>
+        <div class="invoice-container">
+            <div class="invoice-header">
+                <h1>Paragon Zakupu</h1>
+                <p class="invoice-subtitle">Dziękujemy za zakupy!</p>
             </div>
-        <div class="back-button">
-            <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" />
-        </div>
-    </div>
-</h:body>
 
-<!-- Style for the invoice -->
-<h:head>
-    <h:outputStylesheet name="styles.css" />
-</h:head>
+            <div class="invoice-section">
+                <h2>Produkty</h2>
+                <h:dataTable value="#{flash.basket}" var="item" styleClass="invoice-table">
+                    <h:column>
+                        <f:facet name="header">Zdjęcie</f:facet>
+                        <h:graphicImage value="/resources/#{item.ksiazka.imgUrl}" style="height: 100px" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Tytuł</f:facet>
+                            #{item.ksiazka.tytul}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ilość</f:facet>
+                            #{item.ilosc}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Cena</f:facet>
+                        #{item.ksiazka.cena} PLN
+                    </h:column>
+                </h:dataTable>
+            </div>
+
+            <div class="invoice-section">
+                <h2>Informacje o Zamówieniu</h2>
+                <h:form>
+                    <h:dataTable value="#{flash.fieldList}" var="field">
+                        <h:column>
+                            <br/>
+                            <f:facet name="header">Data Zamówienia</f:facet>
+                            <h:outputText value="#{field.datazamowienia}">
+                                <f:convertDateTime pattern="yyyy-MM-dd" />
+                            </h:outputText>
+                            <br/>
+
+
+                            <f:facet name="header">Rodzaj Płatności</f:facet>
+                            <h:outputText value="#{field.platnosciidPlatnosci.rodzajpłatnosci}" />
+
+                            <br/>
+
+                            <f:facet name="header">Adres</f:facet>
+                            <h:outputText value=" #{field.adres}" />
+                            <br/>
+
+                            <f:facet name="header">Kod Zamówienia</f:facet>
+                            <h:outputText value="#{field.kodZamowienia}" />
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+
+
+            </div>
+
+            <div class="invoice-footer">
+                <h3>Podsumowanie</h3>
+                <p>
+                    <strong>Całkowita kwota:</strong>
+                    <h:outputText value="#{flash.fieldList.platnosciidPlatnosci.kwota} PLN" styleClass="total-amount" />
+                </p>
+            </div>
+
+
+            <div class="back-button">
+                <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" />
+            </div>
+        </div>
+    </h:body>
+
 
 </html>
