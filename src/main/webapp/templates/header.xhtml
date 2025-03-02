@@ -8,11 +8,13 @@
 
     <div class="card" >
         <h:form>
-            <p:growl id="messages"/> <!-- sprawdzic-->
+            <p:growl id="messages"/> 
         
             <p:menubar hideDelay="1000">
                 <f:facet name="start">
-                    <p:graphicImage name="logo.webp" library="images"  style="height: 40px"/>
+              
+                    <p:graphicImage name="logo.webp" library="images"  style="height: 40px"  />
+         
                 </f:facet>
 
                 <p:divider layout="vertical"/>
@@ -28,16 +30,12 @@
                     </c:forEach>
                 </p:submenu>
                 <p:divider layout="vertical"/>
-                <!-- Panel wyszukiwania -->
+             
                 <f:facet name="end">
-                  
-
-                    <!-- Przycisk Logout - widoczny tylko jeśli użytkownik jest zalogowany -->
                     <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" rendered="#{logInOutBB.loggedIn}" />
-
-                    <!-- Przycisk Login - widoczny tylko jeśli użytkownik nie jest zalogowany -->
                     <p:commandButton value="Login" action="#{logInOutBB.loginPage}" icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" rendered="#{not logInOutBB.loggedIn}" />
                 </f:facet>
+                
             </p:menubar>
         </h:form>
     </div>

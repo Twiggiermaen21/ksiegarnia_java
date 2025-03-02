@@ -16,98 +16,77 @@
         <ui:include src="/templates/header.xhtml"/>
         
         <div class="container">
-        <h:form id="form">
-            <p:growl id="msgs" showDetail="true"/>
-            <div class="card">
-                <h5>Row Editing</h5>
-                <p:dataTable id="usersTable" var="user" value="#{userData.user}" editable="true"
-                             style="margin-bottom:20px">
+       <h:form id="form">
+    <p:growl id="msgs" showDetail="true"/>
+    <div class="card">
+        <h5>Row Editing</h5>
+        <p:dataTable id="usersTable" var="user" value="#{userData.user}" editable="true"
+                     style="margin-bottom:20px">
 
-                    <p:ajax event="rowEdit" listener="#{userPageEdit.onRowEdit}" update=":form:msgs"/>
-                    <p:ajax event="rowEditCancel" listener="#{userPageEdit.onRowCancel}" update=":form:msgs"/>
+            <p:ajax event="rowEdit" listener="#{userPageEdit.onRowEdit}" update=":form:msgs"/>
+            <p:ajax event="rowEditCancel" listener="#{userPageEdit.onRowCancel}" update=":form:msgs"/>
 
-                    <p:column headerText="Username">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{user.imie}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{user.imie}" style="width:100%"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
+            <p:column headerText="Imie">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{user.imie}"/>
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{user.imie}" style="width:200px;"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
 
-                    <p:column headerText="Usersurname">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{user.nazwisko}"/>   
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText  value="#{user.nazwisko}" style="width:100%" />
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
+            <p:column headerText="Nazwisko">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{user.nazwisko}"/>   
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{user.nazwisko}" style="width:200px;"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
 
-                    <p:column headerText="Data_aktualizacji">
+          
 
+           
 
-                        <h:outputText value="#{user.dataaktualizacji}">
-                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
-                        </h:outputText>
+            <p:column headerText="Email">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{user.email}"/>
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{user.email}" style="width:200px;"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
 
-                    </p:column>
+            <p:column headerText="Haslo">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{user.haslo.replaceAll('.', '*')}" />
+                    </f:facet>
+                    <f:facet name="input">
+                       <p:password value="#{user.haslo}" style="width:200px;"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
 
-                    <p:column headerText="Id_aktualizacjil">
+          
+            <p:column style="width:6rem">
+                <p:rowEditor editTitle="Edit User" cancelTitle="Cancel" saveTitle="Save"/>
+            </p:column>
+        </p:dataTable>
+        <p:button value="Cofnij" icon="pi pi-arrow-left"  outcome="index"  />
+    </div>
+</h:form>
 
-                        <h:outputText value="#{user.idaktualizacji}"/>
-
-                    </p:column>
-
-                    <p:column headerText="Email">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{user.email}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{user.email}" style="width:100%"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="haslo">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{user.haslo.replaceAll('.', '*')}" />
-                            </f:facet>
-                            <f:facet name="input">
-                               <p:password value="#{user.haslo}" style="width:100%"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="Data_utworzenia">
-
-                        <h:outputText value="#{user.datautworzenia}">
-                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
-                        </h:outputText>
-
-                    </p:column>
-
-                    <p:column headerText="aktywny">
-
-                        <h:outputText value="#{user.aktywny}"/>
-
-
-                    </p:column>
-
-                    <p:column style="width:6rem">
-                        <p:rowEditor editTitle="Edit User" cancelTitle="Cancel" saveTitle="Save"/>
-                    </p:column>
-                </p:dataTable>
-                <p:button value="Cofnij" icon="pi pi-arrow-left"  outcome="index"  />
-            </div>
-
-        </h:form>
+            
+            
+            
+            
              </div>
     </h:body>
 </html>

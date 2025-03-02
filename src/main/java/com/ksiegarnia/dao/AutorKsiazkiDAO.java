@@ -80,7 +80,7 @@ public class AutorKsiazkiDAO {
 
         // 3. Ustawianie parametrów
         if (nazwisko != null) {
-            query.setParameter("nazwisko", nazwisko + "%");  // Dopasowanie nazwiska od początku
+            query.setParameter("nazwisko", nazwisko + "%"); 
         }
 
         // 4. Wykonanie zapytania

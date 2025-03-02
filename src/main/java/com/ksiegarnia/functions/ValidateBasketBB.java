@@ -114,7 +114,7 @@ public class ValidateBasketBB {
     // Metoda do przetwarzania danych po wysłaniu formularza
     public String submit() {
         HttpSession session = (HttpSession) extcontext.getSession(false);
-        basket = (List<Basket>) session.getAttribute("busket");
+        basket = (List<Basket>) session.getAttribute("basket");
 
         // Check if the basket is not null or empty
         if (basket != null && !basket.isEmpty()) {

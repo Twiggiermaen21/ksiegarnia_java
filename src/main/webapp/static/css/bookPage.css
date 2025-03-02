@@ -1,0 +1,78 @@
+  .book-container {
+    display: flex;
+    align-items: flex-start; /* Aligns items at the top */
+    gap: 20px; /* Space between image and text */
+}
+
+.book-image {
+    max-width: 200px; /* Adjust image size */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.book-info {
+    flex: 1; /* Takes up remaining space */
+}
+
+.button-container {
+    margin-top: 20px;
+}
+            
+            
+            .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .header {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+            }
+
+           
+
+            .book-details {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #555;
+            }
+
+           
+
+            .book-info label {
+            font-weight: bold;
+            }
+
+            .form-input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            }
+
+           
+
+            .cancel-button, .save-button {
+            padding: 10px 20px;
+            background-color: #ff5733;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px;
+            text-decoration: none;
+            }
+
+            .cancel-button:hover, .save-button:hover {
+            background-color: #cc4628;
+            }

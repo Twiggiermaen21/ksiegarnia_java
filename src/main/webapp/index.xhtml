@@ -7,7 +7,6 @@
       xmlns:f="jakarta.faces.core"
       xmlns:c="jakarta.tags.core">
 
-
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Księgarnia</title>
@@ -16,25 +15,15 @@
     </h:head>
 
     <h:body>
-        <!-- menubar -->
         <ui:include src="/templates/header.xhtml"/>
-  
-
-
         <div class="container">
-
-
-            
-            <div class="left">
-            
-
-            </div>
-            <!-- Książki -->  
+            <div class="left"/>
             <div class="center">
-      
-                <ui:include src="/templates/books.xhtml"/></div>
-
-            <div class="right"><ui:include src="/templates/basket.xhtml"/> </div>
+                <ui:include src="/templates/books.xhtml"/>
+            </div>
+            <div class="right">
+                <ui:include src="/templates/basket.xhtml"/> 
+            </div>
         </div>
 
     </h:body>

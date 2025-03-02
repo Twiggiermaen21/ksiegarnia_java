@@ -4,14 +4,10 @@
  */
 package com.ksiegarnia.functions;
 
-import java.io.IOException;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import com.ksiegarnia.dao.UserDAO;
 import com.ksiegarnia.dao.UzytkownikHasRolaDAO;
 import com.ksiegarnia.entities.Uzytkownik;
@@ -37,17 +33,51 @@ public class LogInOutBB extends HttpServlet {
     private Uzytkownik loggedUser;
     private List<UzytkownikHasRola> loggedRola;
     private boolean loggedIn = false;
+    private FacesContext facesContext;
+    private HttpServletRequest request;
+    private HttpSession session;
 
-    @Inject
-    ExternalContext extcontext;
-
-    @Inject
-    Flash flash;
+    public LogInOutBB() {
+        facesContext = FacesContext.getCurrentInstance();
+        request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+    }
 
     @EJB
     UserDAO userDAO;
     @EJB
     UzytkownikHasRolaDAO uzytkownikHasRolaDAO;
+
+    public String login() {
+        Uzytkownik users = userDAO.getUser(email, password);
+
+        List<UzytkownikHasRola> userRole = uzytkownikHasRolaDAO.getFullList(users);
+        if (users != null && userRole != null) {
+            loggedUser = users;
+            loggedRola = userRole;
+            loggedIn = true;
+
+            session = request.getSession(true);
+            session.setAttribute("user", loggedUser);
+            session.setAttribute("role", loggedRola);
+            return "index.xhtml?faces-redirect=true";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nieprawidłowe dane logowania!", ""));
+
+            return null;
+        }
+    }
+
+    public String logout() {
+
+        session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        loggedUser = null;
+        loggedIn = false;
+        return "login.xhtml?faces-redirect=true";
+    }
 
     public String getEmail() {
         return email;
@@ -73,49 +103,16 @@ public class LogInOutBB extends HttpServlet {
         return loggedIn;
     }
 
-    public String login() {
-        Uzytkownik users = userDAO.getUser(email, password); // Pobieramy użytkownika po emailu
-        List<UzytkownikHasRola> userRole = uzytkownikHasRolaDAO.getFullList(users);
-        if (users != null && userRole != null) {
-            loggedUser = users;
-            loggedRola = userRole;
-            loggedIn = true;
-
-            // Pobranie sesji i zapisanie użytkownika
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user", loggedUser); // Zapisanie użytkownika w sesji
-            session.setAttribute("role", loggedRola);
-            return "index.xhtml?faces-redirect=true"; // Przekierowanie na stronę powitalną
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nieprawidłowe dane logowania!", ""));
-          
-            return null;
-        }
-    }
-
-    public String logout() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        loggedUser = null;
-        loggedIn = false;
-        return "login.xhtml?faces-redirect=true";
-    }
-
     public String loginPage() {
-
         return "login.xhtml?faces-redirect=true";
     }
 
     public String registerPage() {
-
         return "register.xhtml?faces-redirect=true";
+    }
+
+    public String indexPage() {
+        return "index.xhtml?faces-redirect=true";
     }
 
 }
