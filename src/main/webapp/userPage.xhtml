@@ -3,38 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="jakarta.faces.html"
+          xmlns:ui="jakarta.faces.facelets"
       xmlns:f="jakarta.faces.core">
     <h:head>
         <title>Strona Użytkownika</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/basket.css"/>
 
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-            }
-            .card {
-                background: white;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                width: 1000px;
-            }
-            .username {
-                font-size: 24px;
-                font-weight: bold;
-            }
-        </style>
     </h:head>
     <h:body>
-
+        <ui:include src="/templates/header.xhtml"/>
+        
+        <div class="container">
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
             <div class="card">
@@ -69,9 +50,9 @@
 
                     <p:column headerText="Data_aktualizacji">
 
-                        
-                            <h:outputText value="#{user.dataaktualizacji}">
-                         <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
+
+                        <h:outputText value="#{user.dataaktualizacji}">
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
                         </h:outputText>
 
                     </p:column>
@@ -79,7 +60,7 @@
                     <p:column headerText="Id_aktualizacjil">
 
                         <h:outputText value="#{user.idaktualizacji}"/>
-                            
+
                     </p:column>
 
                     <p:column headerText="Email">
@@ -96,10 +77,10 @@
                     <p:column headerText="haslo">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:outputText value="#{user.haslo}"/>
+                                <h:outputText value="#{user.haslo.replaceAll('.', '*')}" />
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{user.haslo}" style="width:100%"/>
+                               <p:password value="#{user.haslo}" style="width:100%"/>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
@@ -114,8 +95,8 @@
 
                     <p:column headerText="aktywny">
 
-                            <h:outputText value="#{user.aktywny}"/>
-                       
+                        <h:outputText value="#{user.aktywny}"/>
+
 
                     </p:column>
 
@@ -127,10 +108,7 @@
             </div>
 
         </h:form>
-
-
-
-
+             </div>
     </h:body>
 </html>
 

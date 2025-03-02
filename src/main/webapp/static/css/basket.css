@@ -86,3 +86,7 @@ h\:outputText {
 .btn-submit:hover {
     background-color: #4cae4c;    /* Zmiana koloru tła przy najechaniu */
 }
+.username {
+    font-size: 24px;
+    font-weight: bold;
+}

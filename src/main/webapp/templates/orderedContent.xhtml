@@ -16,14 +16,11 @@
                 <p:column field="zamowienia.datazamowienia" headerText="Data"  />
                 <p:column field="zamowienia.adres" headerText="Adres" />
 
-
                 <p:column headerText="Tytuly">
                     <ui:repeat var="ksiazka" value="#{row.ksiazki}">
                         <h:outputText value="#{ksiazka.tytul}" /><br/>
                     </ui:repeat>
                 </p:column>
-
-
 
                 <p:column  headerText="Ilosc Ksiazek" >
                     <ui:repeat var="ilosc" value="#{row.iloscKsiazek}">
