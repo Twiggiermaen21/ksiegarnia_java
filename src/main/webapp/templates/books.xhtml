@@ -7,6 +7,22 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
     
+              <h:form>
+                       <div class="searchbar-grid">
+    <div class="product card" >
+        <div class="ui-input-icon-left mr-2" style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ccc; padding: 10px; border-radius: 5px; margin-bottom: 10px; width: 100%; box-shadow: none;">
+            <i class="pi pi-fw pi-search" style="margin-right: 10px; margin-left: 10px;"></i>
+            <p:inputText placeholder="Search" value="#{ksiazkiListBB.tytul}" style="flex-grow: 1; border: none;">
+                <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
+            </p:inputText>
+        </div>
+    </div>
+                           </div>
+</h:form>
+                
+    
+    
+    
     <h:form id="booksTable">
         <p:growl id="msgs" showDetail="true"/>
         <div class="book-grid">

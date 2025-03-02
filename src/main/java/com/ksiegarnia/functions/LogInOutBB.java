@@ -76,7 +76,7 @@ public class LogInOutBB extends HttpServlet {
     public String login() {
         Uzytkownik users = userDAO.getUser(email, password); // Pobieramy użytkownika po emailu
         List<UzytkownikHasRola> userRole = uzytkownikHasRolaDAO.getFullList(users);
-        if (users != null || userRole != null) {
+        if (users != null && userRole != null) {
             loggedUser = users;
             loggedRola = userRole;
             loggedIn = true;
@@ -91,12 +91,7 @@ public class LogInOutBB extends HttpServlet {
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nieprawidłowe dane logowania!", ""));
-            if (users == null) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "puste", ""));
-
-            }
-
+          
             return null;
         }
     }

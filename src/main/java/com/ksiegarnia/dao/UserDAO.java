@@ -55,6 +55,7 @@ public class UserDAO {
             user = (Uzytkownik) query.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
+             user = null;
         }
 
         return user;
