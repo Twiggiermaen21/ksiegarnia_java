@@ -7,20 +7,19 @@
     <h:head>
         <title>Koszyk</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/basket.css"/>
-
-
     </h:head>
     <h:body>
 
         <ui:include src="/templates/header.xhtml"/>
         <div class="container">
-            <!--co z tym zrobic? -->
+            <!--_________________co z tym zrobic? __________________----->
             <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" style="margin-bottom: 15px;" /> 
-            <ui:include src="/templatesBasket/bakset-content.xhtml"/>
-            <ui:include src="/templatesBasket/shipping-payment.xhtml"/>
-         
+
+            <ui:include src="/templates/basketContent.xhtml" />
+
+            <ui:include src="/templates/shippingPayment.xhtml"/>
+
         </div>
     </h:body>
 </html>
