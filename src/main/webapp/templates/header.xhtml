@@ -30,12 +30,7 @@
                 <p:divider layout="vertical"/>
                 <!-- Panel wyszukiwania -->
                 <f:facet name="end">
-                    <div class="ui-input-icon-left mr-2">
-                        <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search" value="#{ksiazkiListBB.tytul}">
-                            <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
-                        </p:inputText>
-                    </div>
+                  
 
                     <!-- Przycisk Logout - widoczny tylko jeśli użytkownik jest zalogowany -->
                     <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" rendered="#{logInOutBB.loggedIn}" />

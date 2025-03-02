@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+   
+             <div class="card">
+                <h:form>
+                    <p:growl id="msg" showDetail="true"/>
+                    <h5>Adres</h5>
+                    <p:inputText id="float-input" value="#{validateBasketBB.text}">
+                        <f:validator validatorId="addressValidator" />
+                    </p:inputText>
+                    <p:message for="float-input" />
+
+                    <h5>Metoda Płatności</h5>
+                    <p:selectOneMenu id="paymentMethod" value="#{validateBasketBB.paymentMethod}" >
+                        <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
+                        <f:selectItem itemLabel="Gotówka" itemValue="1"/>
+                        <f:selectItem itemLabel="Blik" itemValue="2"/>
+                        <f:validator validatorId="paymentMethodValidator" />
+                    </p:selectOneMenu>
+                    <p:message for="paymentMethod" />
+
+                    <h5>Akceptacja regulaminu</h5>
+                    <p:selectBooleanButton id="agree"  required="true" value="#{validateBasketBB.agree}" onLabel="Tak" offLabel="Nie"  />
+                    <p:message for="agree"/>
+
+                    <div class="button-container">
+                        <h:commandButton value="Zatwierdź" action="#{validateBasketBB.submit}" class="btn-submit" />
+                    </div>
+                </h:form>
+            </div>
+</html>

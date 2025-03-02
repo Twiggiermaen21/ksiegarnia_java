@@ -1,19 +1,88 @@
-   .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            .card {
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            }
-            .button-container {
-            text-align: right;
-            margin-top: 10px;
-            }
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.button-container {
+    text-align: right;
+    margin-top: 10px;
+}
+.card-title {
+    font-size: 24px;          /* Zwiększa rozmiar czcionki */
+    font-weight: bold;        /* Pogrubienie tekstu */
+    margin-bottom: 20px;      /* Odstęp poniżej tytułu */
+    color: #333;              /* Kolor tekstu */
+    text-align: center;       /* Wyrównanie tekstu na środku */
+    text-transform: none;     /* Usuwa wszelką transformację tekstu (np. automatyczne wielkie litery) */
+}
+/* Styl dla całej karty */
+.card {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styl dla nagłówka tekstu */
+.card h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Styl tabeli */
+.p-datatable {
+    width: 100%;
+}
+
+/* Styl kolumny z tytułem */
+.p-datatable .p-column-header {
+    font-weight: bold;
+}
+
+/* Styl kolumny z grafiką */
+.p-graphic-image {
+    height: 100px;
+    display: block;
+    margin: auto;
+}
+
+/* Styl dla przycisku usuń */
+.p-command-button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+}
+
+/* Styl dla stopy tabeli z sumą */
+.p-datatable-footer {
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Styl dla liczby z konwersją */
+h\:outputText {
+    font-size: 16px;
+    font-weight: normal;
+}
+.btn-submit {
+    background-color: #5cb85c;    /* Zielony kolor tła */
+    color: white;                  /* Kolor tekstu na biały */
+    border: none;                  /* Usuwa ramkę */
+    padding: 10px 15px;            /* Wewnętrzne odstępy (padding) */
+    border-radius: 5px;            /* Zaokrąglenie rogów */
+    cursor: pointer;              /* Zmienia kursor na wskaźnik */
+    font-size: 16px;               /* Zwiększa rozmiar czcionki */
+}
+
+.btn-submit:hover {
+    background-color: #4cae4c;    /* Zmiana koloru tła przy najechaniu */
+}

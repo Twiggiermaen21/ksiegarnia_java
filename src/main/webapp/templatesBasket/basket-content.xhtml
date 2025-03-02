@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+   
+            <h:form id="koszykForm">
+                <div class="card">
+                    <h:outputText value="Zawartość Koszyka:" class="card-title" />
+                    <p:dataTable var="ksiazka" value="#{basketPageBB.basket}">
+                        <p:column headerText="Tytuł">
+                            <h:outputText value="#{ksiazka.ksiazka.tytul}" />
+                        </p:column>
+                        <p:column headerText="Cena">
+                            <h:outputText value="#{ksiazka.ksiazka.cena}" />
+                        </p:column>
+                        <p:column headerText="Grafika">
+                            <h:graphicImage value="/resources/#{ksiazka.ksiazka.imgUrl}" class="p-graphic-image" />
+                        </p:column>
+                        <p:column headerText="Ilość">
+                            <h:outputText value="#{ksiazka.ilosc}" />
+                        </p:column>
+                        <p:column headerText="Łączna Cena">
+                            <h:outputText value="#{ksiazka.ilosc * ksiazka.ksiazka.cena}" />
+                        </p:column>
+                        <p:column headerText="Opcje">
+                            <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBasket(ksiazka)}" update="koszykForm" class="p-command-button" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:column colspan="3" class="p-datatable-footer">
+                                Suma: 
+                                <h:outputText value="#{basketPageBB.totalPrice}">
+                                    <f:convertNumber pattern="###,##0.00" />
+                                </h:outputText>
+                            </p:column>
+                        </f:facet>
+                    </p:dataTable>
+                </div>
+            </h:form>
+</html>

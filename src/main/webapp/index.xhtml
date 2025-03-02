@@ -20,7 +20,16 @@
         <ui:include src="/templates/header.xhtml"/>
         <div class="container">
 
-            <div class="left"/>
+            <div class="left">
+                <h:form>
+                  <div class="ui-input-icon-left mr-2">
+                        <i class="pi pi-fw pi-search" />
+                        <p:inputText placeholder="Search" value="#{ksiazkiListBB.tytul}">
+                            <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
+                        </p:inputText>
+                    </div>
+                    </h:form>
+                </div>
             <!-- Książki -->  
             <div class="center"><ui:include src="/templates/books.xhtml"/></div>
 

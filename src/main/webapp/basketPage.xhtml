@@ -7,76 +7,20 @@
     <h:head>
         <title>Koszyk</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <h:outputStylesheet>
-                <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/basket.css"/>
 
-        </h:outputStylesheet>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/basket.css"/>
+
+
     </h:head>
     <h:body>
+
+        <ui:include src="/templates/header.xhtml"/>
         <div class="container">
-            <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" style="margin-bottom: 15px;" />
-
-            <h:form id="koszykForm">
-                <div class="card">
-                    <h:outputText value="Zawartość Koszyka:" style="font-size: 18px; font-weight: bold;" />
-                    <p:dataTable var="ksiazka" value="#{basketPageBB.basket}" style="width:100%">
-                        <p:column headerText="Tytuł">
-                            <h:outputText value="#{ksiazka.ksiazka.tytul}" />
-                        </p:column>
-                        <p:column headerText="Cena">
-                            <h:outputText value="#{ksiazka.ksiazka.cena}" />
-                        </p:column>
-                        <p:column headerText="Grafika">
-                            <h:graphicImage value="/resources/#{ksiazka.ksiazka.imgUrl}" style="height: 100px; display: block; margin: auto;" />
-                        </p:column>
-                        <p:column headerText="Ilość">
-                            <h:outputText value="#{ksiazka.ilosc}" />
-                        </p:column>
-                        <p:column headerText="Łączna Cena">
-                            <h:outputText value="#{ksiazka.ilosc * ksiazka.ksiazka.cena}" />
-                        </p:column>
-                        <p:column headerText="Opcje">
-                            <p:commandButton value="Usuń" action="#{ksiazkiListBB.usunBasket(ksiazka)}" update="koszykForm" style="background-color: #d9534f; color: white; border: none;" />
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:column colspan="3" style="text-align: right; font-weight: bold;">
-                                Suma: 
-                                <h:outputText value="#{basketPageBB.totalPrice}">
-                                    <f:convertNumber pattern="###,##0.00" />
-                                </h:outputText>
-                            </p:column>
-                        </f:facet>
-                    </p:dataTable>
-                </div>
-            </h:form>
-
-            <div class="card">
-                <h:form>
-                    <p:growl id="msg" showDetail="true"/>
-                    <h5>Adres</h5>
-                    <p:inputText id="float-input" value="#{validateBasketBB.text}" style="width: 100%;">
-                        <f:validator validatorId="addressValidator" />
-                    </p:inputText>
-                    <p:message for="float-input" />
-
-                    <h5>Metoda Płatności</h5>
-                    <p:selectOneMenu id="paymentMethod" value="#{validateBasketBB.paymentMethod}" style="width: 100%;">
-                        <f:selectItem itemLabel="Przelew Bankowy" itemValue="0"/>
-                        <f:selectItem itemLabel="Gotówka" itemValue="1"/>
-                        <f:selectItem itemLabel="Blik" itemValue="2"/>
-                        <f:validator validatorId="paymentMethodValidator" />
-                    </p:selectOneMenu>
-                    <p:message for="paymentMethod" />
-
-                    <h5>Akceptacja regulaminu</h5>
-                    <p:selectBooleanButton id="agree"  required="true" value="#{validateBasketBB.agree}" onLabel="Tak" offLabel="Nie" style="width:100px;" />
-                    <p:message for="agree"/>
-
-                    <div class="button-container">
-                        <h:commandButton value="Zatwierdź" action="#{validateBasketBB.submit}" style="background-color: #5cb85c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;" />
-                    </div>
-                </h:form>
-            </div>
+            <!--co z tym zrobic? -->
+            <p:button value="Cofnij" icon="pi pi-arrow-left" outcome="index" style="margin-bottom: 15px;" /> 
+            <ui:include src="/templatesBasket/bakset-content.xhtml"/>
+            <ui:include src="/templatesBasket/shipping-payment.xhtml"/>
+         
         </div>
     </h:body>
 </html>
