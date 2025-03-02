@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <div class="card" >
+        <h:form>
+            <p:growl id="messages"/> <!-- sprawdzic-->
+        
+            <p:menubar hideDelay="1000">
+                <f:facet name="start">
+                    <p:graphicImage name="logo.webp" library="images"  style="height: 40px"/>
+                </f:facet>
+
+                <p:divider layout="vertical"/>
+                <p:menuitem value="koszyk"  action="#{ksiazkiListBB.showBusket}" icon="pi pi-shopping-bag" disabled="#{not logInOutBB.loggedIn}"/>
+                <p:divider layout="vertical"/>
+                <p:menuitem value="biblioteczka" icon="pi pi-book"  action="#{zamowieniaPage.OrdersPage}" disabled="#{not logInOutBB.loggedIn}" />
+                <p:divider layout="vertical"/>
+                <p:menuitem value="#{userData.loggedInUser.imie} #{userData.loggedInUser.nazwisko}" icon="pi pi-fw pi-user" action="#{userData.userPage}" disabled="#{not logInOutBB.loggedIn}" />
+                <p:divider layout="vertical"/>
+                <p:submenu label="Role" icon="pi pi-shopping-bag" disabled="#{not logInOutBB.loggedIn}">
+                    <c:forEach items="#{userData.userRoles}" var="role">
+                        <p:menuitem value="#{role.rolaidRola.nazwaRoli}" icon="pi pi-fw pi-user" />
+                    </c:forEach>
+                </p:submenu>
+                <p:divider layout="vertical"/>
+                <!-- Panel wyszukiwania -->
+                <f:facet name="end">
+                    <div class="ui-input-icon-left mr-2">
+                        <i class="pi pi-fw pi-search" />
+                        <p:inputText placeholder="Search" value="#{ksiazkiListBB.tytul}">
+                            <p:ajax event="keyup" listener="#{ksiazkiListBB.getList}" update="booksTable" />
+                        </p:inputText>
+                    </div>
+
+                    <!-- Przycisk Logout - widoczny tylko jeśli użytkownik jest zalogowany -->
+                    <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" rendered="#{logInOutBB.loggedIn}" />
+
+                    <!-- Przycisk Login - widoczny tylko jeśli użytkownik nie jest zalogowany -->
+                    <p:commandButton value="Login" action="#{logInOutBB.loginPage}" icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" rendered="#{not logInOutBB.loggedIn}" />
+                </f:facet>
+            </p:menubar>
+        </h:form>
+    </div>
+</html>

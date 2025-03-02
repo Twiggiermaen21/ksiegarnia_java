@@ -11,11 +11,10 @@ import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.Flash;
 
 import com.ksiegarnia.dao.KsiazkiDAO;
+import com.ksiegarnia.dao.KsiazkiHasAutorKsiazkiDAO;
 import com.ksiegarnia.entities.*;
 import com.ksiegarnia.enums.Busket;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ public class KsiazkiListBB implements Serializable {
     private static final String PAGE_BUSKET_SHOW = "busketPage?faces-redirect=true";
     private static final String PAGE_STAY_AT_THE_SAME = null;
     private List<Ksiazki> list;
+    private List <KsiazkiHasAutorKsiazki> listKHAK;
     private List<Busket> busket = new ArrayList<>(); // Lista przedmiotów w koszyku
     private int quantity = 1;
     private String tytul;
@@ -44,6 +44,9 @@ public class KsiazkiListBB implements Serializable {
 
     @EJB
     KsiazkiDAO ksiazkiDAO;
+    @EJB
+    KsiazkiHasAutorKsiazkiDAO khakDAO;
+    
  public int getQuantity() {
         return quantity;
     }
@@ -80,6 +83,10 @@ public class KsiazkiListBB implements Serializable {
 
         return list.subList(start, end);
     }
+    
+ 
+    
+    
 
     public String showBook(Ksiazki ksiazki) {
         //1. Pass object through session

@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <h:form id="booksTable">
+        <p:growl id="msgs" showDetail="true"/>
+        <div class="book-grid">
+            <ui:repeat value="#{ksiazkiListBB.list}" var="k">
+                <div class="book-card">
+                    <h:graphicImage value="/resources/#{k.imgUrl}" styleClass="book-image" />
+                    <div class="book-title">
+                        <h:outputText value="#{k.tytul}" />
+                    </div>
+                    <div class="book-price">
+                        <h:outputText value="#{k.cena} PLN" />
+                    </div>
+                    <div class="book-details">
+                        <ui:repeat var="a" value="#{ksiazkiHasAutorKsiazkiBB.list}">
+                            <h:panelGroup rendered="#{k.idKsiazki eq a.ksiazkiidKsiazki.idKsiazki}">
+                                <span><b>Autor:</b> #{a.autorKsiazkiidAutorKsiazki.imie} #{a.autorKsiazkiidAutorKsiazki.nazwisko}</span>
+                            </h:panelGroup>
+                        </ui:repeat>
+                        <span><b>Ilość sztuk:</b> #{k.iloscsztuk}</span>
+                    </div>
+
+                    <p:commandButton value="Zobacz" styleClass="details-link" action="#{ksiazkiListBB.showBook(k)}" ajax="false" />
+
+
+                    <p:commandButton 
+                        value="Dodaj do koszyka" 
+                        styleClass="details-link"  
+                        action="#{ksiazkiListBB.addToBusket(k)}"
+                        update=":koszykForm, :rotate" 
+                        disabled="#{k.iloscsztuk  lt 1}" />
+                </div>
+            </ui:repeat>
+        </div>
+        <div class="pagination-container">
+            <p:commandButton value="Poprzednia" action="#{ksiazkiListBB.prevPage}" ajax="true" update="booksTable" styleClass="pagination-btn"/>
+            <p:commandButton value="Następna" action="#{ksiazkiListBB.nextPage}" ajax="true" update="booksTable" styleClass="pagination-btn" />
+        </div>
+
+    </h:form>
+    </html>
