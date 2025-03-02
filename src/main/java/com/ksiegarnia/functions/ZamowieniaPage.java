@@ -6,9 +6,11 @@ package com.ksiegarnia.functions;
 
 import com.ksiegarnia.dao.ZamowieniaDAO;
 import com.ksiegarnia.dao.ZamowieniaKsiazkiDAO;
+import com.ksiegarnia.entities.Ksiazki;
 import com.ksiegarnia.entities.Uzytkownik;
 import com.ksiegarnia.entities.Zamowienia;
 import com.ksiegarnia.entities.ZamowieniaHasKsiazki;
+import com.ksiegarnia.enums.Orders;
 import jakarta.ejb.EJB;
 
 import jakarta.faces.context.ExternalContext;
@@ -23,6 +25,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.event.ColumnToggleEvent;
 import org.primefaces.model.Visibility;
@@ -34,6 +37,8 @@ public class ZamowieniaPage implements Serializable  {
 private List<Zamowienia> list;
 private List<ZamowieniaHasKsiazki> zhklist;
  private Uzytkownik user;
+ 
+ 
     @Inject
     ExternalContext extcontext;
 
@@ -61,11 +66,31 @@ private List<ZamowieniaHasKsiazki> zhklist;
         return list;
     }
      
-     public List<ZamowieniaHasKsiazki> getZHK(){
+     public List<Orders> getZHK(){
+         List<Orders> ListaZbady = new ArrayList<>();
+
          getList();
          zhklist=zamowieniaKsiazkiDAO.getFullList(list);
-        
-         return zhklist;
+         
+         for (int i = 0; i < list.size(); i++) {
+             List<Ksiazki> ksiazki = new ArrayList<>();  // Initialize here
+        List<Integer> bookCount = new ArrayList<>(); 
+             for (int j = 0; j <zhklist.size(); j++) {
+                 
+                 if (list.get(i).equals(zhklist.get(j).getZamowieniaIdzamowienia()))
+{
+                     ksiazki.add(zhklist.get(j).getKsiazkiidKsiazki());
+                     bookCount.add(zhklist.get(j).getIloscksiazek());
+                 }
+                
+                 
+             }
+              Orders pom = new Orders(ksiazki,list.get(i),bookCount);
+                 ListaZbady.add(pom);
+         }
+     
+         
+         return ListaZbady;
      }
     
       public void onToggle(ColumnToggleEvent e) {

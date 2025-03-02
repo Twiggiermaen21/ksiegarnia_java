@@ -4,23 +4,34 @@
       xmlns:ui="jakarta.faces.facelets"
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core">
-    
- <h:form>
-            <div class="card">
-                <p:dataTable var="row" value="#{zamowieniaPage.ZHK}" rows="10"
-                             paginator="true" paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                             rowsPerPageTemplate="5,10,{ShowAll|'All'}">
-                    
-                    <p:column field="zamowieniaIdzamowienia.datazamowienia" headerText="Data"  />
-                    <p:column field="zamowieniaIdzamowienia.adres" headerText="Adres" />
-                    <p:column field="iloscksiazek" headerText="Ilosc Ksiazek" />
-                    <p:column field="ksiazkiidKsiazki.tytul" headerText="Tytul" />
-                    <p:column field="ksiazkiidKsiazki.imgUrl" headerText="Grafika" />
-                    <p:column field="ksiazkiidKsiazki.cena" headerText="Cena" />
-                    
-                </p:dataTable>
-            </div>
-        </h:form>
+
+    <h:form>
+        <div class="card">
+            <p:dataTable var="row" value="#{zamowieniaPage.ZHK}" rows="10"
+                         paginator="true" paginatorPosition="both"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                         rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+
+                <p:column field="zamowienia.datazamowienia" headerText="Data"  />
+                <p:column field="zamowienia.adres" headerText="Adres" />
+
+
+                <p:column headerText="Tytuly">
+                    <ui:repeat var="ksiazka" value="#{row.ksiazki}">
+                        <h:outputText value="#{ksiazka.tytul}" /><br/>
+                    </ui:repeat>
+                </p:column>
+
+
+
+                <p:column  headerText="Ilosc Ksiazek" >
+                    <ui:repeat var="ilosc" value="#{row.iloscKsiazek}">
+                        <h:outputText value="#{ilosc}" /><br/>
+                    </ui:repeat>
+                </p:column>
+
+            </p:dataTable>
+        </div>
+    </h:form>
 </html>
