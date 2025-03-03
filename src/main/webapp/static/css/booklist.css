@@ -1,5 +1,6 @@
 /* Globalny styl */
 body {
+    
     background-color: #f4f4f9;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -15,6 +16,7 @@ body {
 /* Kontener główny */
 .container {
     display: flex;
+   
 }
 
 .left, .right {
@@ -149,3 +151,87 @@ body {
         grid-template-columns: 1fr; /* 1 kolumna dla telefonów */
     }
 }
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.custom-table th {
+    text-align: left;
+    background-color: #f4f4f4;
+    padding: 10px;
+    width: 30%;
+    border: 1px solid #ccc;
+}
+
+.custom-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.separator {
+    height: 10px;
+    background-color: #ddd;
+    border: none;
+}
+
+.back-button {
+    text-align: center;
+}
+
+.back-button .ui-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.back-button .ui-button:hover {
+    background-color: #45a049;
+}
+
+
+.invoice-container {
+    width: 90%; 
+    margin: auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.invoice-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.invoice-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.invoice-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.invoice-table th, .invoice-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.invoice-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+.invoice-info {
+    width: 100%;
+    margin-bottom: 20px;
+}
+

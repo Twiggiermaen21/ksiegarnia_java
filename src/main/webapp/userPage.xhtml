@@ -8,9 +8,8 @@
     <h:head>
         <title>Strona Użytkownika</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+ <link rel="icon" type="image/png" href="#{resource['images/logo.webp']}" />
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/basket.css"/>
-
     </h:head>
     <h:body>
         <ui:include src="/templates/header.xhtml"/>
@@ -36,7 +35,6 @@
                     </f:facet>
                 </p:cellEditor>
             </p:column>
-
             <p:column headerText="Nazwisko">
                 <p:cellEditor>
                     <f:facet name="output">
@@ -47,11 +45,6 @@
                     </f:facet>
                 </p:cellEditor>
             </p:column>
-
-          
-
-           
-
             <p:column headerText="Email">
                 <p:cellEditor>
                     <f:facet name="output">
@@ -62,7 +55,6 @@
                     </f:facet>
                 </p:cellEditor>
             </p:column>
-
             <p:column headerText="Haslo">
                 <p:cellEditor>
                     <f:facet name="output">
@@ -73,8 +65,6 @@
                     </f:facet>
                 </p:cellEditor>
             </p:column>
-
-          
             <p:column style="width:6rem">
                 <p:rowEditor editTitle="Edit User" cancelTitle="Cancel" saveTitle="Save"/>
             </p:column>
@@ -83,10 +73,6 @@
     </div>
 </h:form>
 
-            
-            
-            
-            
              </div>
     </h:body>
 </html>

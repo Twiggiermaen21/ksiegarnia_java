@@ -8,10 +8,13 @@
         <title>Rachunek</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  
-        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/billPage.css"/>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/booklist.css"/>
+ <link rel="icon" type="image/png" href="#{resource['images/logo.webp']}" />
     </h:head>
     <h:body>
+        <ui:include src="/templates/header.xhtml"/>
+
+
         <div class="invoice-container">
             <div class="invoice-header">
                 <h1>Paragon Zakupu</h1>
@@ -35,47 +38,50 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">Cena</f:facet>
-                        #{item.ksiazka.cena} PLN
+                        #{item.ksiazka.cena * item.ilosc} PLN
                     </h:column>
                 </h:dataTable>
             </div>
 
             <div class="invoice-section">
                 <h2>Informacje o Zamówieniu</h2>
-                <h:form>
-                    <h:dataTable value="#{flash.fieldList}" var="field">
-                        <h:column>
-                            <br/>
-                            <f:facet name="header">Data Zamówienia</f:facet>
-                            <h:outputText value="#{field.datazamowienia}">
-                                <f:convertDateTime pattern="yyyy-MM-dd" />
-                            </h:outputText>
-                            <br/>
-
-
-                            <f:facet name="header">Rodzaj Płatności</f:facet>
-                            <h:outputText value="#{field.platnosciidPlatnosci.rodzajpłatnosci}" />
-
-                            <br/>
-
-                            <f:facet name="header">Adres</f:facet>
-                            <h:outputText value=" #{field.adres}" />
-                            <br/>
-
-                            <f:facet name="header">Kod Zamówienia</f:facet>
-                            <h:outputText value="#{field.kodZamowienia}" />
-                        </h:column>
-                    </h:dataTable>
-                </h:form>
-
+                <table class="custom-table">
+                    <ui:repeat value="#{flash.fieldList}" var="field">
+                        <tr>
+                            <th>Data Zamówienia</th>
+                            <td>
+                                <h:outputText value="#{field.datazamowienia}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Rodzaj Płatności</th>
+                            <td><h:outputText value="#{field.platnosciidPlatnosci.rodzajpłatnosci}" /></td>
+                        </tr>
+                        <tr>
+                            <th>Adres</th>
+                            <td><h:outputText value="#{field.adres}" /></td>
+                        </tr>
+                        <tr>
+                            <th>Kod Zamówienia</th>
+                            <td><h:outputText value="#{field.kodZamowienia}" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="separator"></td>
+                        </tr>
+                    </ui:repeat>
+                </table>
 
             </div>
-
             <div class="invoice-footer">
                 <h3>Podsumowanie</h3>
                 <p>
-                    <strong>Całkowita kwota:</strong>
-                    <h:outputText value="#{flash.fieldList.platnosciidPlatnosci.kwota} PLN" styleClass="total-amount" />
+                    <strong>Całkowita kwota: </strong>
+                    <h:outputText value="#{flash.fieldList.platnosciidPlatnosci.kwota}" styleClass="total-amount">
+                        <f:convertNumber type="number" pattern="###,##0.00" locale="pl_PL" />
+                    </h:outputText> PLN
+
                 </p>
             </div>
 

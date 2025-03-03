@@ -12,12 +12,14 @@
         <meta charset="utf-8" />
         <title>Szczegóły książki</title>
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/basket.css"/>
+         <link rel="icon" type="image/png" href="#{resource['images/logo.webp']}" />
     </h:head>
 
     <h:body style="background-color: #f8f8f8; font-family: Arial, sans-serif;">
         <ui:include src="/templates/header.xhtml"/>
 
         <div class="container">
+            <div class="card">
             <h2 class="header">Szczegóły książki</h2>
             <h:form rendered="#{bookShowBB.ksiazki != null}">
                 <div class="book-container">
@@ -48,7 +50,7 @@
             <p:panel rendered="#{bookShowBB.ksiazki == null}" header="Błąd" styleClass="error-panel">
                 <h:outputText value="Nie znaleziono książki. Proszę wrócić do strony głównej." />
             </p:panel>
-
+</div>
         </div>
 
     </h:body>

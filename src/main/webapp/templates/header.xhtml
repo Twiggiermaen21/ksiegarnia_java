@@ -9,12 +9,12 @@
     <div class="card" >
         <h:form>
             <p:growl id="messages"/> 
-        
+
             <p:menubar hideDelay="1000">
                 <f:facet name="start">
-              
-                    <p:graphicImage name="logo.webp" library="images"  style="height: 40px"  />
-         
+                    <h:link outcome="index.xhtml">
+                        <p:graphicImage name="logo.webp" library="images" style="height: 40px" />
+                    </h:link>
                 </f:facet>
 
                 <p:divider layout="vertical"/>
@@ -30,12 +30,12 @@
                     </c:forEach>
                 </p:submenu>
                 <p:divider layout="vertical"/>
-             
+
                 <f:facet name="end">
                     <p:commandButton value="Logout" action="#{logInOutBB.logout}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" rendered="#{logInOutBB.loggedIn}" />
                     <p:commandButton value="Login" action="#{logInOutBB.loginPage}" icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" rendered="#{not logInOutBB.loggedIn}" />
                 </f:facet>
-                
+
             </p:menubar>
         </h:form>
     </div>
