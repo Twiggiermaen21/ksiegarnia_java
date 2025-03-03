@@ -1,24 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.ksiegarnia.dao;
 
 import java.util.List;
-import java.util.Map;
-
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-
 import com.ksiegarnia.entities.KsiazkiHasAutorKsiazki;
 
 @Stateless
 public class KsiazkiHasAutorKsiazkiDAO {
 
     private final static String UNIT_NAME = "jsfcourse-ksiegarniaPU";
-    // Dependency injection (no setter method is needed)
     @PersistenceContext(unitName = UNIT_NAME)
     protected EntityManager em;
 
@@ -55,9 +48,8 @@ public class KsiazkiHasAutorKsiazkiDAO {
     public List<KsiazkiHasAutorKsiazki> getList() {
         List<KsiazkiHasAutorKsiazki> list = null;
 
-        // Poprawione zapytanie JPQL
         String select = "select k ";
-        String from = "from KsiazkiHasAutorKsiazki k"; // Użycie nazwy klasy encyjnej
+        String from = "from KsiazkiHasAutorKsiazki k";
 
         Query query = em.createQuery(select + from);
 
@@ -70,8 +62,4 @@ public class KsiazkiHasAutorKsiazkiDAO {
         return list;
     }
 
-    
-
-    
-    
 }

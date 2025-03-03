@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ksiegarnia.functions;
 
 import jakarta.servlet.annotation.WebServlet;
@@ -24,6 +20,9 @@ import java.util.List;
 @WebServlet("/LoginServlet")
 public class LogInOutBB extends HttpServlet {
 
+    private static final String PAGE_LOGIN = "login.xhtml?faces-redirect=true";
+    private static final String PAGE_REGISTER = "register.xhtml?faces-redirect=true";
+    private static final String PAGE_INDEX = "index.xhtml?faces-redirect=true";
     private String email;
     private String password;
     private Uzytkownik loggedUser;
@@ -72,7 +71,7 @@ public class LogInOutBB extends HttpServlet {
         }
         loggedUser = null;
         loggedIn = false;
-        return "login.xhtml?faces-redirect=true";
+         return PAGE_LOGIN;
     }
 
     public String getEmail() {
@@ -99,16 +98,16 @@ public class LogInOutBB extends HttpServlet {
         return loggedIn;
     }
 
-    public String loginPage() {
-        return "login.xhtml?faces-redirect=true";
+  public String loginPage() {
+        return PAGE_LOGIN;
     }
 
     public String registerPage() {
-        return "register.xhtml?faces-redirect=true";
+        return PAGE_REGISTER;
     }
 
     public String indexPage() {
-        return "index.xhtml?faces-redirect=true";
+        return PAGE_INDEX;
     }
 
 }

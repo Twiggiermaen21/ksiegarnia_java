@@ -42,7 +42,7 @@ public class UserPageEdit implements Serializable {
     try {
         Uzytkownik userr = (Uzytkownik) event.getObject();
         if (userr != null) {
-            userDAO.merge(userr);  // Zatwierdzenie zmian
+            userDAO.merge(userr);  
             FacesMessage msg = new FacesMessage("User Edited", String.valueOf(userr.getEmail()));
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }

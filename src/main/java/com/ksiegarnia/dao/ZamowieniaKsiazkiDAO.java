@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.ksiegarnia.dao;
 
 import com.ksiegarnia.entities.Zamowienia;
@@ -16,8 +13,6 @@ import java.util.List;
 public class ZamowieniaKsiazkiDAO {
     
  private final static String UNIT_NAME = "jsfcourse-ksiegarniaPU";
-
-    // Dependency injection (no setter method is needed)
     @PersistenceContext(unitName = UNIT_NAME)
     protected EntityManager em;
 
@@ -44,11 +39,6 @@ public class ZamowieniaKsiazkiDAO {
               String from = "from ZamowieniaHasKsiazki z ";
               String where = "where z.zamowieniaIdzamowienia IN :zam";
 
-         
-        
-        
-        // ... other parameters ... 
-        // 2. Create query object
         Query query = em.createQuery(select + from + where );
      query.setParameter("zam", zam);
         try {

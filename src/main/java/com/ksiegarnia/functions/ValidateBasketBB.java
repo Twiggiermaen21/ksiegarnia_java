@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.ksiegarnia.functions;
 
 import com.ksiegarnia.dao.*;
@@ -233,17 +230,12 @@ public void GenerateZHK(Zamowienia order, Ksiazki book, int ilosc) {
     }
 }
 
-
-    
     public void updateBook(Ksiazki book, int ilosc) {
         int pom = book.getIloscsztuk() - ilosc;
         book.setIloscsztuk(pom);
         ksiazkiDAO.merge(book);
     }
 
-    
-    
-    
     public static String generateRandomCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder randomString = new StringBuilder();

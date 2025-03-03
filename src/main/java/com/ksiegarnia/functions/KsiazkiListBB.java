@@ -40,8 +40,7 @@ public class KsiazkiListBB implements Serializable {
     Flash flash;
     @EJB
     KsiazkiDAO ksiazkiDAO;
-    @EJB
-    KsiazkiHasAutorKsiazkiDAO khakDAO;
+    
 
     
 
